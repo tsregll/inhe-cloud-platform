@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAmSubstationDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAmSubstation">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="STATION_CODE" property="stationCode" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+		<result column="VOL_LEVEL" property="volLevel" jdbcType="VARCHAR" />
+		<result column="LO" property="lo" jdbcType="DOUBLE" />
+		<result column="LA" property="la" jdbcType="DOUBLE" />
+		<result column="ZOOM" property="zoom" jdbcType="SMALLINT" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+		<result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+		<result column="UDATE" property="udate" jdbcType="TIMESTAMP" />
+		<result column="REMARKS" property="remarks" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, DESCRIPTION, ADDRESS, STATION_CODE, ORG_ID, DEPT_ID,
+		VOL_LEVEL, LO,
+		LA, ZOOM,
+		STATUS, COPERATOR, CDATE, UDATE, REMARKS
+	</sql>
+
+	<select id="selectCount" resultType="Integer">
+		select count(*)
+		from MDM_AM_SUBSTATION
+		<where>
+			<if test="mdmAmSubstation.subCodeName != null and mdmAmSubstation.subCodeName != ''">
+				and concat(ifnull(STATION_CODE, ''), ifnull(DESCRIPTION, ''))
+				like concat('%',#{mdmAmSubstation.subCodeName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmSubstation.orgId != null and mdmAmSubstation.orgId != ''">
+				and ORG_ID = #{mdmAmSubstation.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmSubstation.deptId != null and mdmAmSubstation.deptId != ''">
+				and DEPT_ID like concat(#{mdmAmSubstation.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmSubstation.status != null and mdmAmSubstation.status != ''">
+				and STATUS = #{mdmAmSubstation.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from MDM_AM_SUBSTATION
+		<where>
+			<if test="mdmAmSubstation.subCodeName != null and mdmAmSubstation.subCodeName != ''">
+				and concat(ifnull(STATION_CODE, ''), ifnull(DESCRIPTION, ''))
+				like concat('%',#{mdmAmSubstation.subCodeName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmSubstation.orgId != null and mdmAmSubstation.orgId != ''">
+				and ORG_ID = #{mdmAmSubstation.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmSubstation.deptId != null and mdmAmSubstation.deptId != ''">
+				and DEPT_ID like concat(#{mdmAmSubstation.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmSubstation.status != null and mdmAmSubstation.status != ''">
+				and STATUS = #{mdmAmSubstation.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by ID asc limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectDashboardCount" resultType="map" >
+	   select
+		A.subNum,
+		B.lineNum,
+		C.meterNum,
+		D.publicNum,
+		E.privateNum,
+		F.lowNum,
+		G.priUserNum
+		from
+		(
+			select
+				count(*) AS subNum
+			from
+				MDM_AM_SUBSTATION
+			where
+				ORG_ID = #{orgId,jdbcType=VARCHAR}
+			and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%')
+		) A,
+		(
+			select
+				count(*) AS lineNum
+			from
+				MDM_AM_LINE H join MDM_AM_SUBSTATION I on H.STATION_ID = I.ID
+			where
+				H.ORG_ID = #{orgId,jdbcType=VARCHAR}
+			and I.DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%')
+		) B,
+		(
+			select
+				count(*) AS meterNum
+			from
+				MDM_AM_DEVICE
+			where
+				ORG_ID = #{orgId,jdbcType=VARCHAR}
+			and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%')
+		) C,
+		(
+			select
+				count(*) AS publicNum
+			from
+				MDM_AM_TM
+			where
+				ORG_ID = #{orgId,jdbcType=VARCHAR} AND LOAD_TYPE = "1"
+			and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%')
+		) D,
+		(
+			select
+				count(*) AS privateNum
+			from
+				MDM_AM_TM
+			where
+				ORG_ID = #{orgId,jdbcType=VARCHAR} AND LOAD_TYPE = "0"
+			and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%')
+		) E,
+		(
+			select
+				count(*) AS lowNum
+			from
+				MDM_AM_DEVICE
+			where
+				ORG_ID = #{orgId,jdbcType=VARCHAR} and METER_SORT = "3"
+			and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%')
+		) F,
+		(
+			select
+				count(*) AS priUserNum
+			from
+				MDM_AM_DEVICE
+			where
+				ORG_ID = #{orgId,jdbcType=VARCHAR} AND METER_SORT = "1"
+			and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%')
+		) G
+  	</select>
+
+	<select id="selectMaxId" resultType="String" parameterType="com.inhe.mdm.model.MdmAmSubstation">
+		select max(right(ID,5)) as ID
+		from MDM_AM_SUBSTATION
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AM_SUBSTATION
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByStationCode" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAmSubstation">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AM_SUBSTATION
+		where 
+			STATION_CODE = #{stationCode,jdbcType=VARCHAR} 
+			and ORG_ID = #{orgId,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="delete" parameterType="com.inhe.mdm.model.MdmAmSubstation">
+		update 
+			MDM_AM_SUBSTATION
+		set
+			STATUS = #{status,jdbcType=VARCHAR}
+		where 
+			ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmAmSubstation">
+		delete from
+			MDM_AM_SUBSTATION
+		where 
+			ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAmSubstation">
+		insert into MDM_AM_SUBSTATION
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="description != null">
+				DESCRIPTION,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="stationCode != null">
+				STATION_CODE,
+			</if>
+			<if test="orgId != null">
+				ORG_ID,
+			</if>
+			<if test="deptId != null">
+				DEPT_ID,
+			</if>
+			<if test="volLevel != null">
+				VOL_LEVEL,
+			</if>
+			<if test="lo != null">
+				LO,
+			</if>
+			<if test="la != null">
+				LA,
+			</if>
+			<if test="zoom != null">
+				ZOOM,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="coperator != null">
+				COPERATOR,
+			</if>
+			<if test="cdate != null">
+				CDATE,
+			</if>
+			<if test="udate != null">
+				UDATE,
+			</if>
+			<if test="remarks != null">
+				REMARKS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="stationCode != null">
+				#{stationCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				#{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="volLevel != null">
+				#{volLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="lo != null">
+				#{lo,jdbcType=DOUBLE},
+			</if>
+			<if test="la != null">
+				#{la,jdbcType=DOUBLE},
+			</if>
+			<if test="zoom != null">
+				#{zoom,jdbcType=SMALLINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				#{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				#{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="udate != null">
+				#{udate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAmSubstation">
+		update MDM_AM_SUBSTATION
+		<set>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="stationCode != null">
+				STATION_CODE = #{stationCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				DEPT_ID = #{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="volLevel != null">
+				VOL_LEVEL = #{volLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="lo != null">
+				LO = #{lo,jdbcType=DOUBLE},
+			</if>
+			<if test="la != null">
+				LA = #{la,jdbcType=DOUBLE},
+			</if>
+			<if test="zoom != null">
+				ZOOM = #{zoom,jdbcType=SMALLINT},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				COPERATOR = #{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				CDATE = #{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="udate != null">
+				UDATE = #{udate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

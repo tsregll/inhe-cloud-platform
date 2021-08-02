@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAaKwhDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAaKwh" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="WAY" property="way" jdbcType="VARCHAR" />
+    <result column="REF_ID" property="refId" jdbcType="VARCHAR" />
+    <result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
+    <result column="NOW_TIME" property="nowTime" jdbcType="VARCHAR" />
+    <result column="REF_CONTENT" property="refContent" jdbcType="VARCHAR" />
+    <result column="TOTAL_KWH_START" property="totalKwhStart" jdbcType="DOUBLE" />
+    <result column="TOTAL_KWH_END" property="totalKwhEnd" jdbcType="DOUBLE" />
+    <result column="TOTAL_KWH" property="totalKwh" jdbcType="DOUBLE" />
+    <result column="PRI_LINE_PRI_TM_KWH" property="priLinePriTmKwh" jdbcType="DOUBLE" />
+    <result column="PUB_LINE_PRI_TM_KWH" property="pubLinePriTmKwh" jdbcType="DOUBLE" />
+    <result column="PUB_LINE_PUB_TM_KWH" property="pubLinePubTmKwh" jdbcType="DOUBLE" />
+    <result column="YEAR_BASIS" property="yearBasis" jdbcType="DOUBLE" />
+    <result column="LINK_RELATIVE_RATIO" property="linkRelativeRatio" jdbcType="DOUBLE" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, ORG_ID, DEPT_ID, WAY, REF_ID, DATA_TYPE, NOW_TIME, REF_CONTENT, TOTAL_KWH_START, 
+    TOTAL_KWH_END, TOTAL_KWH, PRI_LINE_PRI_TM_KWH, PUB_LINE_PRI_TM_KWH, PUB_LINE_PUB_TM_KWH, 
+    YEAR_BASIS, LINK_RELATIVE_RATIO, CDATE
+  </sql>
+  
+  <select id="selectCount" resultType="Integer">
+		select count(*)
+		from MDM_AA_KWH
+		<where>
+			<if test="mdmAaKwh.deptId != null and mdmAaKwh.deptId != ''">
+				and DEPT_ID = #{mdmAaKwh.deptId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwh.orgId != null and mdmAaKwh.orgId != ''">
+				and ORG_ID = #{mdmAaKwh.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwh.dataType != null and mdmAaKwh.dataType != ''">
+				and DATA_TYPE = #{mdmAaKwh.dataType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwh.nowTime != null and mdmAaKwh.nowTime != ''">
+				and NOW_TIME = #{mdmAaKwh.nowTime,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from MDM_AA_KWH
+		<where>
+			<if test="mdmAaKwh.deptId != null and mdmAaKwh.deptId != ''">
+				and DEPT_ID = #{mdmAaKwh.deptId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwh.orgId != null and mdmAaKwh.orgId != ''">
+				and ORG_ID = #{mdmAaKwh.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwh.dataType != null and mdmAaKwh.dataType != ''">
+				and DATA_TYPE = #{mdmAaKwh.dataType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwh.nowTime != null and mdmAaKwh.nowTime != ''">
+				and NOW_TIME = #{mdmAaKwh.nowTime,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by TOTAL_KWH desc limit #{currIndex}, #{pageSize}
+	</select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    	<include refid="Base_Column_List" />
+    from MDM_AA_KWH
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MDM_AA_KWH
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAaKwh" >
+    insert into MDM_AA_KWH
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="way != null" >
+        WAY,
+      </if>
+      <if test="refId != null" >
+        REF_ID,
+      </if>
+      <if test="dataType != null" >
+        DATA_TYPE,
+      </if>
+      <if test="nowTime != null" >
+        NOW_TIME,
+      </if>
+      <if test="refContent != null" >
+        REF_CONTENT,
+      </if>
+      <if test="totalKwhStart != null" >
+        TOTAL_KWH_START,
+      </if>
+      <if test="totalKwhEnd != null" >
+        TOTAL_KWH_END,
+      </if>
+      <if test="totalKwh != null" >
+        TOTAL_KWH,
+      </if>
+      <if test="priLinePriTmKwh != null" >
+        PRI_LINE_PRI_TM_KWH,
+      </if>
+      <if test="pubLinePriTmKwh != null" >
+        PUB_LINE_PRI_TM_KWH,
+      </if>
+      <if test="pubLinePubTmKwh != null" >
+        PUB_LINE_PUB_TM_KWH,
+      </if>
+      <if test="yearBasis != null" >
+        YEAR_BASIS,
+      </if>
+      <if test="linkRelativeRatio != null" >
+        LINK_RELATIVE_RATIO,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="way != null" >
+        #{way,jdbcType=VARCHAR},
+      </if>
+      <if test="refId != null" >
+        #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="nowTime != null" >
+        #{nowTime,jdbcType=VARCHAR},
+      </if>
+      <if test="refContent != null" >
+        #{refContent,jdbcType=VARCHAR},
+      </if>
+      <if test="totalKwhStart != null" >
+        #{totalKwhStart,jdbcType=DOUBLE},
+      </if>
+      <if test="totalKwhEnd != null" >
+        #{totalKwhEnd,jdbcType=DOUBLE},
+      </if>
+      <if test="totalKwh != null" >
+        #{totalKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="priLinePriTmKwh != null" >
+        #{priLinePriTmKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="pubLinePriTmKwh != null" >
+        #{pubLinePriTmKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="pubLinePubTmKwh != null" >
+        #{pubLinePubTmKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="yearBasis != null" >
+        #{yearBasis,jdbcType=DOUBLE},
+      </if>
+      <if test="linkRelativeRatio != null" >
+        #{linkRelativeRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAaKwh" >
+    update MDM_AA_KWH
+    <set >
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="way != null" >
+        WAY = #{way,jdbcType=VARCHAR},
+      </if>
+      <if test="refId != null" >
+        REF_ID = #{refId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        DATA_TYPE = #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="nowTime != null" >
+        NOW_TIME = #{nowTime,jdbcType=VARCHAR},
+      </if>
+      <if test="refContent != null" >
+        REF_CONTENT = #{refContent,jdbcType=VARCHAR},
+      </if>
+      <if test="totalKwhStart != null" >
+        TOTAL_KWH_START = #{totalKwhStart,jdbcType=DOUBLE},
+      </if>
+      <if test="totalKwhEnd != null" >
+        TOTAL_KWH_END = #{totalKwhEnd,jdbcType=DOUBLE},
+      </if>
+      <if test="totalKwh != null" >
+        TOTAL_KWH = #{totalKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="priLinePriTmKwh != null" >
+        PRI_LINE_PRI_TM_KWH = #{priLinePriTmKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="pubLinePriTmKwh != null" >
+        PUB_LINE_PRI_TM_KWH = #{pubLinePriTmKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="pubLinePubTmKwh != null" >
+        PUB_LINE_PUB_TM_KWH = #{pubLinePubTmKwh,jdbcType=DOUBLE},
+      </if>
+      <if test="yearBasis != null" >
+        YEAR_BASIS = #{yearBasis,jdbcType=DOUBLE},
+      </if>
+      <if test="linkRelativeRatio != null" >
+        LINK_RELATIVE_RATIO = #{linkRelativeRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByOld" parameterType="com.inhe.mdm.model.MdmAaKwh" >
+    delete from MDM_AA_KWH
+    where 
+	    WAY = #{way,jdbcType=VARCHAR} 
+	    and DATA_TYPE = #{dataType,jdbcType=VARCHAR} 
+	    and NOW_TIME = #{nowTime,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

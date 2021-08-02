@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmDictionaryDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmDictionary" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <id column="TABLE_TYPE" property="tableType" jdbcType="VARCHAR" />
+    <id column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="INTEGER" />
+    <result column="V1" property="v1" jdbcType="VARCHAR" />
+    <result column="V2" property="v2" jdbcType="VARCHAR" />
+    <result column="V3" property="v3" jdbcType="VARCHAR" />
+    <result column="V4" property="v4" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="UOPERATOR" property="uoperator" jdbcType="VARCHAR" />
+    <result column="UDATE" property="udate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, TABLE_TYPE, PARENT_CODE, CODE, DESCRIPTION, ORDER_NO, V1, V2, V3, V4, REMARK, 
+    COPERATOR, CDATE, UOPERATOR, UDATE
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmDictionary" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_DICTIONARY
+    where TABLE_TYPE = #{tableType,jdbcType=VARCHAR}
+      and CODE = #{code,jdbcType=VARCHAR}
+      <if test="id != null and id != ''">
+	  	  and ID = #{id,jdbcType=VARCHAR}
+	  </if>
+	  <if test="parentCode != null and parentCode != ''">
+	  	  and PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+	  </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmDictionary" >
+    delete from MDM_DICTIONARY
+    where ID = #{id,jdbcType=VARCHAR}
+      and TABLE_TYPE = #{tableType,jdbcType=VARCHAR}
+      and PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+      and CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmDictionary" >
+    insert into MDM_DICTIONARY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="tableType != null" >
+        TABLE_TYPE,
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="v1 != null" >
+        V1,
+      </if>
+      <if test="v2 != null" >
+        V2,
+      </if>
+      <if test="v3 != null" >
+        V3,
+      </if>
+      <if test="v4 != null" >
+        V4,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="coperator != null" >
+        COPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+      <if test="uoperator != null" >
+        UOPERATOR,
+      </if>
+      <if test="udate != null" >
+        UDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tableType != null" >
+        #{tableType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="v1 != null" >
+        #{v1,jdbcType=VARCHAR},
+      </if>
+      <if test="v2 != null" >
+        #{v2,jdbcType=VARCHAR},
+      </if>
+      <if test="v3 != null" >
+        #{v3,jdbcType=VARCHAR},
+      </if>
+      <if test="v4 != null" >
+        #{v4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uoperator != null" >
+        #{uoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="udate != null" >
+        #{udate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmDictionary" >
+    update MDM_DICTIONARY
+    <set >
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="v1 != null" >
+        V1 = #{v1,jdbcType=VARCHAR},
+      </if>
+      <if test="v2 != null" >
+        V2 = #{v2,jdbcType=VARCHAR},
+      </if>
+      <if test="v3 != null" >
+        V3 = #{v3,jdbcType=VARCHAR},
+      </if>
+      <if test="v4 != null" >
+        V4 = #{v4,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        COPERATOR = #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uoperator != null" >
+        UOPERATOR = #{uoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="udate != null" >
+        UDATE = #{udate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+      and TABLE_TYPE = #{tableType,jdbcType=VARCHAR}
+      and PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+      and CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

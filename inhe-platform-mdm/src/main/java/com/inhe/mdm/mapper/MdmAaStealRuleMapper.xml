@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAaStealRuleDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAaStealRule">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="THEME_ID" property="themeId" jdbcType="VARCHAR" />
+		<result column="RULE_ID" property="ruleId" jdbcType="VARCHAR" />
+		<result column="ORDER_NO" property="orderNo" jdbcType="INTEGER" />
+		<result column="SOURCE" property="source" jdbcType="VARCHAR" />
+		<result column="PARAMS" property="params" jdbcType="VARCHAR" />
+		<result column="FACTOR" property="factor" jdbcType="DOUBLE" />
+		<result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+		<result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+		<result column="UDATE" property="udate" jdbcType="TIMESTAMP" />
+		<result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, ORG_ID, THEME_ID, RULE_ID, ORDER_NO, SOURCE, PARAMS, FACTOR, ACTIVED,
+		CDATE,
+		UDATE, COPERATOR
+	</sql>
+
+	<select id="selectCount" resultType="Integer">
+		select count(*)
+		from MDM_AA_STEAL_RULE
+		<where>
+			<if test="mdmAaStealRule.themeId != null and mdmAaStealRule.themeId != ''">
+				and THEME_ID = #{mdmAaStealRule.themeId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealRule.ruleId != null and mdmAaStealRule.ruleId != ''">
+				and ID = #{mdmAaStealRule.ruleId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealRule.actived != null and mdmAaStealRule.actived != ''">
+				and ACTIVED = #{mdmAaStealRule.actived,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_STEAL_RULE
+		<where>
+			<if test="mdmAaStealRule.themeId != null and mdmAaStealRule.themeId != ''">
+				and THEME_ID = #{mdmAaStealRule.themeId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealRule.ruleId != null and mdmAaStealRule.ruleId != ''">
+				and ID = #{mdmAaStealRule.ruleId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealRule.actived != null and mdmAaStealRule.actived != ''">
+				and ACTIVED = #{mdmAaStealRule.actived,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by ID asc limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAaStealRule">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_STEAL_RULE
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAaStealRule">
+		update MDM_AA_STEAL_RULE
+		<set>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="themeId != null">
+				THEME_ID = #{themeId,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleId != null">
+				RULE_ID = #{ruleId,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNo != null">
+				ORDER_NO = #{orderNo,jdbcType=INTEGER},
+			</if>
+			<if test="source != null">
+				SOURCE = #{source,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				PARAMS = #{params,jdbcType=VARCHAR},
+			</if>
+			<if test="factor != null">
+				FACTOR = #{factor,jdbcType=DOUBLE},
+			</if>
+			<if test="actived != null">
+				ACTIVED = #{actived,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				CDATE = #{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="udate != null">
+				UDATE = #{udate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="coperator != null">
+				COPERATOR = #{coperator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+	  	select 
+	    	<include refid="Base_Column_List" />
+	    from 
+	    	MDM_AA_STEAL_RULE
+	    where ACTIVED = 'Y'
+	</select>
+
+</mapper>

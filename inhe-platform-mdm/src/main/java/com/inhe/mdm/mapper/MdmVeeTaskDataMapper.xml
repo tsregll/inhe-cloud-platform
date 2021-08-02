@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmVeeTaskDataDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmVeeTaskData" >
+    <id column="DATA_TYPE" property="dataType" jdbcType="INTEGER" />
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+    <result column="CYCLE_TIMES" property="cycleTimes" jdbcType="INTEGER" />
+    <result column="READ_TIME" property="readTime" jdbcType="TIMESTAMP" />
+    <result column="DEVICE_CODE" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="FIELD_ID" property="fieldId" jdbcType="VARCHAR" />
+    <result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+    <result column="VEE_DATA_TYPE" property="veeDataType" jdbcType="VARCHAR" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="VEE_TYPE" property="veeType" jdbcType="VARCHAR" />
+    <result column="OP_RESULT" property="opResult" jdbcType="VARCHAR" />
+    <result column="REAL_VALUE" property="realValue" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="ESTIMATE_VALUE" property="estimateValue" jdbcType="VARCHAR" />
+    <result column="EDIT_VALUE" property="editValue" jdbcType="VARCHAR" />
+    <result column="VEE_RESULT" property="veeResult" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="VEE_RESULT_DETAILS" property="veeResultDetails" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.inhe.mdm.model.VtMdmVeeTaskData" extends="BaseResultMap">
+  	<result column="METER_SORT" property="meterSort" jdbcType="VARCHAR" />
+    <result column="DEVICE_DESCRIPTION" property="deviceDescription" jdbcType="VARCHAR" />
+    <result column="FIELD_DESCRIPTION" property="fieldDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    DATA_TYPE, ID, ORG_ID, TASK_CODE, CYCLE_TIMES, READ_TIME, DEVICE_CODE, FIELD_ID, 
+    DEVICE_NUM, VEE_DATA_TYPE, SOURCE, VEE_TYPE, OP_RESULT, REAL_VALUE, STATUS, ESTIMATE_VALUE, 
+    EDIT_VALUE, VEE_RESULT, CDATE, VEE_RESULT_DETAILS
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmVeeTaskData" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_VEE_TASK_DATA
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmVeeTaskData" >
+    delete from MDM_VEE_TASK_DATA
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmVeeTaskData" >
+    insert into MDM_VEE_TASK_DATA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dataType != null" >
+        DATA_TYPE,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="taskCode != null" >
+        TASK_CODE,
+      </if>
+      <if test="cycleTimes != null" >
+        CYCLE_TIMES,
+      </if>
+      <if test="readTime != null" >
+        READ_TIME,
+      </if>
+      <if test="deviceCode != null" >
+        DEVICE_CODE,
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID,
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM,
+      </if>
+      <if test="veeDataType != null" >
+        VEE_DATA_TYPE,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="veeType != null" >
+        VEE_TYPE,
+      </if>
+      <if test="opResult != null" >
+        OP_RESULT,
+      </if>
+      <if test="realValue != null" >
+        REAL_VALUE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="estimateValue != null" >
+        ESTIMATE_VALUE,
+      </if>
+      <if test="editValue != null" >
+        EDIT_VALUE,
+      </if>
+      <if test="veeResult != null" >
+        VEE_RESULT,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+      <if test="veeResultDetails != null" >
+        VEE_RESULT_DETAILS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dataType != null" >
+        #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCode != null" >
+        #{taskCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleTimes != null" >
+        #{cycleTimes,jdbcType=INTEGER},
+      </if>
+      <if test="readTime != null" >
+        #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceCode != null" >
+        #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        #{fieldId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="veeDataType != null" >
+        #{veeDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="veeType != null" >
+        #{veeType,jdbcType=VARCHAR},
+      </if>
+      <if test="opResult != null" >
+        #{opResult,jdbcType=VARCHAR},
+      </if>
+      <if test="realValue != null" >
+        #{realValue,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="estimateValue != null" >
+        #{estimateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="editValue != null" >
+        #{editValue,jdbcType=VARCHAR},
+      </if>
+      <if test="veeResult != null" >
+        #{veeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="veeResultDetails != null" >
+        #{veeResultDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmVeeTaskData" >
+    update MDM_VEE_TASK_DATA
+    <set >
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCode != null" >
+        TASK_CODE = #{taskCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleTimes != null" >
+        CYCLE_TIMES = #{cycleTimes,jdbcType=INTEGER},
+      </if>
+      <if test="readTime != null" >
+        READ_TIME = #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceCode != null" >
+        DEVICE_CODE = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID = #{fieldId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="veeDataType != null" >
+        VEE_DATA_TYPE = #{veeDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="veeType != null" >
+        VEE_TYPE = #{veeType,jdbcType=VARCHAR},
+      </if>
+      <if test="opResult != null" >
+        OP_RESULT = #{opResult,jdbcType=VARCHAR},
+      </if>
+      <if test="realValue != null" >
+        REAL_VALUE = #{realValue,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="estimateValue != null" >
+        ESTIMATE_VALUE = #{estimateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="editValue != null" >
+        EDIT_VALUE = #{editValue,jdbcType=VARCHAR},
+      </if>
+      <if test="veeResult != null" >
+        VEE_RESULT = #{veeResult,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="veeResultDetails != null" >
+        VEE_RESULT_DETAILS = #{veeResultDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectCount" resultType="java.lang.Integer">
+  	select
+  		count(*)
+  	from MDM_VEE_TASK_DATA A
+  	left join MDM_AM_DEVICE B on A.DEVICE_CODE = B.ID
+  	left join MDM_FIELD C on A.FIELD_ID = C.ID
+  	<where>
+  		A.ID not in (select ID from MDM_VEE_TASK_DATA where VEE_TYPE = '0' and VEE_RESULT = '0')
+  		<if test="vtMdmVeeTaskData.orgId != null and vtMdmVeeTaskData.orgId != ''">
+			and A.ORG_ID = #{vtMdmVeeTaskData.orgId,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeTaskData.veeType != null and vtMdmVeeTaskData.veeType != ''">
+			and A.VEE_TYPE = #{vtMdmVeeTaskData.veeType,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeTaskData.veeDataType != null and vtMdmVeeTaskData.veeDataType != ''">
+			and A.VEE_DATA_TYPE = #{vtMdmVeeTaskData.veeDataType,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeTaskData.meterSort != null and vtMdmVeeTaskData.meterSort != ''">
+			and B.METER_SORT = #{vtMdmVeeTaskData.meterSort,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeTaskData.veeResult != null and vtMdmVeeTaskData.veeResult != ''">
+			and A.VEE_RESULT = #{vtMdmVeeTaskData.veeResult,jdbcType=VARCHAR}
+		</if>
+  		<if test="vtMdmVeeTaskData.startTime != null">
+			and A.READ_TIME &gt;= #{vtMdmVeeTaskData.startTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="vtMdmVeeTaskData.endTime != null">
+			and A.READ_TIME &lt;= #{vtMdmVeeTaskData.endTime,jdbcType=TIMESTAMP}
+		</if>
+  		<if test="vtMdmVeeTaskData.deviceNum != null and vtMdmVeeTaskData.deviceNum != ''">
+			and A.DEVICE_NUM like concat('%',#{vtMdmVeeTaskData.deviceNum,jdbcType=VARCHAR},'%')
+		</if>
+  	</where>
+  </select>
+  
+  <select id="selectList" resultMap="SearchResultMap">
+  	select
+  		A.ORG_ID, A.DATA_TYPE, A.ID, A.VEE_TYPE, A.VEE_DATA_TYPE, A.DEVICE_CODE, A.DEVICE_NUM, 
+  		B.DESCRIPTION as DEVICE_DESCRIPTION, 
+  		B.METER_SORT, A.READ_TIME, A.FIELD_ID,
+  		C.DESCRIPTION as FIELD_DESCRIPTION,
+  		A.REAL_VALUE, A.ESTIMATE_VALUE, A.EDIT_VALUE, A.VEE_RESULT, A.STATUS
+  	from MDM_VEE_TASK_DATA A
+  	left join MDM_AM_DEVICE B on A.DEVICE_CODE = B.ID
+  	left join MDM_FIELD C on A.FIELD_ID = C.ID
+  	<where>
+  		A.ID not in (select ID from MDM_VEE_TASK_DATA where VEE_TYPE = '0' and VEE_RESULT = '0')
+  		<if test="vtMdmVeeTaskData.orgId != null and vtMdmVeeTaskData.orgId != ''">
+			and A.ORG_ID = #{vtMdmVeeTaskData.orgId,jdbcType=VARCHAR}
+		</if>
+  		<if test="vtMdmVeeTaskData.veeType != null and vtMdmVeeTaskData.veeType != ''">
+			and A.VEE_TYPE = #{vtMdmVeeTaskData.veeType,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeTaskData.veeDataType != null and vtMdmVeeTaskData.veeDataType != ''">
+			and A.VEE_DATA_TYPE = #{vtMdmVeeTaskData.veeDataType,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeTaskData.meterSort != null and vtMdmVeeTaskData.meterSort != ''">
+			and B.METER_SORT = #{vtMdmVeeTaskData.meterSort,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeTaskData.veeResult != null and vtMdmVeeTaskData.veeResult != ''">
+			and A.VEE_RESULT = #{vtMdmVeeTaskData.veeResult,jdbcType=VARCHAR}
+		</if>
+  		<if test="vtMdmVeeTaskData.startTime != null">
+			and A.READ_TIME &gt;= #{vtMdmVeeTaskData.startTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="vtMdmVeeTaskData.endTime != null">
+			and A.READ_TIME &lt;= #{vtMdmVeeTaskData.endTime,jdbcType=TIMESTAMP}
+		</if>
+  		<if test="vtMdmVeeTaskData.deviceNum != null and vtMdmVeeTaskData.deviceNum != ''">
+			and A.DEVICE_NUM like concat('%',#{vtMdmVeeTaskData.deviceNum,jdbcType=VARCHAR},'%')
+		</if>
+  	</where>
+  	order by A.READ_TIME desc limit #{currIndex}, #{pageSize}
+  </select>
+  
+  <select id="selectDetailByRule" parameterType="com.inhe.mdm.model.VtMdmVeeTaskData" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from MDM_VEE_TASK_DATA
+  	where
+  		DEVICE_CODE = #{deviceCode,jdbcType=VARCHAR}
+  		and FIELD_ID = #{fieldId,jdbcType=VARCHAR}
+  		<if test="veeType != null and veeType != ''">
+	 		and VEE_TYPE = #{veeType,jdbcType=VARCHAR} 
+	 	</if>
+    	<if test="opResult != null and opResult != ''">
+	 		and OP_RESULT = #{opResult,jdbcType=VARCHAR} 
+	 	</if>
+	 	<if test="startTime != null">
+	 		and READ_TIME &gt;= #{startTime,jdbcType=TIMESTAMP} 
+	 	</if>
+  		<if test="endTime != null">
+	 		and READ_TIME &lt;= #{endTime,jdbcType=TIMESTAMP} 
+	 	</if>
+	 	<if test="veeResultDetails != null and veeResultDetails != ''">
+	 		and instr(VEE_RESULT_DETAILS, #{veeResultDetails,jdbcType=CLOB})>0
+	 	</if>
+  </select>
+  
+</mapper>

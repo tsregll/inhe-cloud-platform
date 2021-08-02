@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmVeeConfigDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmVeeConfig" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="RULES_COUNT" property="rulesCount" jdbcType="SMALLINT" />
+    <result column="FIELDS_COUNT" property="fieldsCount" jdbcType="SMALLINT" />
+    <result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="UDATE" property="udate" jdbcType="TIMESTAMP" />
+    <result column="DATA_TYPE_DETAILS" property="dataTypeDetails" jdbcType="LONGVARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="LONGVARCHAR" />
+    <result column="METER_SORT" property="meterSort" jdbcType="LONGVARCHAR" />
+    <result column="METER_MODEL" property="meterModel" jdbcType="LONGVARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="LONGVARCHAR" />
+    <result column="DEVICE_ID" property="deviceId" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CODE, ORG_ID, DESCRIPTION, RULES_COUNT, FIELDS_COUNT, ACTIVED, REMARKS, COPERATOR, 
+    CDATE, UDATE, DATA_TYPE_DETAILS, DEPT_ID, METER_SORT, METER_MODEL, PARENT_ID, DEVICE_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_VEE_CONFIG
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MDM_VEE_CONFIG
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmVeeConfig" >
+    insert into MDM_VEE_CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="rulesCount != null" >
+        RULES_COUNT,
+      </if>
+      <if test="fieldsCount != null" >
+        FIELDS_COUNT,
+      </if>
+      <if test="actived != null" >
+        ACTIVED,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="coperator != null" >
+        COPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+      <if test="udate != null" >
+        UDATE,
+      </if>
+      <if test="dataTypeDetails != null" >
+        DATA_TYPE_DETAILS,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="meterSort != null" >
+        METER_SORT,
+      </if>
+      <if test="meterModel != null" >
+        METER_MODEL,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="rulesCount != null" >
+        #{rulesCount,jdbcType=SMALLINT},
+      </if>
+      <if test="fieldsCount != null" >
+        #{fieldsCount,jdbcType=SMALLINT},
+      </if>
+      <if test="actived != null" >
+        #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udate != null" >
+        #{udate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataTypeDetails != null" >
+        #{dataTypeDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="meterSort != null" >
+        #{meterSort,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="meterModel != null" >
+        #{meterModel,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmVeeConfig" >
+    update MDM_VEE_CONFIG
+    <set >
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="rulesCount != null" >
+        RULES_COUNT = #{rulesCount,jdbcType=SMALLINT},
+      </if>
+      <if test="fieldsCount != null" >
+        FIELDS_COUNT = #{fieldsCount,jdbcType=SMALLINT},
+      </if>
+      <if test="actived != null" >
+        ACTIVED = #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        COPERATOR = #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udate != null" >
+        UDATE = #{udate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataTypeDetails != null" >
+        DATA_TYPE_DETAILS = #{dataTypeDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="meterSort != null" >
+        METER_SORT = #{meterSort,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="meterModel != null" >
+        METER_MODEL = #{meterModel,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID = #{deviceId,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectCount" resultType="java.lang.Integer">
+  	select count(1) from MDM_VEE_CONFIG
+  	where ORG_ID = #{mdmVeeConfig.orgId,jdbcType=VARCHAR} 
+ 	<if test="mdmVeeConfig.actived != null and mdmVeeConfig.actived != ''">
+		and ACTIVED = #{mdmVeeConfig.actived,jdbcType=VARCHAR}
+	</if>
+ 		<if test="mdmVeeConfig.description != null and mdmVeeConfig.description != ''">
+		and DESCRIPTION like concat('%',#{mdmVeeConfig.description,jdbcType=VARCHAR},'%')
+	</if>
+  </select>
+  
+  <select id="selectList" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from MDM_VEE_CONFIG
+  	where ORG_ID = #{mdmVeeConfig.orgId,jdbcType=VARCHAR} 
+ 	<if test="mdmVeeConfig.actived != null and mdmVeeConfig.actived != ''">
+		and ACTIVED = #{mdmVeeConfig.actived,jdbcType=VARCHAR}
+	</if>
+ 		<if test="mdmVeeConfig.description != null and mdmVeeConfig.description != ''">
+		and DESCRIPTION like concat('%',#{mdmVeeConfig.description,jdbcType=VARCHAR},'%')
+	</if>
+  	limit #{currIndex}, #{pageSize}
+  </select>
+  
+  <select id="selectMaxCode" resultType="java.lang.String">
+  	select max(CODE) from MDM_VEE_CONFIG
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from MDM_VEE_CONFIG 
+  	where ACTIVED = '1' 
+  	order by CDATE asc
+  </select>
+  
+  <select id="SelectVeeRuleDevice" resultType="java.lang.String" parameterType="com.inhe.mdm.model.MdmVeeConfig">  
+    select DEVICE_NUM FROM MDM_AM_DEVICE  
+    where STATUS='0'
+    	and ORG_ID = #{orgId,jdbcType=VARCHAR} 
+     <if test="deviceId != null and deviceId != ''">
+        and DEVICE_NUM in (${deviceId})
+     </if> 
+     <if test="meterModel != null and meterModel != ''">
+        and METER_MODEL in (${meterModel})
+     </if> 
+     <if test="meterSort != null and meterSort != ''">
+        and METER_SORT in (${meterSort})
+     </if> 
+     <if test="deptId != null and deptId != ''">
+        and DEPT_ID in (${deptId})
+     </if> 
+  </select>
+  
+  <select id="selectDescByCmd" resultType="java.lang.String" parameterType="java.lang.String" >
+     select DESCRIPTION from MDM_FIELD where ID=#{cmd,jdbcType=VARCHAR}
+  </select>
+  
+  <!--查询上一次用电量  -->
+   <select id="selectLastKwhValue" parameterType="com.inhe.mdm.model.MdmAaKwhDetail" resultType="com.inhe.mdm.model.MdmAaKwhDetail">
+    select TOTAL_KWH as totalKwh
+    from MDM_AA_KWH_DETAIL 
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    	and TIME_TYPE = #{timeType,jdbcType=VARCHAR} 
+    	and NOW_TIME = #{nowTime,jdbcType=VARCHAR} 
+  </select>
+  
+  <!-- 查询需量上一月或年 -->
+  <select id="selectByReqLastTime" resultType="com.inhe.mdm.model.MdmDeviceRead" parameterType="com.inhe.mdm.model.MdmDeviceRead">
+	  select 
+	  	READ_TIME as readTime,
+	  	REAL_VALUE as realValue 
+	  from MDM_DEVICE_READ 
+	  where DEVICE_ID=#{deviceId,jdbcType=VARCHAR}
+	  	and DATA_TYPE=#{dataType,jdbcType=VARCHAR} 
+	  	and FIELD_ID=#{fieldId,jdbcType=VARCHAR}
+	  	and READ_TIME &gt;=  #{startTime,jdbcType=TIMESTAMP} 
+	  	and READ_TIME &lt;= #{finishTime,jdbcType=TIMESTAMP}
+	  order by READ_TIME desc 
+	  limit 0,1
+  </select>
+  
+  <!-- 查询用电量合相值 -->
+  <select id="calcSum" resultType="com.inhe.mdm.model.MdmAaKwhDetail" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+	  select 
+	  	TOTAL_KWH as totalKwh,
+	  	KWH_T1+KWH_T2+KWH_T3+KWH_T4+KWH_T5+KWH_T6+KWH_T7+KWH_T8 as kwhT1 
+	  from MDM_AA_KWH_DETAIL 
+	  where DEVICE_ID=#{deviceId,jdbcType=VARCHAR} 
+	  	and NOW_TIME=#{nowTime,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询总用电量 -->
+  <select id="calcSumCheck" resultType="java.lang.Double" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+	  select TOTAL_KWH as totalKwh
+	  from MDM_AA_KWH_DETAIL 
+	  where DEVICE_ID=#{deviceId,jdbcType=VARCHAR} 
+	  	and NOW_TIME=#{nowTime,jdbcType=VARCHAR} 
+	  	and TIME_TYPE='1'
+  </select>
+  
+  <!-- 连续N次为零 -->
+  <select id="selectZeroValue" resultType="com.inhe.mdm.model.MdmDeviceRead" parameterType="com.inhe.mdm.model.MdmDeviceRead">
+  	select 
+  		DEVICE_NUM as deviceNum,
+  		READ_TIME as readTime,
+  		FIELD_ID as fieldId,
+  		REAL_VALUE as realValue
+  	from MDM_DEVICE_READ 
+	where DEVICE_ID=#{deviceId,jdbcType=VARCHAR}
+	  	and FIELD_ID=#{fieldId,jdbcType=VARCHAR} 
+	  	and DATA_TYPE=#{dataType,jdbcType=VARCHAR}
+	  	and READ_TIME &gt;= #{readTime,jdbcType=TIMESTAMP} 
+	  	and READ_TIME &lt;= #{cdate,jdbcType=TIMESTAMP} 
+	  	order by READ_TIME asc
+  </select>
+  
+  <select id="selectZeroValue2" resultType="com.inhe.mdm.model.MdmDeviceRead" parameterType="com.inhe.mdm.model.MdmDeviceRead">
+  	select 
+  		DEVICE_NUM as deviceNum,
+  		READ_TIME as readTime,
+  		FIELD_ID as fieldId,
+  		REAL_VALUE as realValue 
+  	from MDM_DEVICE_READ 
+	where DEVICE_ID=#{deviceId,jdbcType=VARCHAR} 
+	  	and FIELD_ID=#{fieldId,jdbcType=VARCHAR} 
+	  	and DATA_TYPE=#{dataType,jdbcType=VARCHAR}
+	  	and READ_TIME &gt;= #{startTime,jdbcType=TIMESTAMP} 
+		and READ_TIME &lt;= #{endTime,jdbcType=TIMESTAMP} 
+	  	order by READ_TIME asc
+  </select>
+  
+  <select id="selectZeroValueTest" resultType="com.inhe.mdm.model.MdmDeviceRead" parameterType="com.inhe.mdm.model.MdmVeeReadQry">
+  	select 
+  		DEVICE_NUM as deviceNum,
+  		READ_TIME as readTime,
+  		FIELD_ID as fieldId,
+  		REAL_VALUE as realValue 
+  	from MDM_DEVICE_READ 
+	where DEVICE_NUM=#{deviceNum,jdbcType=VARCHAR}
+	  	and FIELD_ID=#{fieldId,jdbcType=VARCHAR} 
+	  	and DATA_TYPE=#{dataType,jdbcType=VARCHAR} 
+	  	and READ_TIME &gt;= #{startTime,jdbcType=TIMESTAMP} 
+	  	and READ_TIME &lt;= #{endTime,jdbcType=TIMESTAMP}
+	  	order by READ_TIME asc
+  </select>
+  
+  <!-- 查询用电量数据vee.dto.KwhQry-->
+  <select id="selectAvgValue" resultType="java.lang.Double" parameterType="com.inhe.mdm.model.MdmVeeReadQry">  
+    select TOTAL_KWH as totalKwh
+    from MDM_AA_KWH_DETAIL 
+    where DEVICE_ID=#{deviceId,jdbcType=VARCHAR}
+    AND TIME_TYPE=#{dataType,jdbcType=VARCHAR}
+  	<if test="stimeStr != etimeStr">
+       AND NOW_TIME&gt;=#{stimeStr,jdbcType=VARCHAR} 
+  	   AND NOW_TIME&lt;=#{etimeStr,jdbcType=VARCHAR} 
+    </if>
+  	<if test="stimeStr == etimeStr">
+       AND NOW_TIME=#{stimeStr,jdbcType=VARCHAR} 
+    </if> 
+  </select>
+  
+  <!-- 查询某月所有日用电量数据vee.dto.KwhQry-->
+  <select id="selectKwhValue" resultType="java.lang.Double" parameterType="com.inhe.mdm.model.MdmVeeReadQry">  
+    select TOTAL_KWH as totalKwh
+    from MDM_AA_KWH_DETAIL 
+    where DEVICE_ID=#{deviceId,jdbcType=VARCHAR} 
+  	and TIME_TYPE=#{dataType,jdbcType=VARCHAR}
+  	and NOW_TIME like concat(#{stimeStr,jdbcType=VARCHAR},'%')
+  </select>
+ 
+  <!-- 查询某时期所有某使用电量数据（都取PTCT值）vee.dto.KwhQry-->
+  <select id="selectEkwhValue" resultType="com.inhe.mdm.model.MdmAaKwhDetail" parameterType="com.inhe.mdm.model.MdmVeeReadQry">  
+    select NOW_TIME as nowTime
+    <if test="cmdType == 'VEE0'">
+       ,TOTAL_KWH as totalKwh
+    </if>
+    <if test="cmdType == 'VEE3'">
+       ,KWH_PA_PTCT as totalKwh
+    </if>
+    <if test="cmdType == 'VEE4'">
+       ,KWH_RA_PTCT as totalKwh
+    </if>
+    <if test="cmdType == 'VEE5'">
+       ,KWH_PR_PTCT as totalKwh
+    </if>
+    <if test="cmdType == 'VEE6'">
+       ,KWH_RR_PTCT as totalKwh
+    </if>
+     from MDM_AA_KWH_DETAIL 
+     where DEVICE_ID=#{deviceId,jdbcType=VARCHAR}
+     and TIME_TYPE=#{dataType,jdbcType=VARCHAR}
+  	<if test="stimeStr != etimeStr">
+       and NOW_TIME&gt;=#{stimeStr,jdbcType=VARCHAR} 
+  	   and NOW_TIME&lt;=#{etimeStr,jdbcType=VARCHAR} 
+    </if>
+  	<if test="stimeStr == etimeStr">
+       and NOW_TIME=#{stimeStr,jdbcType=VARCHAR} 
+    </if> 
+  </select>
+  
+</mapper>

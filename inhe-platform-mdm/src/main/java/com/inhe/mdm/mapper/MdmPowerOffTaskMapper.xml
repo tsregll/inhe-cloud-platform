@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmPowerOffTaskDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmPowerOffTask" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="SCHEME_TYPE" property="schemeType" jdbcType="VARCHAR" />
+    <result column="EXEC_WAY" property="execWay" jdbcType="VARCHAR" />
+    <result column="FAILURE_TYPE" property="failureType" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="ACTUAL_EXEC_TIME" property="actualExecTime" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="EXEC_DAY" property="execDay" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="START_DATETIME" property="startDatetime" jdbcType="TIMESTAMP" />
+    <result column="END_DATETIME" property="endDatetime" jdbcType="TIMESTAMP" />
+    <result column="ACTUAL_OFF_DATE" property="actualOffDate" jdbcType="VARCHAR" />
+    <result column="OFF_COUNT" property="offCount" jdbcType="SMALLINT" />
+    <result column="OFF_S_COUNT" property="offSCount" jdbcType="SMALLINT" />
+    <result column="OFF_F_COUNT" property="offFCount" jdbcType="SMALLINT" />
+    <result column="OFF_S_PER" property="offSPer" jdbcType="DECIMAL" />
+    <result column="TRY_TIMES" property="tryTimes" jdbcType="SMALLINT" />
+    <result column="TRY_TIME" property="tryTime" jdbcType="SMALLINT" />
+    <result column="AUDIT_REMARK" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="AUDIT_OPERATOR" property="auditOperator" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="INVALID_TIME" property="invalidTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="EXECING_FLAG" property="execingFlag" jdbcType="VARCHAR" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="MAC" property="mac" jdbcType="VARCHAR" />
+    <result column="EXECING" property="execing" jdbcType="VARCHAR" />
+    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+    <result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, DESCRIPTION, ORG_ID, DEPT_ID, DEPT_NAME, SCHEME_TYPE, EXEC_WAY, FAILURE_TYPE, 
+    START_DATE, ACTUAL_EXEC_TIME, END_DATE, EXEC_DAY, START_TIME, END_TIME, START_DATETIME, 
+    END_DATETIME, ACTUAL_OFF_DATE, OFF_COUNT, OFF_S_COUNT, OFF_F_COUNT, OFF_S_PER, TRY_TIMES, 
+    TRY_TIME, AUDIT_REMARK, AUDIT_OPERATOR, AUDIT_TIME, INVALID_TIME, STATUS, EXECING_FLAG, 
+    IP, MAC, EXECING, REASON, COPERATOR, CDATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_POWER_OFF_TASK
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MDM_POWER_OFF_TASK
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmPowerOffTask" >
+    insert into MDM_POWER_OFF_TASK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+      <if test="schemeType != null" >
+        SCHEME_TYPE,
+      </if>
+      <if test="execWay != null" >
+        EXEC_WAY,
+      </if>
+      <if test="failureType != null" >
+        FAILURE_TYPE,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="actualExecTime != null" >
+        ACTUAL_EXEC_TIME,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="execDay != null" >
+        EXEC_DAY,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="startDatetime != null" >
+        START_DATETIME,
+      </if>
+      <if test="endDatetime != null" >
+        END_DATETIME,
+      </if>
+      <if test="actualOffDate != null" >
+        ACTUAL_OFF_DATE,
+      </if>
+      <if test="offCount != null" >
+        OFF_COUNT,
+      </if>
+      <if test="offSCount != null" >
+        OFF_S_COUNT,
+      </if>
+      <if test="offFCount != null" >
+        OFF_F_COUNT,
+      </if>
+      <if test="offSPer != null" >
+        OFF_S_PER,
+      </if>
+      <if test="tryTimes != null" >
+        TRY_TIMES,
+      </if>
+      <if test="tryTime != null" >
+        TRY_TIME,
+      </if>
+      <if test="auditRemark != null" >
+        AUDIT_REMARK,
+      </if>
+      <if test="auditOperator != null" >
+        AUDIT_OPERATOR,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="execingFlag != null" >
+        EXECING_FLAG,
+      </if>
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="mac != null" >
+        MAC,
+      </if>
+      <if test="execing != null" >
+        EXECING,
+      </if>
+      <if test="reason != null" >
+        REASON,
+      </if>
+      <if test="coperator != null" >
+        COPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="schemeType != null" >
+        #{schemeType,jdbcType=VARCHAR},
+      </if>
+      <if test="execWay != null" >
+        #{execWay,jdbcType=VARCHAR},
+      </if>
+      <if test="failureType != null" >
+        #{failureType,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualExecTime != null" >
+        #{actualExecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="execDay != null" >
+        #{execDay,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="startDatetime != null" >
+        #{startDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDatetime != null" >
+        #{endDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualOffDate != null" >
+        #{actualOffDate,jdbcType=VARCHAR},
+      </if>
+      <if test="offCount != null" >
+        #{offCount,jdbcType=SMALLINT},
+      </if>
+      <if test="offSCount != null" >
+        #{offSCount,jdbcType=SMALLINT},
+      </if>
+      <if test="offFCount != null" >
+        #{offFCount,jdbcType=SMALLINT},
+      </if>
+      <if test="offSPer != null" >
+        #{offSPer,jdbcType=DECIMAL},
+      </if>
+      <if test="tryTimes != null" >
+        #{tryTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="tryTime != null" >
+        #{tryTime,jdbcType=SMALLINT},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOperator != null" >
+        #{auditOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invalidTime != null" >
+        #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="execingFlag != null" >
+        #{execingFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="execing != null" >
+        #{execing,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmPowerOffTask" >
+    update MDM_POWER_OFF_TASK
+    <set >
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="schemeType != null" >
+        SCHEME_TYPE = #{schemeType,jdbcType=VARCHAR},
+      </if>
+      <if test="execWay != null" >
+        EXEC_WAY = #{execWay,jdbcType=VARCHAR},
+      </if>
+      <if test="failureType != null" >
+        FAILURE_TYPE = #{failureType,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualExecTime != null" >
+        ACTUAL_EXEC_TIME = #{actualExecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="execDay != null" >
+        EXEC_DAY = #{execDay,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="startDatetime != null" >
+        START_DATETIME = #{startDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDatetime != null" >
+        END_DATETIME = #{endDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualOffDate != null" >
+        ACTUAL_OFF_DATE = #{actualOffDate,jdbcType=VARCHAR},
+      </if>
+      <if test="offCount != null" >
+        OFF_COUNT = #{offCount,jdbcType=SMALLINT},
+      </if>
+      <if test="offSCount != null" >
+        OFF_S_COUNT = #{offSCount,jdbcType=SMALLINT},
+      </if>
+      <if test="offFCount != null" >
+        OFF_F_COUNT = #{offFCount,jdbcType=SMALLINT},
+      </if>
+      <if test="offSPer != null" >
+        OFF_S_PER = #{offSPer,jdbcType=DECIMAL},
+      </if>
+      <if test="tryTimes != null" >
+        TRY_TIMES = #{tryTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="tryTime != null" >
+        TRY_TIME = #{tryTime,jdbcType=SMALLINT},
+      </if>
+      <if test="auditRemark != null" >
+        AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOperator != null" >
+        AUDIT_OPERATOR = #{auditOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME = #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="execingFlag != null" >
+        EXECING_FLAG = #{execingFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        MAC = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="execing != null" >
+        EXECING = #{execing,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        COPERATOR = #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAaStealDetailDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAaStealDetail">
+		<id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+		<id column="NOW_TIME" property="nowTime" jdbcType="VARCHAR" />
+		<id column="STEAL_ID" property="stealId" jdbcType="VARCHAR" />
+		<result column="REF_CODE" property="refCode" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+		<result column="LINE_ID" property="lineId" jdbcType="VARCHAR" />
+		<result column="TM_ID" property="tmId" jdbcType="VARCHAR" />
+		<result column="DEVICE_TYPE" property="deviceType" jdbcType="VARCHAR" />
+		<result column="SUPPLIER" property="supplier" jdbcType="VARCHAR" />
+		<result column="CST_ID" property="cstId" jdbcType="VARCHAR" />
+		<result column="CST_NAME" property="cstName" jdbcType="VARCHAR" />
+		<result column="METER_SORT" property="meterSort" jdbcType="VARCHAR" />
+		<result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="OP_TYPE" property="opType" jdbcType="VARCHAR" />
+		<result column="OP_TIME" property="opTime" jdbcType="TIMESTAMP" />
+		<result column="OP_OPERATOR" property="opOperator" jdbcType="VARCHAR" />
+		<result column="SUSPICION" property="suspicion" jdbcType="DOUBLE" />
+		<result column="PTCT" property="ptct" jdbcType="VARCHAR" />
+		<result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+		<result column="OP_CONTENT" property="opContent" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="com.inhe.mdm.model.VtMdmAaStealDetail" extends="BaseResultMap">
+		<result column="COUNT_STEALID" property="countStealId" jdbcType="INTEGER" />
+		<result column="SUM_SUSPICION" property="sumSuspicion" jdbcType="DOUBLE" />
+		<result column="METER_DESCRIPTION" property="meterDescription" jdbcType="VARCHAR" />
+		<result column="THEME_ID" property="themeId" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		DEVICE_ID, NOW_TIME, STEAL_ID, REF_CODE, ORG_ID, DEPT_ID,
+		LINE_ID, TM_ID,
+		DEVICE_TYPE,
+		SUPPLIER, CST_ID, CST_NAME, METER_SORT,
+		DEVICE_NUM, STATUS, OP_TYPE, OP_TIME,
+		OP_OPERATOR,
+		SUSPICION, PTCT,
+		CDATE, OP_CONTENT
+	</sql>
+
+	<select id="selectCountByDeviceNum" resultType="Integer">
+		select count(*) 
+		from 
+			(select count(*) from MDM_AA_STEAL_DETAIL
+		<where>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.deptId != null and mdmAaStealDetail.deptId != ''">
+				and DEPT_ID = #{mdmAaStealDetail.deptId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.deviceNum != null and mdmAaStealDetail.deviceNum != ''">
+				and DEVICE_NUM like concat('%', #{mdmAaStealDetail.deviceNum,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaStealDetail.startTime != null and mdmAaStealDetail.startTime != ''">
+				and NOW_TIME &gt; #{mdmAaStealDetail.startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.endTime != null and mdmAaStealDetail.endTime != ''">
+				and NOW_TIME &lt; #{mdmAaStealDetail.endTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.status != null and mdmAaStealDetail.status != ''">
+				and STATUS = #{mdmAaStealDetail.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+		group by DEVICE_ID, NOW_TIME
+		<if test="mdmAaStealDetail.suspicion != null and mdmAaStealDetail.suspicion != ''">
+			having sum(SUSPICION) &gt; #{mdmAaStealDetail.suspicion,jdbcType=DOUBLE}
+		</if>
+		) A
+	</select>
+
+	<select id="selectListByDeviceNum" resultMap="ResultMapWithBLOBs">
+		select
+			A.DEVICE_ID, A.NOW_TIME, A.STEAL_ID, A.REF_CODE, A.ORG_ID,
+			A.DEPT_ID,
+			A.LINE_ID, A.TM_ID,
+			A.DEVICE_TYPE,
+			A.SUPPLIER, A.CST_ID,
+			A.CST_NAME, A.METER_SORT,
+			A.DEVICE_NUM, GROUP_CONCAT( A .STATUS separator '') as STATUS, 
+			A.OP_TYPE, A.OP_TIME,
+			A.OP_OPERATOR,
+			A.SUSPICION, A.PTCT,
+			A.CDATE,
+			A.OP_CONTENT,
+			count(STEAL_ID) as COUNT_STEALID, 
+			sum(SUSPICION) as SUM_SUSPICION,
+			C.DESCRIPTION as METER_DESCRIPTION 
+		from
+			MDM_AA_STEAL_DETAIL A 
+		left join
+			MDM_AM_DEVICE C on A.DEVICE_NUM = C.DEVICE_NUM
+		<where>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.deptId != null and mdmAaStealDetail.deptId != ''">
+				and A.DEPT_ID = #{mdmAaStealDetail.deptId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.deviceNum != null and mdmAaStealDetail.deviceNum != ''">
+				and A.DEVICE_NUM like concat('%', #{mdmAaStealDetail.deviceNum,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaStealDetail.startTime != null and mdmAaStealDetail.startTime != ''">
+				and A.NOW_TIME &gt; #{mdmAaStealDetail.startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.endTime != null and mdmAaStealDetail.endTime != ''">
+				and A.NOW_TIME &lt; #{mdmAaStealDetail.endTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.status != null and mdmAaStealDetail.status != ''">
+				and A.STATUS = #{mdmAaStealDetail.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+		group by A.DEVICE_ID, A.NOW_TIME
+		<if test="mdmAaStealDetail.suspicion != null and mdmAaStealDetail.suspicion != ''">
+			having sum(SUSPICION) &gt; #{mdmAaStealDetail.suspicion,jdbcType=DOUBLE}
+		</if>
+		order by A.NOW_TIME desc limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectCountByEvent" resultType="Integer">
+		select count(*)
+		from MDM_AA_STEAL_DETAIL
+		<where>
+			<if test="mdmAaStealDetail.deptId != null and mdmAaStealDetail.deptId != ''">
+				and DEPT_ID = #{mdmAaStealDetail.deptId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.deviceNum != null and mdmAaStealDetail.deviceNum != ''">
+				and DEVICE_NUM like concat('%', #{mdmAaStealDetail.deviceNum,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaStealDetail.suspicion != null and mdmAaStealDetail.suspicion != ''">
+				and SUSPICION &gt; #{mdmAaStealDetail.suspicion,jdbcType=DOUBLE}
+			</if>
+			<if test="mdmAaStealDetail.startTime != null and mdmAaStealDetail.startTime != ''">
+				and NOW_TIME &gt; #{mdmAaStealDetail.startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.endTime != null and mdmAaStealDetail.endTime != ''">
+				and NOW_TIME &lt; #{mdmAaStealDetail.endTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.status != null and mdmAaStealDetail.status != ''">
+				and STATUS = #{mdmAaStealDetail.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectListByEvent" resultMap="ResultMapWithBLOBs">
+		select
+			A.DEVICE_ID, A.NOW_TIME, A.STEAL_ID, A.REF_CODE, A.ORG_ID, A.DEPT_ID, A.LINE_ID, 
+			A.TM_ID, A.DEVICE_TYPE, A.SUPPLIER, A.CST_ID, A.CST_NAME, A.METER_SORT, 
+			A.DEVICE_NUM, A.STATUS, A.OP_TYPE, A.OP_TIME, A.OP_OPERATOR, A.SUSPICION, A.PTCT, 
+			A.CDATE, A.OP_CONTENT, B.THEME_ID, C.DESCRIPTION as METER_DESCRIPTION 
+		from
+			MDM_AA_STEAL_DETAIL A 
+		join
+			MDM_AA_STEAL_RULE B on A.STEAL_ID = B.ID 
+		left join 
+			MDM_AM_DEVICE C on A.DEVICE_NUM = C.DEVICE_NUM
+		<where>
+			<if test="mdmAaStealDetail.deptId != null and mdmAaStealDetail.deptId != ''">
+				and A.DEPT_ID = #{mdmAaStealDetail.deptId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.deviceNum != null and mdmAaStealDetail.deviceNum != ''">
+				and A.DEVICE_NUM like concat('%', #{mdmAaStealDetail.deviceNum,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaStealDetail.suspicion != null and mdmAaStealDetail.suspicion != ''">
+				and A.SUSPICION &gt; #{mdmAaStealDetail.suspicion,jdbcType=DOUBLE}
+			</if>
+			<if test="mdmAaStealDetail.startTime != null and mdmAaStealDetail.startTime != ''">
+				and A.NOW_TIME &gt; #{mdmAaStealDetail.startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.endTime != null and mdmAaStealDetail.endTime != ''">
+				and A.NOW_TIME &lt; #{mdmAaStealDetail.endTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.status != null and mdmAaStealDetail.status != ''">
+				and A.STATUS = #{mdmAaStealDetail.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by A.NOW_TIME desc limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectRuleDetailCount" resultType="Integer">
+		select count(*)
+		from 
+			MDM_AA_STEAL_DETAIL A
+		join
+			MDM_AA_STEAL_RULE B on A.STEAL_ID = B.ID 
+		<where>
+			<if test="mdmAaStealDetail.deviceId != null and mdmAaStealDetail.deviceId != ''">
+				and A.DEVICE_ID = #{mdmAaStealDetail.deviceId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.nowTime != null and mdmAaStealDetail.nowTime != ''">
+				and A.NOW_TIME = #{mdmAaStealDetail.nowTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.status != null and mdmAaStealDetail.status != ''">
+				and A.STATUS = #{mdmAaStealDetail.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectRuleDetailList" resultMap="ResultMapWithBLOBs">
+		select
+			A.DEVICE_ID, A.NOW_TIME, A.STEAL_ID, A.REF_CODE, A.ORG_ID,
+			A.DEPT_ID,
+			A.LINE_ID, A.TM_ID,
+			A.DEVICE_TYPE,
+			A.SUPPLIER, A.CST_ID,
+			A.CST_NAME, A.METER_SORT,
+			A.DEVICE_NUM, A.STATUS, A.OP_TYPE, A.OP_TIME,
+			A.OP_OPERATOR,
+			A.SUSPICION, A.PTCT,
+			A.CDATE, A.OP_CONTENT, B.THEME_ID,
+			C.DESCRIPTION as METER_DESCRIPTION 
+		from
+			MDM_AA_STEAL_DETAIL A 
+		join
+			MDM_AA_STEAL_RULE B on A.STEAL_ID = B.ID 
+		left join 
+			MDM_AM_DEVICE C on A.DEVICE_NUM = C.DEVICE_NUM
+		<where>
+			<if test="mdmAaStealDetail.deviceId != null and mdmAaStealDetail.deviceId != ''">
+				and A.DEVICE_ID = #{mdmAaStealDetail.deviceId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.nowTime != null and mdmAaStealDetail.nowTime != ''">
+				and A.NOW_TIME = #{mdmAaStealDetail.nowTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.status != null and mdmAaStealDetail.status != ''">
+				and A.STATUS = #{mdmAaStealDetail.status,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by STEAL_ID asc limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAaStealDetail">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_STEAL_DETAIL
+		where 
+			DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+			and NOW_TIME = #{nowTime,jdbcType=VARCHAR}
+			and STEAL_ID = #{stealId,jdbcType=VARCHAR}
+	</select>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAaStealDetail">
+		update MDM_AA_STEAL_DETAIL
+		<set>
+			<if test="refCode != null">
+				REF_CODE = #{refCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				DEPT_ID = #{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="lineId != null">
+				LINE_ID = #{lineId,jdbcType=VARCHAR},
+			</if>
+			<if test="tmId != null">
+				TM_ID = #{tmId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceType != null">
+				DEVICE_TYPE = #{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="supplier != null">
+				SUPPLIER = #{supplier,jdbcType=VARCHAR},
+			</if>
+			<if test="cstId != null">
+				CST_ID = #{cstId,jdbcType=VARCHAR},
+			</if>
+			<if test="cstName != null">
+				CST_NAME = #{cstName,jdbcType=VARCHAR},
+			</if>
+			<if test="meterSort != null">
+				METER_SORT = #{meterSort,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceNum != null">
+				DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="opType != null">
+				OP_TYPE = #{opType,jdbcType=VARCHAR},
+			</if>
+			<if test="opTime != null">
+				OP_TIME = #{opTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="opOperator != null">
+				OP_OPERATOR = #{opOperator,jdbcType=VARCHAR},
+			</if>
+			<if test="suspicion != null">
+				SUSPICION = #{suspicion,jdbcType=DOUBLE},
+			</if>
+			<if test="ptct != null">
+				PTCT = #{ptct,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				CDATE = #{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="opContent != null">
+				OP_CONTENT = #{opContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+		and NOW_TIME = #{nowTime,jdbcType=VARCHAR}
+		and STEAL_ID = #{stealId,jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAaStealDetail" >
+    insert into MDM_AA_STEAL_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="nowTime != null" >
+        NOW_TIME,
+      </if>
+      <if test="stealId != null" >
+        STEAL_ID,
+      </if>
+      <if test="refCode != null" >
+        REF_CODE,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="lineId != null" >
+        LINE_ID,
+      </if>
+      <if test="tmId != null" >
+        TM_ID,
+      </if>
+      <if test="deviceType != null" >
+        DEVICE_TYPE,
+      </if>
+      <if test="supplier != null" >
+        SUPPLIER,
+      </if>
+      <if test="cstId != null" >
+        CST_ID,
+      </if>
+      <if test="cstName != null" >
+        CST_NAME,
+      </if>
+      <if test="meterSort != null" >
+        METER_SORT,
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="opType != null" >
+        OP_TYPE,
+      </if>
+      <if test="opTime != null" >
+        OP_TIME,
+      </if>
+      <if test="opOperator != null" >
+        OP_OPERATOR,
+      </if>
+      <if test="suspicion != null" >
+        SUSPICION,
+      </if>
+      <if test="ptct != null" >
+        PTCT,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+      <if test="opContent != null" >
+        OP_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="nowTime != null" >
+        #{nowTime,jdbcType=VARCHAR},
+      </if>
+      <if test="stealId != null" >
+        #{stealId,jdbcType=VARCHAR},
+      </if>
+      <if test="refCode != null" >
+        #{refCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=VARCHAR},
+      </if>
+      <if test="tmId != null" >
+        #{tmId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplier != null" >
+        #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="cstId != null" >
+        #{cstId,jdbcType=VARCHAR},
+      </if>
+      <if test="cstName != null" >
+        #{cstName,jdbcType=VARCHAR},
+      </if>
+      <if test="meterSort != null" >
+        #{meterSort,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="opType != null" >
+        #{opType,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opOperator != null" >
+        #{opOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="suspicion != null" >
+        #{suspicion,jdbcType=DOUBLE},
+      </if>
+      <if test="ptct != null" >
+        #{ptct,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opContent != null" >
+        #{opContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="selectCountByEventSource" resultType="java.lang.Integer" parameterType="com.inhe.mdm.model.VtMdmDeviceEvent">
+  	select count(*) from MDM_DEVICE_EVENT
+  	where 
+  		DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+	  	and EVENT_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}
+	  	and EVENT_TIME &lt;= #{endTime,jdbcType=TIMESTAMP}
+	  	and EVENT_TYPE in 
+  	 <foreach collection="list" item="item" open="(" separator="," close=")">
+		#{item,jdbcType=INTEGER}
+	 </foreach>
+  </select>
+  
+  <select id="selectCountByDeviceChange" resultType="java.lang.Integer" parameterType="com.inhe.mdm.model.VtMdmAmDeviceChange">
+  	select count(*) from MDM_AM_DEVICE_CHANGE
+  	where (OLD_DEVICENUM = #{oldDevicenum,jdbcType=VARCHAR} or NEW_DEVICENUM = #{newDevicenum,jdbcType=VARCHAR})
+  	  and MODE = #{mode,jdbcType=VARCHAR}
+  	  and OP_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}
+  	  and OP_TIME &lt;= #{endTime,jdbcType=TIMESTAMP}
+  </select>
+
+</mapper>

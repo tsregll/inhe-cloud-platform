@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmPowerOffTaskDataDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmPowerOffTaskData" >
+    <id column="DATA_LEVEL" property="dataLevel" jdbcType="VARCHAR" />
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+    <id column="OFF_EXEC_TIME" property="offExecTime" jdbcType="TIMESTAMP" />
+    <id column="ON_EXEC_TIME" property="onExecTime" jdbcType="TIMESTAMP" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="OFF_CMD" property="offCmd" jdbcType="VARCHAR" />
+    <result column="OFF_RESULT" property="offResult" jdbcType="VARCHAR" />
+    <result column="OFF_TIME" property="offTime" jdbcType="TIMESTAMP" />
+    <result column="ON_CMD" property="onCmd" jdbcType="VARCHAR" />
+    <result column="ON_RESULT" property="onResult" jdbcType="VARCHAR" />
+    <result column="ON_TIME" property="onTime" jdbcType="TIMESTAMP" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="PARAMS" property="params" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DATA_LEVEL, CODE, DEVICE_ID, OFF_EXEC_TIME, ON_EXEC_TIME, ORG_ID, OFF_CMD, OFF_RESULT, 
+    OFF_TIME, ON_CMD, ON_RESULT, ON_TIME, REMARKS, PARAMS
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_POWER_OFF_TASK_DATA
+    where DATA_LEVEL = #{dataLevel,jdbcType=VARCHAR}
+      and CODE = #{code,jdbcType=VARCHAR}
+      and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and OFF_EXEC_TIME = #{offExecTime,jdbcType=TIMESTAMP}
+      and ON_EXEC_TIME = #{onExecTime,jdbcType=TIMESTAMP}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from MDM_POWER_OFF_TASK_DATA
+    where DATA_LEVEL = #{dataLevel,jdbcType=VARCHAR}
+      and CODE = #{code,jdbcType=VARCHAR}
+      and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and OFF_EXEC_TIME = #{offExecTime,jdbcType=TIMESTAMP}
+      and ON_EXEC_TIME = #{onExecTime,jdbcType=TIMESTAMP}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmPowerOffTaskData" >
+    insert into MDM_POWER_OFF_TASK_DATA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dataLevel != null" >
+        DATA_LEVEL,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="offExecTime != null" >
+        OFF_EXEC_TIME,
+      </if>
+      <if test="onExecTime != null" >
+        ON_EXEC_TIME,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="offCmd != null" >
+        OFF_CMD,
+      </if>
+      <if test="offResult != null" >
+        OFF_RESULT,
+      </if>
+      <if test="offTime != null" >
+        OFF_TIME,
+      </if>
+      <if test="onCmd != null" >
+        ON_CMD,
+      </if>
+      <if test="onResult != null" >
+        ON_RESULT,
+      </if>
+      <if test="onTime != null" >
+        ON_TIME,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="params != null" >
+        PARAMS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dataLevel != null" >
+        #{dataLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="offExecTime != null" >
+        #{offExecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onExecTime != null" >
+        #{onExecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="offCmd != null" >
+        #{offCmd,jdbcType=VARCHAR},
+      </if>
+      <if test="offResult != null" >
+        #{offResult,jdbcType=VARCHAR},
+      </if>
+      <if test="offTime != null" >
+        #{offTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onCmd != null" >
+        #{onCmd,jdbcType=VARCHAR},
+      </if>
+      <if test="onResult != null" >
+        #{onResult,jdbcType=VARCHAR},
+      </if>
+      <if test="onTime != null" >
+        #{onTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmPowerOffTaskData" >
+    update MDM_POWER_OFF_TASK_DATA
+    <set >
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="offCmd != null" >
+        OFF_CMD = #{offCmd,jdbcType=VARCHAR},
+      </if>
+      <if test="offResult != null" >
+        OFF_RESULT = #{offResult,jdbcType=VARCHAR},
+      </if>
+      <if test="offTime != null" >
+        OFF_TIME = #{offTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onCmd != null" >
+        ON_CMD = #{onCmd,jdbcType=VARCHAR},
+      </if>
+      <if test="onResult != null" >
+        ON_RESULT = #{onResult,jdbcType=VARCHAR},
+      </if>
+      <if test="onTime != null" >
+        ON_TIME = #{onTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        PARAMS = #{params,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DATA_LEVEL = #{dataLevel,jdbcType=VARCHAR}
+      and CODE = #{code,jdbcType=VARCHAR}
+      and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and OFF_EXEC_TIME = #{offExecTime,jdbcType=TIMESTAMP}
+      and ON_EXEC_TIME = #{onExecTime,jdbcType=TIMESTAMP}
+  </update>
+</mapper>

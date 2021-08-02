@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmDeviceEventDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmDeviceEvent" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EVENT_TIME" property="eventTime" jdbcType="TIMESTAMP" />
+    <result column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="DEVICE_ADDR" property="deviceAddr" jdbcType="VARCHAR" />
+    <result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+    <result column="EVENT_TYPE" property="eventType" jdbcType="INTEGER" />
+    <result column="APP_RCV_STATUS" property="appRcvStatus" jdbcType="VARCHAR" />
+    <result column="DATA_SOURCE" property="dataSource" jdbcType="VARCHAR" />
+    <result column="UP_OPERATOR" property="upOperator" jdbcType="VARCHAR" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="DISPOSE_FLAG" property="disposeFlag" jdbcType="VARCHAR" />
+    <result column="OP_TYPE" property="opType" jdbcType="VARCHAR" />
+    <result column="OP_TIME" property="opTime" jdbcType="TIMESTAMP" />
+    <result column="OP_PIC" property="opPic" jdbcType="VARCHAR" />
+    <result column="OP_OPERATOR" property="opOperator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="OP_CONTENT" property="opContent" jdbcType="LONGVARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, EVENT_TIME, DEVICE_ID, ORG_ID, DEPT_ID, DEVICE_ADDR, DEVICE_NUM, EVENT_TYPE, 
+    APP_RCV_STATUS, DATA_SOURCE, UP_OPERATOR, UP_TIME, DISPOSE_FLAG, OP_TYPE, OP_TIME, 
+    OP_PIC, OP_OPERATOR, CDATE, OP_CONTENT, REMARKS
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_DEVICE_EVENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MDM_DEVICE_EVENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmDeviceEvent" >
+    insert into MDM_DEVICE_EVENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="eventTime != null" >
+        EVENT_TIME,
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="deviceAddr != null" >
+        DEVICE_ADDR,
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM,
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE,
+      </if>
+      <if test="appRcvStatus != null" >
+        APP_RCV_STATUS,
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE,
+      </if>
+      <if test="upOperator != null" >
+        UP_OPERATOR,
+      </if>
+      <if test="upTime != null" >
+        UP_TIME,
+      </if>
+      <if test="disposeFlag != null" >
+        DISPOSE_FLAG,
+      </if>
+      <if test="opType != null" >
+        OP_TYPE,
+      </if>
+      <if test="opTime != null" >
+        OP_TIME,
+      </if>
+      <if test="opPic != null" >
+        OP_PIC,
+      </if>
+      <if test="opOperator != null" >
+        OP_OPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+      <if test="opContent != null" >
+        OP_CONTENT,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTime != null" >
+        #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAddr != null" >
+        #{deviceAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="appRcvStatus != null" >
+        #{appRcvStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null" >
+        #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="upOperator != null" >
+        #{upOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disposeFlag != null" >
+        #{disposeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="opType != null" >
+        #{opType,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opPic != null" >
+        #{opPic,jdbcType=VARCHAR},
+      </if>
+      <if test="opOperator != null" >
+        #{opOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opContent != null" >
+        #{opContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmDeviceEvent" >
+    update MDM_DEVICE_EVENT
+    <set >
+      <if test="eventTime != null" >
+        EVENT_TIME = #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAddr != null" >
+        DEVICE_ADDR = #{deviceAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE = #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="appRcvStatus != null" >
+        APP_RCV_STATUS = #{appRcvStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="upOperator != null" >
+        UP_OPERATOR = #{upOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        UP_TIME = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disposeFlag != null" >
+        DISPOSE_FLAG = #{disposeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="opType != null" >
+        OP_TYPE = #{opType,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        OP_TIME = #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opPic != null" >
+        OP_PIC = #{opPic,jdbcType=VARCHAR},
+      </if>
+      <if test="opOperator != null" >
+        OP_OPERATOR = #{opOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opContent != null" >
+        OP_CONTENT = #{opContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKeySelectives" parameterType="com.inhe.mdm.model.MdmDeviceEvent" >
+    update MDM_DEVICE_EVENT
+    <set >
+      <if test="eventTime != null" >
+        EVENT_TIME = #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAddr != null" >
+        DEVICE_ADDR = #{deviceAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE = #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="appRcvStatus != null" >
+        APP_RCV_STATUS = #{appRcvStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="upOperator != null" >
+        UP_OPERATOR = #{upOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        UP_TIME = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disposeFlag != null" >
+        DISPOSE_FLAG = #{disposeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="opType != null" >
+        OP_TYPE = #{opType,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        OP_TIME = #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opPic != null" >
+        OP_PIC = #{opPic,jdbcType=VARCHAR},
+      </if>
+      <if test="opOperator != null" >
+        OP_OPERATOR = #{opOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opContent != null" >
+        OP_CONTENT = #{opContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+     where DEVICE_ADDR = #{deviceAddr,jdbcType=VARCHAR} and EVENT_TYPE = #{eventType,jdbcType=INTEGER} and DISPOSE_FLAG='N'
+  </update>
+  
+</mapper>

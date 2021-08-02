@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAmTmDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAmTm">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="TM_CODE" property="tmCode" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+		<result column="LINE_ID" property="lineId" jdbcType="VARCHAR" />
+		<result column="CAPACITY" property="capacity" jdbcType="DECIMAL" />
+		<result column="LO" property="lo" jdbcType="DOUBLE" />
+		<result column="LA" property="la" jdbcType="DOUBLE" />
+		<result column="ZOOM" property="zoom" jdbcType="SMALLINT" />
+		<result column="LOAD_TYPE" property="loadType" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+		<result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+		<result column="UDATE" property="udate" jdbcType="TIMESTAMP" />
+		<result column="REMARKS" property="remarks" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<resultMap id="ResultMapWithBLOBs" type="com.inhe.mdm.model.VtMdmAmTm" extends="BaseResultMap">
+		<result column="LINE_DESCRIPTION" property="lineDescription" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, TM_CODE, DESCRIPTION, ADDRESS, ORG_ID, DEPT_ID,
+		LINE_ID, CAPACITY,
+		LO, LA, ZOOM,
+		LOAD_TYPE, STATUS, COPERATOR, CDATE,
+		UDATE, REMARKS
+	</sql>
+
+	<select id="selectCount" resultType="Integer">
+		select count(*)
+		from MDM_AM_TM
+		<where>
+			<if test="mdmAmTm.tmCodeName != null and mdmAmTm.tmCodeName != ''">
+				and concat(ifnull(DESCRIPTION, ''), ifnull(TM_CODE, ''))
+				like concat('%',#{mdmAmTm.tmCodeName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmTm.lineId != null and mdmAmTm.lineId != ''">
+				and LINE_ID = #{mdmAmTm.lineId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmTm.status != null and mdmAmTm.status != ''">
+				and STATUS = #{mdmAmTm.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmTm.loadType != null and mdmAmTm.loadType != ''">
+				and LOAD_TYPE = #{mdmAmTm.loadType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmTm.deptId != null and mdmAmTm.deptId != ''">
+				and DEPT_ID like concat(#{mdmAmTm.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAmTm.orgId != null and mdmAmTm.orgId != ''">
+				and ORG_ID = #{mdmAmTm.orgId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="ResultMapWithBLOBs">
+		select 
+			A.ID, TM_CODE, A.DESCRIPTION, ADDRESS, A.ORG_ID, DEPT_ID,
+			LINE_ID,CAPACITY, LO, LA, ZOOM, LOAD_TYPE, A.STATUS, A.COPERATOR,
+			A.CDATE,A.UDATE, A.REMARKS,B.DESCRIPTION as LINE_DESCRIPTION
+		from
+			MDM_AM_TM A
+		left join
+			MDM_AM_LINE B on A.LINE_ID = B.ID
+		<where>
+			<if test="mdmAmTm.tmCodeName != null and mdmAmTm.tmCodeName != ''">
+				and concat(ifnull(A.DESCRIPTION, ''), ifnull(TM_CODE, ''))
+				like concat('%',#{mdmAmTm.tmCodeName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmTm.lineId != null and mdmAmTm.lineId != ''">
+				and LINE_ID = #{mdmAmTm.lineId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmTm.status != null and mdmAmTm.status != ''">
+				and A.STATUS = #{mdmAmTm.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmTm.loadType != null and mdmAmTm.loadType != ''">
+				and LOAD_TYPE = #{mdmAmTm.loadType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmTm.deptId != null and mdmAmTm.deptId != ''">
+				and DEPT_ID like concat(#{mdmAmTm.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmTm.orgId != null and mdmAmTm.orgId != ''">
+				and A.ORG_ID = #{mdmAmTm.orgId,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by ID asc limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectMaxId" resultType="String" parameterType="com.inhe.mdm.model.MdmAmTm">
+		select max(right(ID,5)) as ID
+		from MDM_AM_TM
+	</select>
+	
+	<select id="selectDesByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="com.inhe.mdm.model.MdmAmTm">
+		select 
+			A.ID, TM_CODE, A.DESCRIPTION, ADDRESS, A.ORG_ID, DEPT_ID,
+			LINE_ID, CAPACITY, LO, LA, ZOOM, LOAD_TYPE, A.STATUS, A.COPERATOR,
+			A.CDATE, A.UDATE, A.REMARKS,B.DESCRIPTION as LINE_DESCRIPTION
+		from
+			MDM_AM_TM A
+		left join
+			MDM_AM_LINE B on A.LINE_ID = B.ID
+		where 
+			A.ID = #{mdmAmTm.id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByTmCode" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAmTm">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AM_TM
+		where 
+			TM_CODE = #{tmCode,jdbcType=VARCHAR}
+			and ORG_ID = #{orgId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AM_TM
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="delete" parameterType="com.inhe.mdm.model.MdmAmTm">
+		update 
+			MDM_AM_TM
+		set
+			STATUS = #{status,jdbcType=VARCHAR}
+		where 
+			ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from MDM_AM_TM
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAmTm">
+		insert into MDM_AM_TM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="tmCode != null">
+				TM_CODE,
+			</if>
+			<if test="description != null">
+				DESCRIPTION,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="orgId != null">
+				ORG_ID,
+			</if>
+			<if test="deptId != null">
+				DEPT_ID,
+			</if>
+			<if test="lineId != null">
+				LINE_ID,
+			</if>
+			<if test="capacity != null">
+				CAPACITY,
+			</if>
+			<if test="lo != null">
+				LO,
+			</if>
+			<if test="la != null">
+				LA,
+			</if>
+			<if test="zoom != null">
+				ZOOM,
+			</if>
+			<if test="loadType != null">
+				LOAD_TYPE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="coperator != null">
+				COPERATOR,
+			</if>
+			<if test="cdate != null">
+				CDATE,
+			</if>
+			<if test="udate != null">
+				UDATE,
+			</if>
+			<if test="remarks != null">
+				REMARKS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tmCode != null">
+				#{tmCode,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				#{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="lineId != null">
+				#{lineId,jdbcType=VARCHAR},
+			</if>
+			<if test="capacity != null">
+				#{capacity,jdbcType=DECIMAL},
+			</if>
+			<if test="lo != null">
+				#{lo,jdbcType=DOUBLE},
+			</if>
+			<if test="la != null">
+				#{la,jdbcType=DOUBLE},
+			</if>
+			<if test="zoom != null">
+				#{zoom,jdbcType=SMALLINT},
+			</if>
+			<if test="loadType != null">
+				#{loadType,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				#{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				#{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="udate != null">
+				#{udate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAmTm">
+		update MDM_AM_TM
+		<set>
+			<if test="tmCode != null">
+				TM_CODE = #{tmCode,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				DEPT_ID = #{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="lineId != null">
+				LINE_ID = #{lineId,jdbcType=VARCHAR},
+			</if>
+			<if test="capacity != null">
+				CAPACITY = #{capacity,jdbcType=DECIMAL},
+			</if>
+			<if test="lo != null">
+				LO = #{lo,jdbcType=DOUBLE},
+			</if>
+			<if test="la != null">
+				LA = #{la,jdbcType=DOUBLE},
+			</if>
+			<if test="zoom != null">
+				ZOOM = #{zoom,jdbcType=SMALLINT},
+			</if>
+			<if test="loadType != null">
+				LOAD_TYPE = #{loadType,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				COPERATOR = #{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				CDATE = #{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="udate != null">
+				UDATE = #{udate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="selectByAll" resultMap="BaseResultMap">
+	    select 
+	    	<include refid="Base_Column_List" />
+	    from 
+	    	MDM_AM_TM
+	    where STATUS='0'
+	</select>
+
+</mapper>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmDeviceReadDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmDeviceRead" >
+    <id column="READ_TIME" property="readTime" jdbcType="TIMESTAMP" />
+    <id column="FUUID" property="fuuid" jdbcType="VARCHAR" />
+    <result column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="FIELD_ID" property="fieldId" jdbcType="VARCHAR" />
+    <result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+    <result column="PARENT_NUM" property="parentNum" jdbcType="VARCHAR" />
+    <result column="CMD_CODE" property="cmdCode" jdbcType="VARCHAR" />
+    <result column="FIELD_VALUE" property="fieldValue" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="FINISH_TIME" property="finishTime" jdbcType="TIMESTAMP" />
+    <result column="PTCT_VALUE" property="ptctValue" jdbcType="VARCHAR" />
+    <result column="REAL_VALUE" property="realValue" jdbcType="VARCHAR" />
+    <result column="DATA_SOURCE" property="dataSource" jdbcType="VARCHAR" />
+    <result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
+    <result column="AGENT_CODE" property="agentCode" jdbcType="VARCHAR" />
+    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    READ_TIME, FUUID, DEVICE_ID, ORG_ID, DEPT_ID, FIELD_ID, DEVICE_NUM, PARENT_NUM, CMD_CODE, 
+    FIELD_VALUE, START_TIME, FINISH_TIME, PTCT_VALUE, REAL_VALUE, DATA_SOURCE, DATA_TYPE, 
+    AGENT_CODE, OPERATOR, CDATE
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmDeviceRead" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_DEVICE_READ
+    where READ_TIME = #{readTime,jdbcType=TIMESTAMP}
+      and FUUID = #{fuuid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmDeviceRead" >
+    delete from MDM_DEVICE_READ
+    where READ_TIME = #{readTime,jdbcType=TIMESTAMP}
+      and FUUID = #{fuuid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmDeviceRead" >
+    insert into MDM_DEVICE_READ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="readTime != null" >
+        READ_TIME,
+      </if>
+      <if test="fuuid != null" >
+        FUUID,
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID,
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM,
+      </if>
+      <if test="parentNum != null" >
+        PARENT_NUM,
+      </if>
+      <if test="cmdCode != null" >
+        CMD_CODE,
+      </if>
+      <if test="fieldValue != null" >
+        FIELD_VALUE,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="finishTime != null" >
+        FINISH_TIME,
+      </if>
+      <if test="ptctValue != null" >
+        PTCT_VALUE,
+      </if>
+      <if test="realValue != null" >
+        REAL_VALUE,
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE,
+      </if>
+      <if test="dataType != null" >
+        DATA_TYPE,
+      </if>
+      <if test="agentCode != null" >
+        AGENT_CODE,
+      </if>
+      <if test="operator != null" >
+        OPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="readTime != null" >
+        #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fuuid != null" >
+        #{fuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        #{fieldId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parentNum != null" >
+        #{parentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cmdCode != null" >
+        #{cmdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldValue != null" >
+        #{fieldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ptctValue != null" >
+        #{ptctValue,jdbcType=VARCHAR},
+      </if>
+      <if test="realValue != null" >
+        #{realValue,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null" >
+        #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="agentCode != null" >
+        #{agentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmDeviceRead" >
+    update MDM_DEVICE_READ
+    <set >
+      <if test="deviceId != null" >
+        DEVICE_ID = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID = #{fieldId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parentNum != null" >
+        PARENT_NUM = #{parentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cmdCode != null" >
+        CMD_CODE = #{cmdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldValue != null" >
+        FIELD_VALUE = #{fieldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ptctValue != null" >
+        PTCT_VALUE = #{ptctValue,jdbcType=VARCHAR},
+      </if>
+      <if test="realValue != null" >
+        REAL_VALUE = #{realValue,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null" >
+        DATA_SOURCE = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        DATA_TYPE = #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="agentCode != null" >
+        AGENT_CODE = #{agentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where READ_TIME = #{readTime,jdbcType=TIMESTAMP}
+      and FUUID = #{fuuid,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectCountByPowerFactor" parameterType="com.inhe.mdm.model.VtMdmDeviceRead" resultType="java.lang.Integer">
+  	select count(*) from MDM_DEVICE_READ
+  	where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+  	  and READ_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}
+  	  and READ_TIME &lt;= #{finishTime,jdbcType=TIMESTAMP}
+  	  and FIELD_NAME in 
+  	  <foreach collection="list" item="item" open="(" separator="," close=")">
+		#{item,jdbcType=VARCHAR}
+	  </foreach>
+	  and <![CDATA[convert(REAL_VALUE,DECIMAL(9,3)) ${compare}]]> 
+  </select>
+  
+</mapper>

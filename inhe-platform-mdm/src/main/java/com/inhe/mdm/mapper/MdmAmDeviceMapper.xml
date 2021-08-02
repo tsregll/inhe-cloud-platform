@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAmDeviceDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAmDevice">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="MEAS_MODE" property="measMode" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="LINE_ID" property="lineId" jdbcType="VARCHAR" />
+		<result column="TM_ID" property="tmId" jdbcType="VARCHAR" />
+		<result column="IMPORTANT" property="important" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="REG_DATE" property="regDate" jdbcType="TIMESTAMP" />
+		<result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+		<result column="VOL_LEVEL" property="volLevel" jdbcType="VARCHAR" />
+		<result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+		<result column="LO" property="lo" jdbcType="DOUBLE" />
+		<result column="LA" property="la" jdbcType="DOUBLE" />
+		<result column="REF_ID" property="refId" jdbcType="VARCHAR" />
+		<result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+		<result column="IMPORT_ID" property="importId" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="METER_TYPE" property="meterType" jdbcType="VARCHAR" />
+		<result column="METER_SORT" property="meterSort" jdbcType="VARCHAR" />
+		<result column="SUBSTATION_ID" property="substationId" jdbcType="VARCHAR" />
+		<result column="SUBSTATION_MT_ID" property="substationMtId" jdbcType="VARCHAR" />
+		<result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+		<result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+		<result column="REMARKS" property="remarks" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="com.inhe.mdm.model.VtMdmAmDevice" extends="BaseResultMap">
+		<result column="TM_DESCRIPTION" property="tmDescription" jdbcType="VARCHAR" />
+		<result column="SUBSTATION_DESCRIPTION" property="substationDescription" jdbcType="VARCHAR" />
+		<result column="LINE_DESCRIPTION" property="lineDescription" jdbcType="VARCHAR" />
+		<result column="SUBSTATION_MT_NAME" property="substationMtName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, ORG_ID, DEPT_ID, PARENT_ID, TYPE, MEAS_MODE,
+		DESCRIPTION, LINE_ID,
+		TM_ID, IMPORTANT,
+		ADDRESS, REG_DATE, DEVICE_NUM,
+		VOL_LEVEL, PARENT_NAME, LO, LA, REF_ID,
+		ACTIVED, IMPORT_ID,
+		STATUS,SUBSTATION_MT_ID,
+		METER_TYPE, METER_SORT, SUBSTATION_ID, COPERATOR, CDATE, REMARKS
+	</sql>
+
+	<select id="selectCount" resultType="Integer">
+		select count(*)
+		from MDM_AM_DEVICE
+		<where>
+			ORG_ID = #{mdmAmDevice.orgId,jdbcType=VARCHAR}
+			<if test="mdmAmDevice.status != null and mdmAmDevice.status != ''">
+				and STATUS = #{mdmAmDevice.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.meterSort != null and mdmAmDevice.meterSort != ''">
+				and METER_SORT = #{mdmAmDevice.meterSort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.meterType != null and mdmAmDevice.meterType != ''">
+				and METER_TYPE = #{mdmAmDevice.meterType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.substationId != null and mdmAmDevice.substationId != ''">
+				and SUBSTATION_ID = #{mdmAmDevice.substationId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.devNumName != null and mdmAmDevice.devNumName != ''">
+				and concat(concat(ifnull(DEVICE_NUM, ''), ifnull(DESCRIPTION, '')), ifnull(ADDRESS,""))
+				like concat('%',#{mdmAmDevice.devNumName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmDevice.deptId != null and mdmAmDevice.deptId != ''">
+				and DEPT_ID like concat(#{mdmAmDevice.deptId,jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="ResultMapWithBLOBs">
+		select 
+			A.ID, A.ORG_ID, A.DEPT_ID, PARENT_ID, TYPE,
+			MEAS_MODE,
+			A.DESCRIPTION, A.LINE_ID,
+			TM_ID, IMPORTANT,
+			A.ADDRESS,
+			A.REG_DATE,
+			A.DEVICE_NUM, A.VOL_LEVEL, A.PARENT_NAME, A.LO, A.LA, A.REF_ID,
+			A.ACTIVED,
+			IMPORT_ID,SUBSTATION_MT_ID,
+			A.STATUS, METER_TYPE, METER_SORT, SUBSTATION_ID,
+			A.COPERATOR, A.CDATE, A.REMARKS,B.DESCRIPTION as
+			TM_DESCRIPTION,C.DESCRIPTION as SUBSTATION_DESCRIPTION
+		from
+			MDM_AM_DEVICE A 
+		left join
+			MDM_AM_TM B on A.TM_ID = B.ID 
+		left join
+			MDM_AM_SUBSTATION C on A.SUBSTATION_ID = C.ID
+		<where>
+			A.ORG_ID = #{mdmAmDevice.orgId,jdbcType=VARCHAR}
+			<if test="mdmAmDevice.status != null and mdmAmDevice.status != ''">
+				and A.STATUS = #{mdmAmDevice.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.meterSort != null and mdmAmDevice.meterSort != ''">
+				and METER_SORT = #{mdmAmDevice.meterSort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.meterType != null and mdmAmDevice.meterType != ''">
+				and METER_TYPE = #{mdmAmDevice.meterType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.substationId != null and mdmAmDevice.substationId != ''">
+				and SUBSTATION_ID = #{mdmAmDevice.substationId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmDevice.devNumName != null and mdmAmDevice.devNumName != ''">
+				and concat(concat(ifnull(DEVICE_NUM, ''), ifnull(A.DESCRIPTION, '')), ifnull(A.ADDRESS,""))
+				like concat('%',#{mdmAmDevice.devNumName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmDevice.deptId != null and mdmAmDevice.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAmDevice.deptId,jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+		order by A.DEPT_ID asc 
+		limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectDesByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="com.inhe.mdm.model.MdmAmDevice">
+		select 
+			A.ID, A.ORG_ID, A.DEPT_ID, PARENT_ID, A.TYPE, MEAS_MODE,
+			A.DESCRIPTION, A.LINE_ID, TM_ID, IMPORTANT,
+			A.ADDRESS, A.REG_DATE,A.DEVICE_NUM, A.VOL_LEVEL, A.PARENT_NAME, 
+			A.LO, A.LA, A.REF_ID,A.ACTIVED,IMPORT_ID,
+			A.STATUS, METER_TYPE, METER_SORT, SUBSTATION_ID,
+			A.COPERATOR, A.CDATE, A.REMARKS,
+			B.DESCRIPTION as TM_DESCRIPTION,
+			C.DESCRIPTION as SUBSTATION_DESCRIPTION,
+			D.DESCRIPTION as LINE_DESCRIPTION,
+			E.NAME as SUBSTATION_MT_NAME
+		from
+			MDM_AM_DEVICE A 
+		left join
+			MDM_AM_TM B on A.TM_ID = B.ID 
+		left join
+			MDM_AM_SUBSTATION C on A.SUBSTATION_ID = C.ID
+		left join
+			MDM_AM_LINE D on A.LINE_ID = D.ID
+		left join
+			MDM_AM_SUBSTATION_MT E on A.SUBSTATION_MT_ID = E.ID
+		where A.ID = #{mdmAmDevice.id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByDevNum" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAmDevice">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AM_DEVICE
+		where 
+			DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR}
+			and ORG_ID = #{orgId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectSummary" resultType="com.inhe.mdm.model.VtMdmDeviceSummary" parameterType="com.inhe.mdm.model.MdmAmDevice" >
+ 		select 
+	    	COUNT(DISTINCT(ID)) AS total,
+	    	sum(case when IMPORTANT='Y' then 1 else 0 end) AS impCount 
+    	from MDM_AM_DEVICE
+   		where TYPE='0' 
+   		and STATUS='0' and METER_SORT!='3'
+    	<if test="deptId != null and deptId != ''">
+	 		and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%') 
+	 	</if>
+	 	<if test="orgId != null and orgId != ''">
+	 		and ORG_ID=#{orgId,jdbcType=VARCHAR} 
+	 	</if>
+    	<if test="lineId != null and lineId != ''">
+	 		and LINE_ID=#{lineId,jdbcType=VARCHAR} 
+	 	</if>
+	 	<if test="tmId != null and tmId != ''">
+	 		and TM_ID=#{tmId,jdbcType=VARCHAR} 
+	 	</if>
+  </select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			<include refid="Base_Column_List" />
+		from MDM_AM_DEVICE
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="delete" parameterType="com.inhe.mdm.model.MdmAmDevice">
+		update 
+			MDM_AM_DEVICE
+		set
+			STATUS = #{status,jdbcType=VARCHAR}
+		where 
+			ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+			MDM_AM_DEVICE
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAmDevice">
+		replace into MDM_AM_DEVICE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="orgId != null">
+				ORG_ID,
+			</if>
+			<if test="deptId != null">
+				DEPT_ID,
+			</if>
+			<if test="parentId != null">
+				PARENT_ID,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="measMode != null">
+				MEAS_MODE,
+			</if>
+			<if test="description != null">
+				DESCRIPTION,
+			</if>
+			<if test="lineId != null">
+				LINE_ID,
+			</if>
+			<if test="tmId != null">
+				TM_ID,
+			</if>
+			<if test="important != null">
+				IMPORTANT,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="regDate != null">
+				REG_DATE,
+			</if>
+			<if test="deviceNum != null">
+				DEVICE_NUM,
+			</if>
+			<if test="volLevel != null">
+				VOL_LEVEL,
+			</if>
+			<if test="parentName != null">
+				PARENT_NAME,
+			</if>
+			<if test="lo != null">
+				LO,
+			</if>
+			<if test="la != null">
+				LA,
+			</if>
+			<if test="refId != null">
+				REF_ID,
+			</if>
+			<if test="actived != null">
+				ACTIVED,
+			</if>
+			<if test="importId != null">
+				IMPORT_ID,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="meterType != null">
+				METER_TYPE,
+			</if>
+			<if test="meterSort != null">
+				METER_SORT,
+			</if>
+			<if test="substationId != null">
+				SUBSTATION_ID,
+			</if>
+			<if test="substationMtId != null">
+				SUBSTATION_MT_ID,
+			</if>
+			<if test="coperator != null">
+				COPERATOR,
+			</if>
+			<if test="cdate != null">
+				CDATE,
+			</if>
+			<if test="remarks != null">
+				REMARKS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				#{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="measMode != null">
+				#{measMode,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="lineId != null">
+				#{lineId,jdbcType=VARCHAR},
+			</if>
+			<if test="tmId != null">
+				#{tmId,jdbcType=VARCHAR},
+			</if>
+			<if test="important != null">
+				#{important,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="regDate != null">
+				#{regDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deviceNum != null">
+				#{deviceNum,jdbcType=VARCHAR},
+			</if>
+			<if test="volLevel != null">
+				#{volLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="parentName != null">
+				#{parentName,jdbcType=VARCHAR},
+			</if>
+			<if test="lo != null">
+				#{lo,jdbcType=DOUBLE},
+			</if>
+			<if test="la != null">
+				#{la,jdbcType=DOUBLE},
+			</if>
+			<if test="refId != null">
+				#{refId,jdbcType=VARCHAR},
+			</if>
+			<if test="actived != null">
+				#{actived,jdbcType=VARCHAR},
+			</if>
+			<if test="importId != null">
+				#{importId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="meterType != null">
+				#{meterType,jdbcType=VARCHAR},
+			</if>
+			<if test="meterSort != null">
+				#{meterSort,jdbcType=VARCHAR},
+			</if>
+			<if test="substationId != null">
+				#{substationId,jdbcType=VARCHAR},
+			</if>
+			<if test="substationMtId != null">
+				#{substationMtId,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				#{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				#{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAmDevice">
+		update MDM_AM_DEVICE
+		<set>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptId != null">
+				DEPT_ID = #{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="measMode != null">
+				MEAS_MODE = #{measMode,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="lineId != null">
+				LINE_ID = #{lineId,jdbcType=VARCHAR},
+			</if>
+			<if test="tmId != null">
+				TM_ID = #{tmId,jdbcType=VARCHAR},
+			</if>
+			<if test="important != null">
+				IMPORTANT = #{important,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="regDate != null">
+				REG_DATE = #{regDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deviceNum != null">
+				DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+			</if>
+			<if test="volLevel != null">
+				VOL_LEVEL = #{volLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="parentName != null">
+				PARENT_NAME = #{parentName,jdbcType=VARCHAR},
+			</if>
+			<if test="lo != null">
+				LO = #{lo,jdbcType=DOUBLE},
+			</if>
+			<if test="la != null">
+				LA = #{la,jdbcType=DOUBLE},
+			</if>
+			<if test="refId != null">
+				REF_ID = #{refId,jdbcType=VARCHAR},
+			</if>
+			<if test="actived != null">
+				ACTIVED = #{actived,jdbcType=VARCHAR},
+			</if>
+			<if test="importId != null">
+				IMPORT_ID = #{importId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="meterType != null">
+				METER_TYPE = #{meterType,jdbcType=VARCHAR},
+			</if>
+			<if test="meterSort != null">
+				METER_SORT = #{meterSort,jdbcType=VARCHAR},
+			</if>
+			<if test="substationId != null">
+				SUBSTATION_ID = #{substationId,jdbcType=VARCHAR},
+			</if>
+			<if test="substationMtId != null">
+				SUBSTATION_MT_ID = #{substationMtId,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				COPERATOR = #{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				CDATE = #{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String" fetchSize="1000">
+	    select 
+	    	<include refid="Base_Column_List" />
+	    from MDM_AM_DEVICE
+	    where TYPE=#{type,jdbcType=VARCHAR} AND STATUS='0' 
+	</select>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+  		select 
+	    	<include refid="Base_Column_List" />
+	    from MDM_AM_DEVICE
+  	</select>
+
+</mapper>

@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmVeeValidationDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmVeeValidation" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NAME_LANG" property="nameLang" jdbcType="VARCHAR" />
+    <result column="PARAME_COUNT" property="parameCount" jdbcType="SMALLINT" />
+    <result column="PARAME1" property="parame1" jdbcType="VARCHAR" />
+    <result column="PARAME1_LANG" property="parame1Lang" jdbcType="VARCHAR" />
+    <result column="PARAME1_IGNORE" property="parame1Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME2" property="parame2" jdbcType="VARCHAR" />
+    <result column="PARAME2_LANG" property="parame2Lang" jdbcType="VARCHAR" />
+    <result column="PARAME2_IGNORE" property="parame2Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME3" property="parame3" jdbcType="VARCHAR" />
+    <result column="PARAME3_LANG" property="parame3Lang" jdbcType="VARCHAR" />
+    <result column="PARAME3_IGNORE" property="parame3Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME4" property="parame4" jdbcType="VARCHAR" />
+    <result column="PARAME4_LANG" property="parame4Lang" jdbcType="VARCHAR" />
+    <result column="PARAME4_IGNORE" property="parame4Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME5" property="parame5" jdbcType="VARCHAR" />
+    <result column="PARAME5_LANG" property="parame5Lang" jdbcType="VARCHAR" />
+    <result column="PARAME5_IGNORE" property="parame5Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME6" property="parame6" jdbcType="VARCHAR" />
+    <result column="PARAME6_LANG" property="parame6Lang" jdbcType="VARCHAR" />
+    <result column="PARAME6_IGNORE" property="parame6Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME7" property="parame7" jdbcType="VARCHAR" />
+    <result column="PARAME7_LANG" property="parame7Lang" jdbcType="VARCHAR" />
+    <result column="PARAME7_IGNORE" property="parame7Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME8" property="parame8" jdbcType="VARCHAR" />
+    <result column="PARAME8_LANG" property="parame8Lang" jdbcType="VARCHAR" />
+    <result column="PARAME8_IGNORE" property="parame8Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME9" property="parame9" jdbcType="VARCHAR" />
+    <result column="PARAME9_LANG" property="parame9Lang" jdbcType="VARCHAR" />
+    <result column="PARAME9_IGNORE" property="parame9Ignore" jdbcType="VARCHAR" />
+    <result column="PARAME10" property="parame10" jdbcType="VARCHAR" />
+    <result column="PARAME10_LANG" property="parame10Lang" jdbcType="VARCHAR" />
+    <result column="PARAME10_IGNORE" property="parame10Ignore" jdbcType="VARCHAR" />
+    <result column="EVENT_TYPE" property="eventType" jdbcType="INTEGER" />
+    <result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+    <result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, NAME, NAME_LANG, PARAME_COUNT, PARAME1, PARAME1_LANG, PARAME1_IGNORE, PARAME2, 
+    PARAME2_LANG, PARAME2_IGNORE, PARAME3, PARAME3_LANG, PARAME3_IGNORE, PARAME4, PARAME4_LANG, 
+    PARAME4_IGNORE, PARAME5, PARAME5_LANG, PARAME5_IGNORE, PARAME6, PARAME6_LANG, PARAME6_IGNORE, 
+    PARAME7, PARAME7_LANG, PARAME7_IGNORE, PARAME8, PARAME8_LANG, PARAME8_IGNORE, PARAME9, 
+    PARAME9_LANG, PARAME9_IGNORE, PARAME10, PARAME10_LANG, PARAME10_IGNORE, EVENT_TYPE, 
+    ACTIVED, COPERATOR, CDATE
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_VEE_VALIDATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MDM_VEE_VALIDATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmVeeValidation" >
+    insert into MDM_VEE_VALIDATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="nameLang != null" >
+        NAME_LANG,
+      </if>
+      <if test="parameCount != null" >
+        PARAME_COUNT,
+      </if>
+      <if test="parame1 != null" >
+        PARAME1,
+      </if>
+      <if test="parame1Lang != null" >
+        PARAME1_LANG,
+      </if>
+      <if test="parame1Ignore != null" >
+        PARAME1_IGNORE,
+      </if>
+      <if test="parame2 != null" >
+        PARAME2,
+      </if>
+      <if test="parame2Lang != null" >
+        PARAME2_LANG,
+      </if>
+      <if test="parame2Ignore != null" >
+        PARAME2_IGNORE,
+      </if>
+      <if test="parame3 != null" >
+        PARAME3,
+      </if>
+      <if test="parame3Lang != null" >
+        PARAME3_LANG,
+      </if>
+      <if test="parame3Ignore != null" >
+        PARAME3_IGNORE,
+      </if>
+      <if test="parame4 != null" >
+        PARAME4,
+      </if>
+      <if test="parame4Lang != null" >
+        PARAME4_LANG,
+      </if>
+      <if test="parame4Ignore != null" >
+        PARAME4_IGNORE,
+      </if>
+      <if test="parame5 != null" >
+        PARAME5,
+      </if>
+      <if test="parame5Lang != null" >
+        PARAME5_LANG,
+      </if>
+      <if test="parame5Ignore != null" >
+        PARAME5_IGNORE,
+      </if>
+      <if test="parame6 != null" >
+        PARAME6,
+      </if>
+      <if test="parame6Lang != null" >
+        PARAME6_LANG,
+      </if>
+      <if test="parame6Ignore != null" >
+        PARAME6_IGNORE,
+      </if>
+      <if test="parame7 != null" >
+        PARAME7,
+      </if>
+      <if test="parame7Lang != null" >
+        PARAME7_LANG,
+      </if>
+      <if test="parame7Ignore != null" >
+        PARAME7_IGNORE,
+      </if>
+      <if test="parame8 != null" >
+        PARAME8,
+      </if>
+      <if test="parame8Lang != null" >
+        PARAME8_LANG,
+      </if>
+      <if test="parame8Ignore != null" >
+        PARAME8_IGNORE,
+      </if>
+      <if test="parame9 != null" >
+        PARAME9,
+      </if>
+      <if test="parame9Lang != null" >
+        PARAME9_LANG,
+      </if>
+      <if test="parame9Ignore != null" >
+        PARAME9_IGNORE,
+      </if>
+      <if test="parame10 != null" >
+        PARAME10,
+      </if>
+      <if test="parame10Lang != null" >
+        PARAME10_LANG,
+      </if>
+      <if test="parame10Ignore != null" >
+        PARAME10_IGNORE,
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE,
+      </if>
+      <if test="actived != null" >
+        ACTIVED,
+      </if>
+      <if test="coperator != null" >
+        COPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameLang != null" >
+        #{nameLang,jdbcType=VARCHAR},
+      </if>
+      <if test="parameCount != null" >
+        #{parameCount,jdbcType=SMALLINT},
+      </if>
+      <if test="parame1 != null" >
+        #{parame1,jdbcType=VARCHAR},
+      </if>
+      <if test="parame1Lang != null" >
+        #{parame1Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame1Ignore != null" >
+        #{parame1Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame2 != null" >
+        #{parame2,jdbcType=VARCHAR},
+      </if>
+      <if test="parame2Lang != null" >
+        #{parame2Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame2Ignore != null" >
+        #{parame2Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame3 != null" >
+        #{parame3,jdbcType=VARCHAR},
+      </if>
+      <if test="parame3Lang != null" >
+        #{parame3Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame3Ignore != null" >
+        #{parame3Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame4 != null" >
+        #{parame4,jdbcType=VARCHAR},
+      </if>
+      <if test="parame4Lang != null" >
+        #{parame4Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame4Ignore != null" >
+        #{parame4Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame5 != null" >
+        #{parame5,jdbcType=VARCHAR},
+      </if>
+      <if test="parame5Lang != null" >
+        #{parame5Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame5Ignore != null" >
+        #{parame5Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame6 != null" >
+        #{parame6,jdbcType=VARCHAR},
+      </if>
+      <if test="parame6Lang != null" >
+        #{parame6Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame6Ignore != null" >
+        #{parame6Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame7 != null" >
+        #{parame7,jdbcType=VARCHAR},
+      </if>
+      <if test="parame7Lang != null" >
+        #{parame7Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame7Ignore != null" >
+        #{parame7Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame8 != null" >
+        #{parame8,jdbcType=VARCHAR},
+      </if>
+      <if test="parame8Lang != null" >
+        #{parame8Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame8Ignore != null" >
+        #{parame8Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame9 != null" >
+        #{parame9,jdbcType=VARCHAR},
+      </if>
+      <if test="parame9Lang != null" >
+        #{parame9Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame9Ignore != null" >
+        #{parame9Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame10 != null" >
+        #{parame10,jdbcType=VARCHAR},
+      </if>
+      <if test="parame10Lang != null" >
+        #{parame10Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame10Ignore != null" >
+        #{parame10Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="actived != null" >
+        #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmVeeValidation" >
+    update MDM_VEE_VALIDATION
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameLang != null" >
+        NAME_LANG = #{nameLang,jdbcType=VARCHAR},
+      </if>
+      <if test="parameCount != null" >
+        PARAME_COUNT = #{parameCount,jdbcType=SMALLINT},
+      </if>
+      <if test="parame1 != null" >
+        PARAME1 = #{parame1,jdbcType=VARCHAR},
+      </if>
+      <if test="parame1Lang != null" >
+        PARAME1_LANG = #{parame1Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame1Ignore != null" >
+        PARAME1_IGNORE = #{parame1Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame2 != null" >
+        PARAME2 = #{parame2,jdbcType=VARCHAR},
+      </if>
+      <if test="parame2Lang != null" >
+        PARAME2_LANG = #{parame2Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame2Ignore != null" >
+        PARAME2_IGNORE = #{parame2Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame3 != null" >
+        PARAME3 = #{parame3,jdbcType=VARCHAR},
+      </if>
+      <if test="parame3Lang != null" >
+        PARAME3_LANG = #{parame3Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame3Ignore != null" >
+        PARAME3_IGNORE = #{parame3Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame4 != null" >
+        PARAME4 = #{parame4,jdbcType=VARCHAR},
+      </if>
+      <if test="parame4Lang != null" >
+        PARAME4_LANG = #{parame4Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame4Ignore != null" >
+        PARAME4_IGNORE = #{parame4Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame5 != null" >
+        PARAME5 = #{parame5,jdbcType=VARCHAR},
+      </if>
+      <if test="parame5Lang != null" >
+        PARAME5_LANG = #{parame5Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame5Ignore != null" >
+        PARAME5_IGNORE = #{parame5Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame6 != null" >
+        PARAME6 = #{parame6,jdbcType=VARCHAR},
+      </if>
+      <if test="parame6Lang != null" >
+        PARAME6_LANG = #{parame6Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame6Ignore != null" >
+        PARAME6_IGNORE = #{parame6Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame7 != null" >
+        PARAME7 = #{parame7,jdbcType=VARCHAR},
+      </if>
+      <if test="parame7Lang != null" >
+        PARAME7_LANG = #{parame7Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame7Ignore != null" >
+        PARAME7_IGNORE = #{parame7Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame8 != null" >
+        PARAME8 = #{parame8,jdbcType=VARCHAR},
+      </if>
+      <if test="parame8Lang != null" >
+        PARAME8_LANG = #{parame8Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame8Ignore != null" >
+        PARAME8_IGNORE = #{parame8Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame9 != null" >
+        PARAME9 = #{parame9,jdbcType=VARCHAR},
+      </if>
+      <if test="parame9Lang != null" >
+        PARAME9_LANG = #{parame9Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame9Ignore != null" >
+        PARAME9_IGNORE = #{parame9Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="parame10 != null" >
+        PARAME10 = #{parame10,jdbcType=VARCHAR},
+      </if>
+      <if test="parame10Lang != null" >
+        PARAME10_LANG = #{parame10Lang,jdbcType=VARCHAR},
+      </if>
+      <if test="parame10Ignore != null" >
+        PARAME10_IGNORE = #{parame10Ignore,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        EVENT_TYPE = #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="actived != null" >
+        ACTIVED = #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        COPERATOR = #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmVeeValidation">
+  	select 
+    <include refid="Base_Column_List" />
+    from MDM_VEE_VALIDATION
+    <where>
+  		<if test="actived != null and actived != ''">
+			and ACTIVED = #{actived,jdbcType=VARCHAR}
+		</if>
+  	</where>
+  </select>
+  
+</mapper>

@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.inhe</groupId>
+    <artifactId>inhe-platform-common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>inhe-common-config</artifactId>
+  <dependencies>
+  	<dependency>
+		<groupId>com.inhe</groupId>
+		<artifactId>inhe-build-base</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	<dependency>
+		<groupId>com.inhe</groupId>
+		<artifactId>inhe-build-config</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	<!-- java-jwt -->
+	<dependency>
+		<groupId>com.auth0</groupId>
+		<artifactId>java-jwt</artifactId>
+		<version>3.3.0</version>
+	</dependency>
+	<!-- argon2 -->
+	<dependency>
+	     <groupId>de.mkammerer</groupId>
+	     <artifactId>argon2-jvm</artifactId>
+	     <version>2.5</version>
+	</dependency>
+  </dependencies>
+</project>

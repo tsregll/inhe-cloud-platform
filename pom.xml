@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.inhe</groupId>
+	<artifactId>inhe-cloud-platform</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<!-- <module>inhe-platform-eureka</module> -->
+		<module>inhe-platform-common</module>
+		<!-- <module>inhe-platform-admin</module>
+		<module>inhe-platform-node</module>
+		<module>inhe-platform-meterage</module>
+		<module>inhe-platform-message</module>
+		<module>inhe-platform-taskctr</module>
+		<module>inhe-platform-build</module>
+		<module>inhe-platform-hes</module>
+		<module>inhe-platform-api</module>
+		<module>inhe-platform-gateway</module>
+		<module>inhe-platform-asset</module>
+		<module>inhe-platform-sts</module>
+		<module>inhe-platform-portal</module>
+		<module>inhe-platform-map</module> -->
+		<module>inhe-platform-mdm</module>
+		<!-- <module>inhe-platform-report</module>
+		<module>inhe-platform-call</module>
+		<module>inhe-platform-crm</module> -->
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<junit.version>4.12</junit.version>
+		<log4j.version>1.2.17</log4j.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Finchley.SR1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>2.0.5.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAaLineLossModelDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAaLineLossModel">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="REF_ID" property="refId" jdbcType="VARCHAR" />
+		<result column="GENERATION_WAY" property="generationWay" jdbcType="VARCHAR" />
+		<result column="SUPPLY_IN_COUNT" property="supplyInCount" jdbcType="SMALLINT" />
+		<result column="SUPPLY_OUT_COUNT" property="supplyOutCount" jdbcType="SMALLINT" />
+		<result column="GENERATION_FLAG" property="generationFlag" jdbcType="VARCHAR" />
+		<result column="GENERATE_TIME" property="generateTime" jdbcType="TIMESTAMP" />
+		<result column="DELETE_TIME" property="deleteTime" jdbcType="TIMESTAMP" />
+		<result column="LOSS_INDEX_DAY" property="lossIndexDay" jdbcType="DOUBLE" />
+		<result column="LOSS_INDEX_MONTH" property="lossIndexMonth" jdbcType="DOUBLE" />
+		<result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+		<result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+		<result column="DEPT_ID" property="deptId" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	
+	<resultMap id="ResultMapWithBLOBs" type="com.inhe.mdm.model.VtMdmAaLineLossModel" extends="BaseResultMap">
+		<result column="VOL_CODE" property="volCode" jdbcType="VARCHAR" />
+		<result column="VOL_DESCRIPTION" property="volDescription" jdbcType="VARCHAR" />
+		<result column="LINE_CODE" property="lineCode" jdbcType="VARCHAR" />
+		<result column="LINE_ID" property="lineId" jdbcType="VARCHAR" />
+		<result column="LINE_NAME" property="lineName" jdbcType="VARCHAR" />
+		<result column="TM_CODE" property="tmCode" jdbcType="VARCHAR" />
+		<result column="TM_ID" property="tmId" jdbcType="VARCHAR" />
+		<result column="TM_NAME" property="tmName" jdbcType="VARCHAR" />
+		<result column="STATION_MT_ID" property="stationMtId" jdbcType="VARCHAR" />
+		<result column="STATION_MT_CODE" property="stationMtCode" jdbcType="VARCHAR" />
+		<result column="STATION_MT_NAME" property="stationMtName" jdbcType="VARCHAR" />
+		<result column="STATION_CODE" property="stationCode" jdbcType="VARCHAR" />
+		<result column="STATION_NAME" property="stationName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, SORT, ORG_ID, REF_ID, GENERATION_WAY, SUPPLY_IN_COUNT,
+		SUPPLY_OUT_COUNT, GENERATION_FLAG,
+		GENERATE_TIME, DELETE_TIME, LOSS_INDEX_DAY, LOSS_INDEX_MONTH, COPERATOR, CDATE,
+		DEPT_ID
+	</sql>
+
+	<select id="selectCountByPartition" resultType="Integer">
+		select 
+			count(*)
+		from 
+			SYS_DEPARTMENT A 
+		left join(
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			MDM_AA_LINE_LOSS_MODEL C
+		where 
+			C.GENERATION_FLAG = "1" and C.SORT = "0" 
+			and C.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+		)B on A.DEPT_ID = B.DEPT_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectListByPartition" resultMap="BaseResultMap">
+		select
+			A.DEPT_ID,
+			B.ID, B.SORT, B.ORG_ID, B.REF_ID, 
+			B.GENERATION_WAY, B.SUPPLY_IN_COUNT,
+			B.SUPPLY_OUT_COUNT, B.GENERATION_FLAG,
+			B.GENERATE_TIME, B.DELETE_TIME, B.LOSS_INDEX_DAY, 
+			B.LOSS_INDEX_MONTH, B.COPERATOR, B.CDATE
+		from 
+			SYS_DEPARTMENT A 
+		left join(
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			MDM_AA_LINE_LOSS_MODEL C
+		where 
+			C.GENERATION_FLAG = "1" and C.SORT = "0" 
+			and C.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+		)B on A.DEPT_ID = B.DEPT_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+		</where>
+		limit #{currIndex}, #{pageSize}
+	</select>
+	
+	
+	<select id="selectCountByVoltage" resultType="Integer">
+	select 
+		count(*)
+	from 
+		SYS_DEPARTMENT A 
+	right join (
+		select
+			 CODE,DESCRIPTION 
+		from
+			MDM_DICTIONARY 
+		where TABLE_TYPE = "VOL_LEVEL"
+	) D on 1 = 1
+	left join (
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			MDM_AA_LINE_LOSS_MODEL C
+		where 
+			C.GENERATION_FLAG = "1" and C.SORT = "1" 
+			and C.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+	)B on D.CODE= B.REF_ID and A.DEPT_ID = B.DEPT_ID
+	<where>
+		<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+			and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+			and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+		</if>
+	</where>
+	</select>
+
+	<select id="selectListByVoltage" resultMap="ResultMapWithBLOBs">
+	select
+		A.DEPT_ID,D.DESCRIPTION as VOL_DESCRIPTION,D.CODE as VOL_CODE,
+		B.ID, B.SORT, B.ORG_ID, B.REF_ID,
+		B.GENERATION_WAY, B.SUPPLY_IN_COUNT,
+		B.SUPPLY_OUT_COUNT, B.GENERATION_FLAG,
+		B.GENERATE_TIME, B.DELETE_TIME, B.LOSS_INDEX_DAY,
+		B.LOSS_INDEX_MONTH, B.COPERATOR, B.CDATE
+	from 
+		SYS_DEPARTMENT A 
+	right join (
+		select
+			 CODE,DESCRIPTION 
+		from
+			MDM_DICTIONARY 
+		where TABLE_TYPE = "VOL_LEVEL"
+	) D on 1 = 1
+	left join (
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			MDM_AA_LINE_LOSS_MODEL C
+		where 
+			C.GENERATION_FLAG = "1" and C.SORT = "1" 
+			and C.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+	)B on D.CODE= B.REF_ID and A.DEPT_ID = B.DEPT_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+		</where>
+	order by A.DEPT_ID,D.CODE asc limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectCountByLine" resultType="Integer">
+	select 
+		count(*) 
+	from 
+		MDM_AM_SUBSTATION A
+	right join 
+		MDM_AM_LINE C on A.ID = C.STATION_ID
+	left join (
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_LINE_LOSS_MODEL D
+		where 
+			D.GENERATION_FLAG = "1" 
+			and D.SORT = "2"
+	)B on C.ID = B.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.stationCode != null and mdmAaLineLossModel.stationCode != ''">
+				and A.STATION_CODE like concat('%',#{mdmAaLineLossModel.stationCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.lineCode != null and mdmAaLineLossModel.lineCode != ''">
+				and C.LINE_CODE like concat('%',#{mdmAaLineLossModel.lineCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+				and C.SORT = "0"
+				and C.STATUS = "0"
+		</where>
+	</select>
+
+	<select id="selectListByLine" resultMap="ResultMapWithBLOBs">
+	select
+		distinct C.LINE_CODE, C.ID LINE_ID, C.DESCRIPTION LINE_NAME,A.DEPT_ID,
+		B.ID,B.SORT,B.ORG_ID,B.REF_ID,B.GENERATION_WAY,B.SUPPLY_IN_COUNT,
+		B.SUPPLY_OUT_COUNT,B.GENERATION_FLAG,B.GENERATE_TIME,B.DELETE_TIME,B.LOSS_INDEX_DAY,
+		B.LOSS_INDEX_MONTH,B.COPERATOR,B.CDATE
+	from 
+		MDM_AM_SUBSTATION A
+	right join 
+		MDM_AM_LINE C on A.ID = C.STATION_ID
+	left join (
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_LINE_LOSS_MODEL D
+		where 
+			D.GENERATION_FLAG = "1" 
+			and D.SORT = "2"
+	)B on C.ID = B.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.stationCode != null and mdmAaLineLossModel.stationCode != ''">
+				and A.STATION_CODE like concat('%',#{mdmAaLineLossModel.stationCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.lineCode != null and mdmAaLineLossModel.lineCode != ''">
+				and C.LINE_CODE like concat('%',#{mdmAaLineLossModel.lineCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+				and C.SORT = "0"
+				and C.STATUS = "0"
+		</where>
+	order by A.DEPT_ID limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectCountByTransformerArea" resultType="Integer">
+	select 
+		count(*) 
+	from
+		MDM_AM_TM A
+	left join 
+		MDM_AM_LINE B on A.LINE_ID = B.ID
+	left join 
+		MDM_AA_LINE_LOSS_MODEL C on C.SORT = '3'
+		AND C.GENERATION_FLAG = '1'
+		AND A.ID = C.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.tmCode != null and mdmAaLineLossModel.tmCode != ''">
+				and A.TM_CODE like concat('%',#{mdmAaLineLossModel.tmCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.lineCode != null and mdmAaLineLossModel.lineCode != ''">
+				and B.LINE_CODE like concat('%',#{mdmAaLineLossModel.lineCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+				and A.STATUS = "0"
+		</where>
+	</select>
+
+	<select id="selectListByTransformerArea" resultMap="ResultMapWithBLOBs">
+	select
+		A.ID as TM_ID, A.TM_CODE, A.DESCRIPTION as TM_NAME, A.DEPT_ID,
+		B.LINE_CODE, B.DESCRIPTION as LINE_NAME,
+		C.GENERATION_WAY, C.GENERATE_TIME, C.DELETE_TIME, C.SUPPLY_IN_COUNT, C.SUPPLY_OUT_COUNT, 
+		C.GENERATION_FLAG, C.CDATE, C.ID, C.REF_ID, C.SORT, C.LOSS_INDEX_DAY, C.LOSS_INDEX_MONTH
+	from
+		MDM_AM_TM A
+	left join 
+		MDM_AM_LINE B on A.LINE_ID = B.ID
+	left join 
+		MDM_AA_LINE_LOSS_MODEL C on C.SORT = '3'
+		AND C.GENERATION_FLAG = '1'
+		AND A.ID = C.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.tmCode != null and mdmAaLineLossModel.tmCode != ''">
+				and A.TM_CODE like concat('%',#{mdmAaLineLossModel.tmCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.lineCode != null and mdmAaLineLossModel.lineCode != ''">
+				and B.LINE_CODE like concat('%',#{mdmAaLineLossModel.lineCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+			and A.STATUS = "0"
+	</where>
+ 	limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectCountByMainLine" resultType="Integer">
+	select 
+		count(*) 
+	from 
+		MDM_AM_SUBSTATION A
+	right join 
+		MDM_AM_LINE C on A.ID = C.STATION_ID
+	left join (
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_LINE_LOSS_MODEL D
+		where 
+			D.GENERATION_FLAG = "1" 
+			and D.SORT = "4"
+	)B on C.ID = B.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.stationCode != null and mdmAaLineLossModel.stationCode != ''">
+				and A.STATION_CODE like concat('%',#{mdmAaLineLossModel.stationCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.lineCode != null and mdmAaLineLossModel.lineCode != ''">
+				and C.LINE_CODE like concat('%',#{mdmAaLineLossModel.lineCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+				and C.SORT = "1"
+				and C.STATUS = "0"
+		</where>
+	</select>
+
+	<select id="selectListByMainLine" resultMap="ResultMapWithBLOBs">
+	select
+		distinct C.LINE_CODE, C.ID LINE_ID, C.DESCRIPTION LINE_NAME,A.STATION_CODE,
+		A.DESCRIPTION as STATION_NAME,A.DEPT_ID,
+		B.ID,B.SORT,B.ORG_ID,B.REF_ID,B.GENERATION_WAY,B.SUPPLY_IN_COUNT,
+		B.SUPPLY_OUT_COUNT,B.GENERATION_FLAG,B.GENERATE_TIME,B.DELETE_TIME,B.LOSS_INDEX_DAY,
+		B.LOSS_INDEX_MONTH,B.COPERATOR,B.CDATE
+	from 
+		MDM_AM_SUBSTATION A
+	right join 
+		MDM_AM_LINE C on A.ID = C.STATION_ID
+	left join (
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_LINE_LOSS_MODEL D
+		where 
+			D.GENERATION_FLAG = "1" 
+			and D.SORT = "4"
+	)B on C.ID = B.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.stationCode != null and mdmAaLineLossModel.stationCode != ''">
+				and A.STATION_CODE like concat('%',#{mdmAaLineLossModel.stationCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.lineCode != null and mdmAaLineLossModel.lineCode != ''">
+				and C.LINE_CODE like concat('%',#{mdmAaLineLossModel.lineCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+				and C.SORT = "1"
+				and C.STATUS = "0"
+		</where>
+	order by A.DEPT_ID limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectCountByMainTransformer" resultType="Integer">
+	select 
+		count(*) 
+	from
+		MDM_AM_SUBSTATION_MT A
+	left join 
+		MDM_AM_SUBSTATION B on A.STATION_ID = B.ID
+	left join 
+		MDM_AA_LINE_LOSS_MODEL C on C.SORT = '5'
+		AND C.GENERATION_FLAG = '1'
+		AND A.ID = C.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.stationCode != null and mdmAaLineLossModel.stationCode != ''">
+				and B.STATION_CODE like concat('%',#{mdmAaLineLossModel.stationCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.stationMtCode != null and mdmAaLineLossModel.stationMtCode != ''">
+				and A.STATION_MT_CODElike concat('%',#{mdmAaLineLossModel.stationMtCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+			and A.STATUS = "0"
+	</where>
+	</select>
+
+	<select id="selectListByMainTransformer" resultMap="ResultMapWithBLOBs">
+	select
+		A.ID as STATION_MT_ID, A.CODE as STATION_MT_CODE, A.NAME as STATION_MT_NAME, A.DEPT_ID,
+		B.STATION_CODE, B.DESCRIPTION as STATION_NAME,
+		C.GENERATION_WAY, C.GENERATE_TIME, C.SUPPLY_IN_COUNT, C.SUPPLY_OUT_COUNT, C.GENERATION_FLAG, 
+		C.CDATE, C.ID, C.REF_ID, C.SORT, C.LOSS_INDEX_DAY, C.LOSS_INDEX_MONTH
+	from
+		MDM_AM_SUBSTATION_MT A
+	left join 
+		MDM_AM_SUBSTATION B on A.STATION_ID = B.ID
+	left join 
+		MDM_AA_LINE_LOSS_MODEL C on C.SORT = '5'
+		AND C.GENERATION_FLAG = '1'
+		AND A.ID = C.REF_ID
+		<where>
+			<if test="mdmAaLineLossModel.deptId != null and mdmAaLineLossModel.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaLineLossModel.deptId,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModel.orgId != null and mdmAaLineLossModel.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModel.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModel.stationCode != null and mdmAaLineLossModel.stationCode != ''">
+				and B.STATION_CODE like concat('%',#{mdmAaLineLossModel.stationCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.stationMtCode != null and mdmAaLineLossModel.stationMtCode != ''">
+				and A.STATION_MT_CODElike concat('%',#{mdmAaLineLossModel.stationMtCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaLineLossModel.generationFlag != null and mdmAaLineLossModel.generationFlag != ''">
+				and GENERATION_FLAG = #{mdmAaLineLossModel.generationFlag,jdbcType=VARCHAR}
+			</if>
+			and A.STATUS = "0"
+	</where>
+ 	limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			<include refid="Base_Column_List" />
+		from MDM_AA_LINE_LOSS_MODEL
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteBatch">
+		update MDM_AA_LINE_LOSS_MODEL
+		<set>
+			<if test="generationFlag != null">
+				GENERATION_FLAG = #{generationFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="deleteTime != null">
+				DELETE_TIME = #{deleteTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+	where ID in
+	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+		#{item,jdbcType=VARCHAR}
+	</foreach>
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from MDM_AA_LINE_LOSS_MODEL
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insertBatchSelective" parameterType="java.util.List">
+		replace into MDM_AA_LINE_LOSS_MODEL
+		(ID, SORT, ORG_ID, REF_ID, GENERATION_WAY, SUPPLY_IN_COUNT,
+		SUPPLY_OUT_COUNT, GENERATION_FLAG,GENERATE_TIME, DELETE_TIME,
+		 LOSS_INDEX_DAY, LOSS_INDEX_MONTH, COPERATOR, CDATE,DEPT_ID)
+		 values
+		<foreach collection="list" item="item" index="index" separator=",">
+				(#{item.id,jdbcType=VARCHAR},
+				#{item.sort,jdbcType=VARCHAR},
+				#{item.orgId,jdbcType=VARCHAR},
+				#{item.refId,jdbcType=VARCHAR},
+				#{item.generationWay,jdbcType=VARCHAR},
+				#{item.supplyInCount,jdbcType=SMALLINT},
+				#{item.supplyOutCount,jdbcType=SMALLINT},
+				#{item.generationFlag,jdbcType=VARCHAR},
+				#{item.generateTime,jdbcType=TIMESTAMP},
+				#{item.deleteTime,jdbcType=TIMESTAMP},
+				#{item.lossIndexDay,jdbcType=DOUBLE},
+				#{item.lossIndexMonth,jdbcType=DOUBLE},
+				#{item.coperator,jdbcType=VARCHAR},
+				#{item.cdate,jdbcType=TIMESTAMP},
+				#{item.deptId,jdbcType=LONGVARCHAR})
+		</foreach>
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAaLineLossModel">
+		insert into MDM_AA_LINE_LOSS_MODEL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="sort != null">
+				SORT,
+			</if>
+			<if test="orgId != null">
+				ORG_ID,
+			</if>
+			<if test="refId != null">
+				REF_ID,
+			</if>
+			<if test="generationWay != null">
+				GENERATION_WAY,
+			</if>
+			<if test="supplyInCount != null">
+				SUPPLY_IN_COUNT,
+			</if>
+			<if test="supplyOutCount != null">
+				SUPPLY_OUT_COUNT,
+			</if>
+			<if test="generationFlag != null">
+				GENERATION_FLAG,
+			</if>
+			<if test="generateTime != null">
+				GENERATE_TIME,
+			</if>
+			<if test="deleteTime != null">
+				DELETE_TIME,
+			</if>
+			<if test="lossIndexDay != null">
+				LOSS_INDEX_DAY,
+			</if>
+			<if test="lossIndexMonth != null">
+				LOSS_INDEX_MONTH,
+			</if>
+			<if test="coperator != null">
+				COPERATOR,
+			</if>
+			<if test="cdate != null">
+				CDATE,
+			</if>
+			<if test="deptId != null">
+				DEPT_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="refId != null">
+				#{refId,jdbcType=VARCHAR},
+			</if>
+			<if test="generationWay != null">
+				#{generationWay,jdbcType=VARCHAR},
+			</if>
+			<if test="supplyInCount != null">
+				#{supplyInCount,jdbcType=SMALLINT},
+			</if>
+			<if test="supplyOutCount != null">
+				#{supplyOutCount,jdbcType=SMALLINT},
+			</if>
+			<if test="generationFlag != null">
+				#{generationFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="generateTime != null">
+				#{generateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteTime != null">
+				#{deleteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lossIndexDay != null">
+				#{lossIndexDay,jdbcType=DOUBLE},
+			</if>
+			<if test="lossIndexMonth != null">
+				#{lossIndexMonth,jdbcType=DOUBLE},
+			</if>
+			<if test="coperator != null">
+				#{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				#{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deptId != null">
+				#{deptId,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateBatchSelective" parameterType="java.util.List">
+	<foreach collection="list" item="item" index="index" separator=";">
+		update MDM_AA_LINE_LOSS_MODEL
+		<set>
+			<if test="item.sort != null">
+				SORT = #{item.sort,jdbcType=VARCHAR},
+			</if>
+			<if test="item.orgId != null">
+				ORG_ID = #{item.orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="item.refId != null">
+				REF_ID = #{item.refId,jdbcType=VARCHAR},
+			</if>
+			<if test="item.generationWay != null">
+				GENERATION_WAY = #{item.generationWay,jdbcType=VARCHAR},
+			</if>
+			<if test="item.supplyInCount != null">
+				SUPPLY_IN_COUNT = #{item.supplyInCount,jdbcType=SMALLINT},
+			</if>
+			<if test="item.supplyOutCount != null">
+				SUPPLY_OUT_COUNT = #{item.supplyOutCount,jdbcType=SMALLINT},
+			</if>
+			<if test="item.generationFlag != null">
+				GENERATION_FLAG = #{item.generationFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="item.generateTime != null">
+				GENERATE_TIME = #{item.generateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.deleteTime != null">
+				DELETE_TIME = #{item.deleteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.lossIndexDay != null">
+				LOSS_INDEX_DAY = #{item.lossIndexDay,jdbcType=DOUBLE},
+			</if>
+			<if test="item.lossIndexMonth != null">
+				LOSS_INDEX_MONTH = #{item.lossIndexMonth,jdbcType=DOUBLE},
+			</if>
+			<if test="item.coperator != null">
+				COPERATOR = #{item.coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="item.cdate != null">
+				CDATE = #{item.cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.deptId != null">
+				DEPT_ID = #{item.deptId,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{item.id,jdbcType=VARCHAR}
+		</foreach>
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAaLineLossModel">
+		update MDM_AA_LINE_LOSS_MODEL
+		<set>
+			<if test="sort != null">
+				SORT = #{sort,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="refId != null">
+				REF_ID = #{refId,jdbcType=VARCHAR},
+			</if>
+			<if test="generationWay != null">
+				GENERATION_WAY = #{generationWay,jdbcType=VARCHAR},
+			</if>
+			<if test="supplyInCount != null">
+				SUPPLY_IN_COUNT = #{supplyInCount,jdbcType=SMALLINT},
+			</if>
+			<if test="supplyOutCount != null">
+				SUPPLY_OUT_COUNT = #{supplyOutCount,jdbcType=SMALLINT},
+			</if>
+			<if test="generationFlag != null">
+				GENERATION_FLAG = #{generationFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="generateTime != null">
+				GENERATE_TIME = #{generateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteTime != null">
+				DELETE_TIME = #{deleteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lossIndexDay != null">
+				LOSS_INDEX_DAY = #{lossIndexDay,jdbcType=DOUBLE},
+			</if>
+			<if test="lossIndexMonth != null">
+				LOSS_INDEX_MONTH = #{lossIndexMonth,jdbcType=DOUBLE},
+			</if>
+			<if test="coperator != null">
+				COPERATOR = #{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="cdate != null">
+				CDATE = #{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deptId != null">
+				DEPT_ID = #{deptId,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+  <select id="selectBySort" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_AA_LINE_LOSS_MODEL
+    where SORT = #{sort,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByEffective" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_AA_LINE_LOSS_MODEL
+    where GENERATION_FLAG = '1'
+  </select>
+  
+  <update id="createDeptTable" parameterType="java.lang.String">
+		create temporary table SYS_DEPARTMENT 
+		(DEPT_ID varchar(30) NOT NULL)
+  </update>
+  
+  <insert id="insertDeptIdBatch" parameterType="java.util.List">
+		replace into SYS_DEPARTMENT (DEPT_ID)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item,jdbcType=LONGVARCHAR})
+		</foreach>
+  </insert>
+  
+   <update id="deleteDeptTable" parameterType="java.lang.String">
+		drop temporary table if exists SYS_DEPARTMENT 
+  </update>
+  
+</mapper>

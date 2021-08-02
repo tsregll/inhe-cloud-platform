@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmVeeFieldsDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmVeeFields" >
+    <id column="TYPE" property="type" jdbcType="VARCHAR" />
+    <id column="FIELD_ID" property="fieldId" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+    <result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="VeeFieldsResultMap" type="com.inhe.mdm.model.VtMdmVeeFields" extends="BaseResultMap">
+	<result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SHORT_CODE" property="shortCode" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="DATA_UNIT" property="dataUnit" jdbcType="VARCHAR" />	
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    TYPE, FIELD_ID, ORDER_NO, ACTIVED
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmVeeFields" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_VEE_FIELDS
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and FIELD_ID = #{fieldId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmVeeFields" >
+    delete from MDM_VEE_FIELDS
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and FIELD_ID = #{fieldId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmVeeFields" >
+    insert into MDM_VEE_FIELDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="actived != null" >
+        ACTIVED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        #{fieldId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        #{actived,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmVeeFields" >
+    update MDM_VEE_FIELDS
+    <set >
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        ACTIVED = #{actived,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and FIELD_ID = #{fieldId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectCount" resultType="java.lang.Integer">
+  	select count(*)
+  	from MDM_VEE_FIELDS A
+  	left join MDM_FIELD B
+  	on A.FIELD_ID = B.ID
+  	<where>
+  		<if test="vtMdmVeeFields.type != null and vtMdmVeeFields.type != ''">
+			and A.TYPE = #{vtMdmVeeFields.type,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeFields.id != null and vtMdmVeeFields.id != ''">
+			and B.ID = #{vtMdmVeeFields.id,jdbcType=VARCHAR}
+		</if>
+  		<if test="vtMdmVeeFields.description != null and vtMdmVeeFields.description != ''">
+			and B.DESCRIPTION like concat('%',#{vtMdmVeeFields.description,jdbcType=VARCHAR},'%')
+		</if>
+  	</where>
+  </select>
+  
+  <select id="selectList" resultMap="VeeFieldsResultMap">
+  	select A.TYPE, A.ACTIVED, B.ID, B.SHORT_CODE, B.DESCRIPTION, B.DATA_UNIT
+  	from MDM_VEE_FIELDS A
+  	left join MDM_FIELD B
+  	on A.FIELD_ID = B.ID
+  	<where>
+  		<if test="vtMdmVeeFields.type != null and vtMdmVeeFields.type != ''">
+			and A.TYPE = #{vtMdmVeeFields.type,jdbcType=VARCHAR}
+		</if>
+		<if test="vtMdmVeeFields.id != null and vtMdmVeeFields.id != ''">
+			and B.ID = #{vtMdmVeeFields.id,jdbcType=VARCHAR}
+		</if>
+  		<if test="vtMdmVeeFields.description != null and vtMdmVeeFields.description != ''">
+			and B.DESCRIPTION like concat('%',#{vtMdmVeeFields.description,jdbcType=VARCHAR},'%')
+		</if>
+  	</where>
+  	limit #{currIndex}, #{pageSize}
+  </select>
+  
+</mapper>

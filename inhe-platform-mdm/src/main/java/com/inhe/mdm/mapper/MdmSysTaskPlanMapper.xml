@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmSysTaskPlanDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.admin.model.SysTaskPlan" >
+    <id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+    <result column="EXEC_TIME" property="execTime" jdbcType="TIMESTAMP" />
+    <result column="DATA_TIME" property="dataTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="PARAMS" property="params" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, TASK_CODE, EXEC_TIME, DATA_TIME, STATUS, CDATE , PARAMS
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_TASK_PLAN
+    where CODE = #{code,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectPlanCodeByTaskCode" resultType="java.lang.String">
+    select 
+    CODE
+    from SYS_TASK_PLAN
+    where TASK_CODE = #{taskCode,jdbcType=VARCHAR}
+    and DATA_TIME like concat(#{dataTime,jdbcType=TIMESTAMP},'%')
+    order by EXEC_TIME desc limit 1
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_TASK_PLAN
+    where CODE = #{code,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.admin.model.SysTaskPlan" >
+    insert into SYS_TASK_PLAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="taskCode != null" >
+        TASK_CODE,
+      </if>
+      <if test="execTime != null" >
+        EXEC_TIME,
+      </if>
+      <if test="dataTime != null" >
+        DATA_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+      <if test="params != null" >
+        PARAMS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCode != null" >
+        #{taskCode,jdbcType=VARCHAR},
+      </if>
+      <if test="execTime != null" >
+        #{execTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataTime != null" >
+        #{dataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.admin.model.SysTaskPlan" >
+    update SYS_TASK_PLAN
+    <set >
+      <if test="taskCode != null" >
+        TASK_CODE = #{taskCode,jdbcType=VARCHAR},
+      </if>
+      <if test="execTime != null" >
+        EXEC_TIME = #{execTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataTime != null" >
+        DATA_TIME = #{dataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="params != null" >
+        PARAMS = #{params,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

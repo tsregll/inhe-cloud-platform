@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmVeeFieldsValidationDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmVeeFieldsValidation" >
+    <id column="TYPE" property="type" jdbcType="VARCHAR" />
+    <id column="VALIDATION_ID" property="validationId" jdbcType="VARCHAR" />
+    <result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+    <result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    TYPE, VALIDATION_ID, ACTIVED, COPERATOR, CDATE
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmVeeFieldsValidation" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_VEE_FIELDS_VALIDATION
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and VALIDATION_ID = #{validationId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmVeeFieldsValidation" >
+    delete from MDM_VEE_FIELDS_VALIDATION
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and VALIDATION_ID = #{validationId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmVeeFieldsValidation" >
+    insert into MDM_VEE_FIELDS_VALIDATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="validationId != null" >
+        VALIDATION_ID,
+      </if>
+      <if test="actived != null" >
+        ACTIVED,
+      </if>
+      <if test="coperator != null" >
+        COPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="validationId != null" >
+        #{validationId,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmVeeFieldsValidation" >
+    update MDM_VEE_FIELDS_VALIDATION
+    <set >
+      <if test="actived != null" >
+        ACTIVED = #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        COPERATOR = #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TYPE = #{type,jdbcType=VARCHAR}
+      and VALIDATION_ID = #{validationId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByType" parameterType="java.lang.String" resultType="java.lang.String">
+  	select VALIDATION_ID from MDM_VEE_FIELDS_VALIDATION
+  	where TYPE = #{type,jdbcType=VARCHAR} 
+  	  and ACTIVED = 'Y'
+  </select>
+  
+</mapper>

@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAaKwhDetailDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAaKwhDetail">
+		<id column="DEVICE_ID" jdbcType="VARCHAR" property="deviceId" />
+	    <id column="TIME_TYPE" jdbcType="VARCHAR" property="timeType" />
+	    <id column="NOW_TIME" jdbcType="VARCHAR" property="nowTime" />
+	    <result column="REF_CODE" jdbcType="VARCHAR" property="refCode" />
+	    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+	    <result column="DEPT_ID" jdbcType="VARCHAR" property="deptId" />
+	    <result column="LINE_ID" jdbcType="VARCHAR" property="lineId" />
+	    <result column="TM_ID" jdbcType="VARCHAR" property="tmId" />
+	    <result column="DEVICE_TYPE" jdbcType="VARCHAR" property="deviceType" />
+	    <result column="SUPPLIER" jdbcType="VARCHAR" property="supplier" />
+	    <result column="CST_ID" jdbcType="VARCHAR" property="cstId" />
+	    <result column="CST_NAME" jdbcType="VARCHAR" property="cstName" />
+	    <result column="METER_SORT" jdbcType="VARCHAR" property="meterSort" />
+	    <result column="MEAS_TYPE" jdbcType="VARCHAR" property="measType" />
+	    <result column="DEVICE_NUM" jdbcType="VARCHAR" property="deviceNum" />
+	    <result column="PTCT" jdbcType="VARCHAR" property="ptct" />
+	    <result column="KWH_PA" jdbcType="DOUBLE" property="kwhPa" />
+	    <result column="KWH_PA_PTCT" jdbcType="DOUBLE" property="kwhPaPtct" />
+	    <result column="KWH_PR" jdbcType="DOUBLE" property="kwhPr" />
+	    <result column="KWH_PR_PTCT" jdbcType="DOUBLE" property="kwhPrPtct" />
+	    <result column="KWH_RA_PTCT" jdbcType="DOUBLE" property="kwhRaPtct" />
+	    <result column="KWH_RA" jdbcType="DOUBLE" property="kwhRa" />
+	    <result column="KWH_RR_PTCT" jdbcType="DOUBLE" property="kwhRrPtct" />
+	    <result column="KWH_RR" jdbcType="DOUBLE" property="kwhRr" />
+	    <result column="TOTAL_KWH_START" jdbcType="DOUBLE" property="totalKwhStart" />
+	    <result column="TOTAL_KWH_END" jdbcType="DOUBLE" property="totalKwhEnd" />
+	    <result column="TOTAL_KWH" jdbcType="DOUBLE" property="totalKwh" />
+	    <result column="KWH_T1" jdbcType="DOUBLE" property="kwhT1" />
+	    <result column="KWH_T2" jdbcType="DOUBLE" property="kwhT2" />
+	    <result column="KWH_T3" jdbcType="DOUBLE" property="kwhT3" />
+	    <result column="KWH_T4" jdbcType="DOUBLE" property="kwhT4" />
+	    <result column="KWH_T5" jdbcType="DOUBLE" property="kwhT5" />
+	    <result column="KWH_T6" jdbcType="DOUBLE" property="kwhT6" />
+	    <result column="KWH_T7" jdbcType="DOUBLE" property="kwhT7" />
+	    <result column="KWH_T8" jdbcType="DOUBLE" property="kwhT8" />
+	    <result column="OLD_TOTAL_KWH_START" jdbcType="DOUBLE" property="oldTotalKwhStart" />
+	    <result column="OLD_TOTAL_KWH_END" jdbcType="DOUBLE" property="oldTotalKwhEnd" />
+	    <result column="OLD_TOTAL_KWH" jdbcType="DOUBLE" property="oldTotalKwh" />
+	    <result column="REMAIN_KWH" jdbcType="DOUBLE" property="remainKwh" />
+	    <result column="REMAIN_DAYS" jdbcType="DOUBLE" property="remainDays" />
+	    <result column="LAST_KWH_PA_PTCT" jdbcType="DOUBLE" property="lastKwhPaPtct" />
+	    <result column="LAST_KWH_PR_PTCT" jdbcType="DOUBLE" property="lastKwhPrPtct" />
+	    <result column="LAST_KWH_RA_PTCT" jdbcType="DOUBLE" property="lastKwhRaPtct" />
+	    <result column="LAST_KWH_RR_PTCT" jdbcType="DOUBLE" property="lastKwhRrPtct" />
+	    <result column="LAST_TOTAL_KWH" jdbcType="DOUBLE" property="lastTotalKwh" />
+	    <result column="LAST_KWH_T1" jdbcType="DOUBLE" property="lastKwhT1" />
+	    <result column="LAST_KWH_T2" jdbcType="DOUBLE" property="lastKwhT2" />
+	    <result column="LAST_KWH_T3" jdbcType="DOUBLE" property="lastKwhT3" />
+	    <result column="LAST_KWH_T4" jdbcType="DOUBLE" property="lastKwhT4" />
+	    <result column="LAST_KWH_T5" jdbcType="DOUBLE" property="lastKwhT5" />
+	    <result column="LAST_KWH_T6" jdbcType="DOUBLE" property="lastKwhT6" />
+	    <result column="LAST_KWH_T7" jdbcType="DOUBLE" property="lastKwhT7" />
+	    <result column="LAST_KWH_T8" jdbcType="DOUBLE" property="lastKwhT8" />
+	    <result column="ACTIVE" jdbcType="VARCHAR" property="active" />
+	    <result column="CDATE" jdbcType="TIMESTAMP" property="cdate" />
+	    <result column="KWH_PA_PTCT_START" jdbcType="DOUBLE" property="kwhPaPtctStart" />
+	    <result column="KWH_PA_PTCT_END" jdbcType="DOUBLE" property="kwhPaPtctEnd" />
+	    <result column="KWH_PR_PTCT_START" jdbcType="DOUBLE" property="kwhPrPtctStart" />
+	    <result column="KWH_PR_PTCT_END" jdbcType="DOUBLE" property="kwhPrPtctEnd" />
+	    <result column="KWH_RA_PTCT_START" jdbcType="DOUBLE" property="kwhRaPtctStart" />
+	    <result column="KWH_RA_PTCT_END" jdbcType="DOUBLE" property="kwhRaPtctEnd" />
+	    <result column="KWH_RR_PTCT_START" jdbcType="DOUBLE" property="kwhRrPtctStart" />
+	    <result column="KWH_RR_PTCT_END" jdbcType="DOUBLE" property="kwhRrPtctEnd" />
+		<result column="VEE_RESULT_DETAIL" jdbcType="LONGVARCHAR" property="veeResultDetail" />
+	    <result column="VEE_ESTMT_DETAIL" jdbcType="LONGVARCHAR" property="veeEstmtDetail" />
+	    <result column="VEE_EDIT_DETAIL" jdbcType="LONGVARCHAR" property="veeEditDetail" />
+	</resultMap>
+	
+	<resultMap id="KwhResultMap" type="java.util.HashMap">
+	   	<id column="NOW_TIME" property="nowTime" jdbcType="VARCHAR" />
+	   	<result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+	    <result column="TOTAL_KWH" property="totalKwh" jdbcType="DOUBLE" />
+		<result column="KWH_T1" property="kwhT1" jdbcType="DOUBLE" />
+		<result column="KWH_T2" property="kwhT2" jdbcType="DOUBLE" />
+		<result column="KWH_T3" property="kwhT3" jdbcType="DOUBLE" />
+		<result column="KWH_T4" property="kwhT4" jdbcType="DOUBLE" />
+		<result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+		<result column="Meter_NAME" property="meterName" jdbcType="VARCHAR" />
+		<result column="LINE_NAME" property="lineName" jdbcType="VARCHAR" />
+		<result column="IMPORTANT" property="important" jdbcType="VARCHAR" />
+		<result column="METER_SORT" property="meterSort" jdbcType="VARCHAR" />
+		<result column="TOTAL_KWH_START" property="totalKwhStart" jdbcType="DOUBLE" />
+		<result column="TOTAL_KWH_END" property="totalKwhEnd" jdbcType="DOUBLE" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="VEE_RESULT_DETAIL" property="veeResultDetail" jdbcType="LONGVARCHAR" />
+		<result column="VEE_ESTMT_DETAIL" property="veeEstmtDetail" jdbcType="LONGVARCHAR" />
+		<result column="VEE_EDIT_DETAIL" property="veeEditDetail" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		DEVICE_ID, TIME_TYPE, NOW_TIME, REF_CODE, ORG_ID, DEPT_ID, LINE_ID, TM_ID, DEVICE_TYPE, 
+	    SUPPLIER, CST_ID, CST_NAME, METER_SORT, MEAS_TYPE, DEVICE_NUM, PTCT, KWH_PA, KWH_PA_PTCT, 
+	    KWH_PR, KWH_PR_PTCT, KWH_RA_PTCT, KWH_RA, KWH_RR_PTCT, KWH_RR, TOTAL_KWH_START, TOTAL_KWH_END, 
+	    TOTAL_KWH, KWH_T1, KWH_T2, KWH_T3, KWH_T4, KWH_T5, KWH_T6, KWH_T7, KWH_T8, OLD_TOTAL_KWH_START, 
+	    OLD_TOTAL_KWH_END, OLD_TOTAL_KWH, REMAIN_KWH, REMAIN_DAYS, LAST_KWH_PA_PTCT, LAST_KWH_PR_PTCT, 
+	    LAST_KWH_RA_PTCT, LAST_KWH_RR_PTCT, LAST_TOTAL_KWH, LAST_KWH_T1, LAST_KWH_T2, LAST_KWH_T3, 
+	    LAST_KWH_T4, LAST_KWH_T5, LAST_KWH_T6, LAST_KWH_T7, LAST_KWH_T8, ACTIVE, CDATE, KWH_PA_PTCT_START, 
+	    KWH_PA_PTCT_END, KWH_PR_PTCT_START, KWH_PR_PTCT_END, KWH_RA_PTCT_START, KWH_RA_PTCT_END, 
+	    KWH_RR_PTCT_START, KWH_RR_PTCT_END,
+		VEE_RESULT_DETAIL,VEE_ESTMT_DETAIL,VEE_EDIT_DETAIL
+	</sql>
+
+	<select id="selectKwhCountByDeviceId" resultType="Integer">
+		select count(*)
+		from MDM_AA_KWH_DETAIL
+		<where>
+			<if test="mdmAaStealDetail.deviceId != null and mdmAaStealDetail.deviceId != ''">
+				and DEVICE_ID = #{mdmAaStealDetail.deviceId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.timeType != null and mdmAaStealDetail.timeType != ''">
+				and TIME_TYPE = #{mdmAaStealDetail.timeType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.startTime != null and mdmAaStealDetail.startTime != ''">
+				and NOW_TIME &gt; #{mdmAaStealDetail.startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.endTime != null and mdmAaStealDetail.endTime != ''">
+				and NOW_TIME &lt; #{mdmAaStealDetail.endTime,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectKwhList" resultMap="KwhResultMap" parameterType="com.inhe.mdm.model.VtMdmAaStealDetail">
+		select
+			NOW_TIME,TOTAL_KWH, KWH_T1, KWH_T2, KWH_T3, KWH_T4
+		from
+		MDM_AA_KWH_DETAIL
+		<where>
+			<if test="mdmAaStealDetail.deviceId != null and mdmAaStealDetail.deviceId != ''">
+				and DEVICE_ID = #{mdmAaStealDetail.deviceId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.timeType != null and mdmAaStealDetail.timeType != ''">
+				and TIME_TYPE = #{mdmAaStealDetail.timeType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.startTime != null and mdmAaStealDetail.startTime != ''">
+				and NOW_TIME &gt; #{mdmAaStealDetail.startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.endTime != null and mdmAaStealDetail.endTime != ''">
+				and NOW_TIME &lt; #{mdmAaStealDetail.endTime,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by NOW_TIME desc
+	</select>
+
+	<select id="selectKwhListByDeviceId" resultMap="KwhResultMap" parameterType="com.inhe.mdm.model.VtMdmAaStealDetail">
+		select
+			NOW_TIME,TOTAL_KWH, KWH_T1, KWH_T2, KWH_T3, KWH_T4
+		from
+		MDM_AA_KWH_DETAIL
+		<where>
+			<if test="mdmAaStealDetail.deviceId != null and mdmAaStealDetail.deviceId != ''">
+				and DEVICE_ID = #{mdmAaStealDetail.deviceId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.orgId != null and mdmAaStealDetail.orgId != ''">
+				and ORG_ID = #{mdmAaStealDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.timeType != null and mdmAaStealDetail.timeType != ''">
+				and TIME_TYPE = #{mdmAaStealDetail.timeType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.startTime != null and mdmAaStealDetail.startTime != ''">
+				and NOW_TIME &gt; #{mdmAaStealDetail.startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaStealDetail.endTime != null and mdmAaStealDetail.endTime != ''">
+				and NOW_TIME &lt; #{mdmAaStealDetail.endTime,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by NOW_TIME desc limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectCountByMeter" resultType="Integer">
+		select count(*)
+		from MDM_AA_KWH_DETAIL A 
+		join MDM_AM_DEVICE B on A.DEVICE_ID = B.ID
+		<where>
+			<if test="mdmAaKwhDetail.deptId != null and mdmAaKwhDetail.deptId != ''">
+				and A.DEPT_ID like concat (#{mdmAaKwhDetail.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaKwhDetail.orgId != null and mdmAaKwhDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaKwhDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwhDetail.timeType != null and mdmAaKwhDetail.timeType != ''">
+				and A.TIME_TYPE = #{mdmAaKwhDetail.timeType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwhDetail.meterSort != null and mdmAaKwhDetail.meterSort != ''">
+				and A.METER_SORT = #{mdmAaKwhDetail.meterSort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwhDetail.nowTime != null and mdmAaKwhDetail.nowTime != ''">
+				and NOW_TIME = #{mdmAaKwhDetail.nowTime,jdbcType=VARCHAR}
+			</if>
+			and B.METER_type = "1"
+			and B.`STATUS` = "0"
+		</where>
+	</select>
+
+	<select id="selectListByMeter" resultMap="KwhResultMap">
+		select
+			A.METER_SORT,A.TOTAL_KWH,A.TOTAL_KWH_START,A.TOTAL_KWH_END,
+			A.VEE_RESULT_DETAIL,A.VEE_ESTMT_DETAIL,A.VEE_EDIT_DETAIL,
+			B.DEVICE_NUM, B.IMPORTANT,B.DEPT_ID,B.ORG_ID,
+			B.DESCRIPTION as METER_NAME,
+			C.DESCRIPTION as LINE_NAME
+		from 
+			MDM_AA_KWH_DETAIL A 
+		join 
+			MDM_AM_DEVICE B on A.DEVICE_ID = B.ID
+		left join 
+			MDM_AM_LINE C on B.LINE_ID = C.ID
+		<where>
+			<if test="mdmAaKwhDetail.deptId != null and mdmAaKwhDetail.deptId != ''">
+				and A.DEPT_ID like concat (#{mdmAaKwhDetail.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaKwhDetail.orgId != null and mdmAaKwhDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaKwhDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwhDetail.timeType != null and mdmAaKwhDetail.timeType != ''">
+				and A.TIME_TYPE = #{mdmAaKwhDetail.timeType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwhDetail.meterSort != null and mdmAaKwhDetail.meterSort != ''">
+				and A.METER_SORT = #{mdmAaKwhDetail.meterSort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaKwhDetail.nowTime != null and mdmAaKwhDetail.nowTime != ''">
+				and NOW_TIME = #{mdmAaKwhDetail.nowTime,jdbcType=VARCHAR}
+			</if>
+			and B.METER_type = "1"
+			and B.`STATUS` = "0"
+		</where>
+		order by A.TOTAL_KWH desc limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AA_KWH_DETAIL
+		where 
+			DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+			and TIME_TYPE = #{timeType,jdbcType=VARCHAR}
+			and NOW_TIME = #{nowTime,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+		delete from MDM_AA_KWH_DETAIL
+		where 
+			DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+			and TIME_TYPE = #{timeType,jdbcType=VARCHAR}
+			and NOW_TIME = #{nowTime,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+		replace into MDM_AA_KWH_DETAIL
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="deviceId != null">
+	        DEVICE_ID,
+	      </if>
+	      <if test="timeType != null">
+	        TIME_TYPE,
+	      </if>
+	      <if test="nowTime != null">
+	        NOW_TIME,
+	      </if>
+	      <if test="refCode != null">
+	        REF_CODE,
+	      </if>
+	      <if test="orgId != null">
+	        ORG_ID,
+	      </if>
+	      <if test="deptId != null">
+	        DEPT_ID,
+	      </if>
+	      <if test="lineId != null">
+	        LINE_ID,
+	      </if>
+	      <if test="tmId != null">
+	        TM_ID,
+	      </if>
+	      <if test="deviceType != null">
+	        DEVICE_TYPE,
+	      </if>
+	      <if test="supplier != null">
+	        SUPPLIER,
+	      </if>
+	      <if test="cstId != null">
+	        CST_ID,
+	      </if>
+	      <if test="cstName != null">
+	        CST_NAME,
+	      </if>
+	      <if test="meterSort != null">
+	        METER_SORT,
+	      </if>
+	      <if test="measType != null">
+	        MEAS_TYPE,
+	      </if>
+	      <if test="deviceNum != null">
+	        DEVICE_NUM,
+	      </if>
+	      <if test="ptct != null">
+	        PTCT,
+	      </if>
+	      <if test="kwhPa != null">
+	        KWH_PA,
+	      </if>
+	      <if test="kwhPaPtct != null">
+	        KWH_PA_PTCT,
+	      </if>
+	      <if test="kwhPr != null">
+	        KWH_PR,
+	      </if>
+	      <if test="kwhPrPtct != null">
+	        KWH_PR_PTCT,
+	      </if>
+	      <if test="kwhRaPtct != null">
+	        KWH_RA_PTCT,
+	      </if>
+	      <if test="kwhRa != null">
+	        KWH_RA,
+	      </if>
+	      <if test="kwhRrPtct != null">
+	        KWH_RR_PTCT,
+	      </if>
+	      <if test="kwhRr != null">
+	        KWH_RR,
+	      </if>
+	      <if test="totalKwhStart != null">
+	        TOTAL_KWH_START,
+	      </if>
+	      <if test="totalKwhEnd != null">
+	        TOTAL_KWH_END,
+	      </if>
+	      <if test="totalKwh != null">
+	        TOTAL_KWH,
+	      </if>
+	      <if test="kwhT1 != null">
+	        KWH_T1,
+	      </if>
+	      <if test="kwhT2 != null">
+	        KWH_T2,
+	      </if>
+	      <if test="kwhT3 != null">
+	        KWH_T3,
+	      </if>
+	      <if test="kwhT4 != null">
+	        KWH_T4,
+	      </if>
+	      <if test="kwhT5 != null">
+	        KWH_T5,
+	      </if>
+	      <if test="kwhT6 != null">
+	        KWH_T6,
+	      </if>
+	      <if test="kwhT7 != null">
+	        KWH_T7,
+	      </if>
+	      <if test="kwhT8 != null">
+	        KWH_T8,
+	      </if>
+	      <if test="oldTotalKwhStart != null">
+	        OLD_TOTAL_KWH_START,
+	      </if>
+	      <if test="oldTotalKwhEnd != null">
+	        OLD_TOTAL_KWH_END,
+	      </if>
+	      <if test="oldTotalKwh != null">
+	        OLD_TOTAL_KWH,
+	      </if>
+	      <if test="remainKwh != null">
+	        REMAIN_KWH,
+	      </if>
+	      <if test="remainDays != null">
+	        REMAIN_DAYS,
+	      </if>
+	      <if test="lastKwhPaPtct != null">
+	        LAST_KWH_PA_PTCT,
+	      </if>
+	      <if test="lastKwhPrPtct != null">
+	        LAST_KWH_PR_PTCT,
+	      </if>
+	      <if test="lastKwhRaPtct != null">
+	        LAST_KWH_RA_PTCT,
+	      </if>
+	      <if test="lastKwhRrPtct != null">
+	        LAST_KWH_RR_PTCT,
+	      </if>
+	      <if test="lastTotalKwh != null">
+	        LAST_TOTAL_KWH,
+	      </if>
+	      <if test="lastKwhT1 != null">
+	        LAST_KWH_T1,
+	      </if>
+	      <if test="lastKwhT2 != null">
+	        LAST_KWH_T2,
+	      </if>
+	      <if test="lastKwhT3 != null">
+	        LAST_KWH_T3,
+	      </if>
+	      <if test="lastKwhT4 != null">
+	        LAST_KWH_T4,
+	      </if>
+	      <if test="lastKwhT5 != null">
+	        LAST_KWH_T5,
+	      </if>
+	      <if test="lastKwhT6 != null">
+	        LAST_KWH_T6,
+	      </if>
+	      <if test="lastKwhT7 != null">
+	        LAST_KWH_T7,
+	      </if>
+	      <if test="lastKwhT8 != null">
+	        LAST_KWH_T8,
+	      </if>
+	      <if test="active != null">
+	        ACTIVE,
+	      </if>
+	      <if test="cdate != null">
+	        CDATE,
+	      </if>
+	      <if test="kwhPaPtctStart != null">
+	        KWH_PA_PTCT_START,
+	      </if>
+	      <if test="kwhPaPtctEnd != null">
+	        KWH_PA_PTCT_END,
+	      </if>
+	      <if test="kwhPrPtctStart != null">
+	        KWH_PR_PTCT_START,
+	      </if>
+	      <if test="kwhPrPtctEnd != null">
+	        KWH_PR_PTCT_END,
+	      </if>
+	      <if test="kwhRaPtctStart != null">
+	        KWH_RA_PTCT_START,
+	      </if>
+	      <if test="kwhRaPtctEnd != null">
+	        KWH_RA_PTCT_END,
+	      </if>
+	      <if test="kwhRrPtctStart != null">
+	        KWH_RR_PTCT_START,
+	      </if>
+	      <if test="kwhRrPtctEnd != null">
+	        KWH_RR_PTCT_END,
+	      </if>
+	      <if test="veeResultDetail != null">
+	        VEE_RESULT_DETAIL,
+	      </if>
+	      <if test="veeEstmtDetail != null">
+	        VEE_ESTMT_DETAIL,
+	      </if>
+	      <if test="veeEditDetail != null">
+	        VEE_EDIT_DETAIL,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="deviceId != null">
+	        #{deviceId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="timeType != null">
+	        #{timeType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="nowTime != null">
+	        #{nowTime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="refCode != null">
+	        #{refCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="orgId != null">
+	        #{orgId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deptId != null">
+	        #{deptId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lineId != null">
+	        #{lineId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="tmId != null">
+	        #{tmId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deviceType != null">
+	        #{deviceType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="supplier != null">
+	        #{supplier,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cstId != null">
+	        #{cstId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cstName != null">
+	        #{cstName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="meterSort != null">
+	        #{meterSort,jdbcType=VARCHAR},
+	      </if>
+	      <if test="measType != null">
+	        #{measType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deviceNum != null">
+	        #{deviceNum,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ptct != null">
+	        #{ptct,jdbcType=VARCHAR},
+	      </if>
+	      <if test="kwhPa != null">
+	        #{kwhPa,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPaPtct != null">
+	        #{kwhPaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPr != null">
+	        #{kwhPr,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPrPtct != null">
+	        #{kwhPrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRaPtct != null">
+	        #{kwhRaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRa != null">
+	        #{kwhRa,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRrPtct != null">
+	        #{kwhRrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRr != null">
+	        #{kwhRr,jdbcType=DOUBLE},
+	      </if>
+	      <if test="totalKwhStart != null">
+	        #{totalKwhStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="totalKwhEnd != null">
+	        #{totalKwhEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="totalKwh != null">
+	        #{totalKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT1 != null">
+	        #{kwhT1,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT2 != null">
+	        #{kwhT2,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT3 != null">
+	        #{kwhT3,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT4 != null">
+	        #{kwhT4,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT5 != null">
+	        #{kwhT5,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT6 != null">
+	        #{kwhT6,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT7 != null">
+	        #{kwhT7,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT8 != null">
+	        #{kwhT8,jdbcType=DOUBLE},
+	      </if>
+	      <if test="oldTotalKwhStart != null">
+	        #{oldTotalKwhStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="oldTotalKwhEnd != null">
+	        #{oldTotalKwhEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="oldTotalKwh != null">
+	        #{oldTotalKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="remainKwh != null">
+	        #{remainKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="remainDays != null">
+	        #{remainDays,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhPaPtct != null">
+	        #{lastKwhPaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhPrPtct != null">
+	        #{lastKwhPrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhRaPtct != null">
+	        #{lastKwhRaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhRrPtct != null">
+	        #{lastKwhRrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastTotalKwh != null">
+	        #{lastTotalKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT1 != null">
+	        #{lastKwhT1,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT2 != null">
+	        #{lastKwhT2,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT3 != null">
+	        #{lastKwhT3,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT4 != null">
+	        #{lastKwhT4,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT5 != null">
+	        #{lastKwhT5,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT6 != null">
+	        #{lastKwhT6,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT7 != null">
+	        #{lastKwhT7,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT8 != null">
+	        #{lastKwhT8,jdbcType=DOUBLE},
+	      </if>
+	      <if test="active != null">
+	        #{active,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cdate != null">
+	        #{cdate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="kwhPaPtctStart != null">
+	        #{kwhPaPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPaPtctEnd != null">
+	        #{kwhPaPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPrPtctStart != null">
+	        #{kwhPrPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPrPtctEnd != null">
+	        #{kwhPrPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRaPtctStart != null">
+	        #{kwhRaPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRaPtctEnd != null">
+	        #{kwhRaPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRrPtctStart != null">
+	        #{kwhRrPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRrPtctEnd != null">
+	        #{kwhRrPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="veeResultDetail != null">
+	        #{veeResultDetail,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="veeEstmtDetail != null">
+	        #{veeEstmtDetail,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="veeEditDetail != null">
+	        #{veeEditDetail,jdbcType=LONGVARCHAR},
+	      </if>
+	    </trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+		update MDM_AA_KWH_DETAIL
+	    <set>
+	      <if test="refCode != null">
+	        REF_CODE = #{refCode,jdbcType=VARCHAR},
+	      </if>
+	      <if test="orgId != null">
+	        ORG_ID = #{orgId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deptId != null">
+	        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lineId != null">
+	        LINE_ID = #{lineId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="tmId != null">
+	        TM_ID = #{tmId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deviceType != null">
+	        DEVICE_TYPE = #{deviceType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="supplier != null">
+	        SUPPLIER = #{supplier,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cstId != null">
+	        CST_ID = #{cstId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cstName != null">
+	        CST_NAME = #{cstName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="meterSort != null">
+	        METER_SORT = #{meterSort,jdbcType=VARCHAR},
+	      </if>
+	      <if test="measType != null">
+	        MEAS_TYPE = #{measType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deviceNum != null">
+	        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ptct != null">
+	        PTCT = #{ptct,jdbcType=VARCHAR},
+	      </if>
+	      <if test="kwhPa != null">
+	        KWH_PA = #{kwhPa,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPaPtct != null">
+	        KWH_PA_PTCT = #{kwhPaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPr != null">
+	        KWH_PR = #{kwhPr,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPrPtct != null">
+	        KWH_PR_PTCT = #{kwhPrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRaPtct != null">
+	        KWH_RA_PTCT = #{kwhRaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRa != null">
+	        KWH_RA = #{kwhRa,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRrPtct != null">
+	        KWH_RR_PTCT = #{kwhRrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRr != null">
+	        KWH_RR = #{kwhRr,jdbcType=DOUBLE},
+	      </if>
+	      <if test="totalKwhStart != null">
+	        TOTAL_KWH_START = #{totalKwhStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="totalKwhEnd != null">
+	        TOTAL_KWH_END = #{totalKwhEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="totalKwh != null">
+	        TOTAL_KWH = #{totalKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT1 != null">
+	        KWH_T1 = #{kwhT1,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT2 != null">
+	        KWH_T2 = #{kwhT2,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT3 != null">
+	        KWH_T3 = #{kwhT3,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT4 != null">
+	        KWH_T4 = #{kwhT4,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT5 != null">
+	        KWH_T5 = #{kwhT5,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT6 != null">
+	        KWH_T6 = #{kwhT6,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT7 != null">
+	        KWH_T7 = #{kwhT7,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhT8 != null">
+	        KWH_T8 = #{kwhT8,jdbcType=DOUBLE},
+	      </if>
+	      <if test="oldTotalKwhStart != null">
+	        OLD_TOTAL_KWH_START = #{oldTotalKwhStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="oldTotalKwhEnd != null">
+	        OLD_TOTAL_KWH_END = #{oldTotalKwhEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="oldTotalKwh != null">
+	        OLD_TOTAL_KWH = #{oldTotalKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="remainKwh != null">
+	        REMAIN_KWH = #{remainKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="remainDays != null">
+	        REMAIN_DAYS = #{remainDays,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhPaPtct != null">
+	        LAST_KWH_PA_PTCT = #{lastKwhPaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhPrPtct != null">
+	        LAST_KWH_PR_PTCT = #{lastKwhPrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhRaPtct != null">
+	        LAST_KWH_RA_PTCT = #{lastKwhRaPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhRrPtct != null">
+	        LAST_KWH_RR_PTCT = #{lastKwhRrPtct,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastTotalKwh != null">
+	        LAST_TOTAL_KWH = #{lastTotalKwh,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT1 != null">
+	        LAST_KWH_T1 = #{lastKwhT1,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT2 != null">
+	        LAST_KWH_T2 = #{lastKwhT2,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT3 != null">
+	        LAST_KWH_T3 = #{lastKwhT3,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT4 != null">
+	        LAST_KWH_T4 = #{lastKwhT4,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT5 != null">
+	        LAST_KWH_T5 = #{lastKwhT5,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT6 != null">
+	        LAST_KWH_T6 = #{lastKwhT6,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT7 != null">
+	        LAST_KWH_T7 = #{lastKwhT7,jdbcType=DOUBLE},
+	      </if>
+	      <if test="lastKwhT8 != null">
+	        LAST_KWH_T8 = #{lastKwhT8,jdbcType=DOUBLE},
+	      </if>
+	      <if test="active != null">
+	        ACTIVE = #{active,jdbcType=VARCHAR},
+	      </if>
+	      <if test="cdate != null">
+	        CDATE = #{cdate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="kwhPaPtctStart != null">
+	        KWH_PA_PTCT_START = #{kwhPaPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPaPtctEnd != null">
+	        KWH_PA_PTCT_END = #{kwhPaPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPrPtctStart != null">
+	        KWH_PR_PTCT_START = #{kwhPrPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhPrPtctEnd != null">
+	        KWH_PR_PTCT_END = #{kwhPrPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRaPtctStart != null">
+	        KWH_RA_PTCT_START = #{kwhRaPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRaPtctEnd != null">
+	        KWH_RA_PTCT_END = #{kwhRaPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRrPtctStart != null">
+	        KWH_RR_PTCT_START = #{kwhRrPtctStart,jdbcType=DOUBLE},
+	      </if>
+	      <if test="kwhRrPtctEnd != null">
+	        KWH_RR_PTCT_END = #{kwhRrPtctEnd,jdbcType=DOUBLE},
+	      </if>
+	      <if test="veeResultDetail != null">
+	        VEE_RESULT_DETAIL = #{veeResultDetail,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="veeEstmtDetail != null">
+	        VEE_ESTMT_DETAIL = #{veeEstmtDetail,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="veeEditDetail != null">
+	        VEE_EDIT_DETAIL = #{veeEditDetail,jdbcType=LONGVARCHAR},
+	      </if>
+	    </set>
+	    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+	      and TIME_TYPE = #{timeType,jdbcType=VARCHAR}
+	      and NOW_TIME = #{nowTime,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateResultByPrimaryKey" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+	  	update MDM_AA_KWH_DETAIL
+	  	<set>
+	  	  <if test="totalKwh != null">
+	  	    TOTAL_KWH = #{totalKwh,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhPaPtct != null">
+	  	    KWH_PA_PTCT = #{kwhPaPtct,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhRaPtct != null">
+	  	    KWH_RA_PTCT = #{kwhRaPtct,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhPrPtct != null">
+	  	    KWH_PR_PTCT = #{kwhPrPtct,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhRrPtct != null">
+	  	  	KWH_RR_PTCT = #{kwhRrPtct,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="veeResultDetail != null" >
+			VEE_RESULT_DETAIL = #{veeResultDetail,jdbcType=LONGVARCHAR},
+		  </if>
+	  	  <if test="veeEstmtDetail != null" >
+			VEE_ESTMT_DETAIL = #{veeEstmtDetail,jdbcType=LONGVARCHAR},
+		  </if>
+	  	  <if test="veeEditDetail != null" >
+			VEE_EDIT_DETAIL = #{veeEditDetail,jdbcType=LONGVARCHAR},
+		  </if>
+	  	  <if test="kwhPaPtctStart != null">
+	  	    KWH_PA_PTCT_START = #{kwhPaPtctStart,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhPaPtctEnd != null">
+	  	    KWH_PA_PTCT_END = #{kwhPaPtctEnd,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhPrPtctStart != null">
+	  	    KWH_PR_PTCT_START = #{kwhPrPtctStart,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhPrPtctEnd != null">
+	  	    KWH_PR_PTCT_END = #{kwhPrPtctEnd,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhRaPtctStart != null">
+	  	    KWH_RA_PTCT_START = #{kwhRaPtctStart,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhRaPtctEnd != null">
+	  	    KWH_RA_PTCT_END = #{kwhRaPtctEnd,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhRrPtctStart != null">
+	  	    KWH_RR_PTCT_START = #{kwhRrPtctStart,jdbcType=DOUBLE},
+	  	  </if>
+	  	  <if test="kwhRrPtctEnd != null">
+	  	    KWH_RR_PTCT_END = #{kwhRrPtctEnd,jdbcType=DOUBLE},
+	  	  </if>
+	  	</set>
+	  	where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+	      and TIME_TYPE = #{timeType,jdbcType=VARCHAR}
+	      and NOW_TIME = #{nowTime,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectSummary" resultType="com.inhe.mdm.model.VtMdmAaKwhSummary" parameterType="com.inhe.mdm.model.MdmAaKwhDetail">
+  	select 
+  	    A.ORG_ID as orgId,
+  	    max(A.DEPT_ID) as deptId,
+		sum(A.TOTAL_KWH_START) as totalKwhStart,
+		sum(A.TOTAL_KWH_END) as totalKwhEnd,
+		sum(A.TOTAL_KWH) as totalKwh,
+        sum(case when (B.TYPE='1' AND A.METER_SORT='0') then A.TOTAL_KWH else NULL end) AS priLinePriTmKwh, 
+        sum(case when (B.TYPE='0' AND A.METER_SORT='1' AND C.LOAD_TYPE='0') then A.TOTAL_KWH else NULL end) AS pubLinePriTmKwh, 
+        sum(case when (B.TYPE='0' AND A.METER_SORT='2' AND C.LOAD_TYPE='1') then A.TOTAL_KWH else NULL end) AS pubLinePubTmKwh,
+        (select count(*) from MDM_AM_TM d where d.line_id = #{lineId,jdbcType=VARCHAR} and d.status='0') as YearBasis
+	from MDM_AA_KWH_DETAIL A
+        left join MDM_AM_LINE B ON B.ID=A.LINE_ID 
+        left join MDM_AM_TM C ON C.ID=A.TM_ID  
+	where 
+	    A.NOW_TIME=#{nowTime,jdbcType=VARCHAR} and
+	    A.TIME_TYPE=#{timeType,jdbcType=VARCHAR} and
+	    A.ACTIVE='Y' and
+ 		A.LINE_ID=#{lineId,jdbcType=VARCHAR} 
+	 	group by A.ORG_ID
+  </select>
+
+</mapper>

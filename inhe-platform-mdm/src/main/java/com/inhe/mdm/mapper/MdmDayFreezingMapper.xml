@@ -1,0 +1,1100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inhe.mdm.dao.MdmDayFreezingDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmDayFreezing" >
+    <id column="DATA_TYPE" jdbcType="INTEGER" property="dataType" />
+    <id column="DEVICE_ID" jdbcType="VARCHAR" property="deviceId" />
+    <id column="DATA_PERIOD" jdbcType="VARCHAR" property="dataPeriod" />
+    <id column="FZ_DATA_TYPE" jdbcType="VARCHAR" property="fzDataType" />
+    <result column="DEVICE_NUM" jdbcType="VARCHAR" property="deviceNum" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="DEPT_ID" jdbcType="VARCHAR" property="deptId" />
+    <result column="READ_TYPE" jdbcType="VARCHAR" property="readType" />
+    <result column="READ_STATUS" jdbcType="VARCHAR" property="readStatus" />
+    <result column="SC_TIMES" jdbcType="SMALLINT" property="scTimes" />
+    <result column="CMD_CODE" jdbcType="VARCHAR" property="cmdCode" />
+    <result column="OP_STATUS" jdbcType="VARCHAR" property="opStatus" />
+    <result column="VALUE_FREEZING" jdbcType="DOUBLE" property="valueFreezing" />
+    <result column="READ_TIME" jdbcType="TIMESTAMP" property="readTime" />
+    <result column="PTCT" jdbcType="VARCHAR" property="ptct" />
+    <result column="PTCT_VALUE_FREEZING" jdbcType="DOUBLE" property="ptctValueFreezing" />
+    <result column="VALUE_FREEZING_T1" jdbcType="DOUBLE" property="valueFreezingT1" />
+    <result column="PTCT_VALUE_FREEZING_T1" jdbcType="DOUBLE" property="ptctValueFreezingT1" />
+    <result column="VALUE_FREEZING_T2" jdbcType="DOUBLE" property="valueFreezingT2" />
+    <result column="PTCT_VALUE_FREEZING_T2" jdbcType="DOUBLE" property="ptctValueFreezingT2" />
+    <result column="VALUE_FREEZING_T3" jdbcType="DOUBLE" property="valueFreezingT3" />
+    <result column="PTCT_VALUE_FREEZING_T3" jdbcType="DOUBLE" property="ptctValueFreezingT3" />
+    <result column="VALUE_FREEZING_T4" jdbcType="DOUBLE" property="valueFreezingT4" />
+    <result column="PTCT_VALUE_FREEZING_T4" jdbcType="DOUBLE" property="ptctValueFreezingT4" />
+    <result column="VALUE_FREEZING_T5" jdbcType="DOUBLE" property="valueFreezingT5" />
+    <result column="PTCT_VALUE_FREEZING_T5" jdbcType="DOUBLE" property="ptctValueFreezingT5" />
+    <result column="VALUE_FREEZING_T6" jdbcType="DOUBLE" property="valueFreezingT6" />
+    <result column="PTCT_VALUE_FREEZING_T6" jdbcType="DOUBLE" property="ptctValueFreezingT6" />
+    <result column="VALUE_FREEZING_T7" jdbcType="DOUBLE" property="valueFreezingT7" />
+    <result column="PTCT_VALUE_FREEZING_T7" jdbcType="DOUBLE" property="ptctValueFreezingT7" />
+    <result column="VALUE_FREEZING_T8" jdbcType="DOUBLE" property="valueFreezingT8" />
+    <result column="PTCT_VALUE_FREEZING_T8" jdbcType="DOUBLE" property="ptctValueFreezingT8" />
+    <result column="KWH_PA" jdbcType="DOUBLE" property="kwhPa" />
+    <result column="KWH_PA_PTCT" jdbcType="DOUBLE" property="kwhPaPtct" />
+    <result column="KWH_PR" jdbcType="DOUBLE" property="kwhPr" />
+    <result column="KWH_PR_PTCT" jdbcType="DOUBLE" property="kwhPrPtct" />
+    <result column="KWH_RA" jdbcType="DOUBLE" property="kwhRa" />
+    <result column="KWH_RA_PTCT" jdbcType="DOUBLE" property="kwhRaPtct" />
+    <result column="KWH_RR" jdbcType="DOUBLE" property="kwhRr" />
+    <result column="KWH_RR_PTCT" jdbcType="DOUBLE" property="kwhRrPtct" />
+    <result column="APP_RCV_STATUS" jdbcType="VARCHAR" property="appRcvStatus" />
+    <result column="APP_RECEIVER" jdbcType="VARCHAR" property="appReceiver" />
+    <result column="DATA_SOURCE" jdbcType="VARCHAR" property="dataSource" />
+    <result column="FACTOR" jdbcType="DECIMAL" property="factor" />
+    <result column="COMPENSATE_RATE" jdbcType="DECIMAL" property="compensateRate" />
+    <result column="MAX_DEMAND" jdbcType="DECIMAL" property="maxDemand" />
+    <result column="MAX_DEMAND_TIME" jdbcType="TIMESTAMP" property="maxDemandTime" />
+    <result column="COPERATOR" jdbcType="VARCHAR" property="coperator" />
+    <result column="CDATE" jdbcType="TIMESTAMP" property="cdate" />
+    <result column="UDATE" jdbcType="TIMESTAMP" property="udate" />
+    <result column="KWH_PA_T1" jdbcType="DOUBLE" property="kwhPaT1" />
+    <result column="KWH_PA_PTCT_T1" jdbcType="DOUBLE" property="kwhPaPtctT1" />
+    <result column="KWH_PA_T2" jdbcType="DOUBLE" property="kwhPaT2" />
+    <result column="KWH_PA_PTCT_T2" jdbcType="DOUBLE" property="kwhPaPtctT2" />
+    <result column="KWH_PA_T3" jdbcType="DOUBLE" property="kwhPaT3" />
+    <result column="KWH_PA_PTCT_T3" jdbcType="DOUBLE" property="kwhPaPtctT3" />
+    <result column="KWH_PA_T4" jdbcType="DOUBLE" property="kwhPaT4" />
+    <result column="KWH_PA_PTCT_T4" jdbcType="DOUBLE" property="kwhPaPtctT4" />
+    <result column="KWH_PR_T1" jdbcType="DOUBLE" property="kwhPrT1" />
+    <result column="KWH_PR_PTCT_T1" jdbcType="DOUBLE" property="kwhPrPtctT1" />
+    <result column="KWH_PR_T2" jdbcType="DOUBLE" property="kwhPrT2" />
+    <result column="KWH_PR_PTCT_T2" jdbcType="DOUBLE" property="kwhPrPtctT2" />
+    <result column="KWH_PR_T3" jdbcType="DOUBLE" property="kwhPrT3" />
+    <result column="KWH_PR_PTCT_T3" jdbcType="DOUBLE" property="kwhPrPtctT3" />
+    <result column="KWH_PR_T4" jdbcType="DOUBLE" property="kwhPrT4" />
+    <result column="KWH_PR_PTCT_T4" jdbcType="DOUBLE" property="kwhPrPtctT4" />
+    <result column="KWH_RA_T1" jdbcType="DOUBLE" property="kwhRaT1" />
+    <result column="KWH_RA_PTCT_T1" jdbcType="DOUBLE" property="kwhRaPtctT1" />
+    <result column="KWH_RA_T2" jdbcType="DOUBLE" property="kwhRaT2" />
+    <result column="KWH_RA_PTCT_T2" jdbcType="DOUBLE" property="kwhRaPtctT2" />
+    <result column="KWH_RA_T3" jdbcType="DOUBLE" property="kwhRaT3" />
+    <result column="KWH_RA_PTCT_T3" jdbcType="DOUBLE" property="kwhRaPtctT3" />
+    <result column="KWH_RA_T4" jdbcType="DOUBLE" property="kwhRaT4" />
+    <result column="KWH_RA_PTCT_T4" jdbcType="DOUBLE" property="kwhRaPtctT4" />
+    <result column="KWH_RR_T1" jdbcType="DOUBLE" property="kwhRrT1" />
+    <result column="KWH_RR_PTCT_T1" jdbcType="DOUBLE" property="kwhRrPtctT1" />
+    <result column="KWH_RR_T2" jdbcType="DOUBLE" property="kwhRrT2" />
+    <result column="KWH_RR_PTCT_T2" jdbcType="DOUBLE" property="kwhRrPtctT2" />
+    <result column="KWH_RR_T3" jdbcType="DOUBLE" property="kwhRrT3" />
+    <result column="KWH_RR_PTCT_T3" jdbcType="DOUBLE" property="kwhRrPtctT3" />
+    <result column="KWH_RR_T4" jdbcType="DOUBLE" property="kwhRrT4" />
+    <result column="KWH_RR_PTCT_T4" jdbcType="DOUBLE" property="kwhRrPtctT4" />
+    <result column="VEE_RESULT_DETAIL" jdbcType="LONGVARCHAR" property="veeResultDetail" />
+    <result column="VEE_ESTMT_DETAIL" jdbcType="LONGVARCHAR" property="veeEstmtDetail" />
+    <result column="VEE_EDIT_DETAIL" jdbcType="LONGVARCHAR" property="veeEditDetail" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    DATA_TYPE, DEVICE_ID, DATA_PERIOD, FZ_DATA_TYPE, DEVICE_NUM, ORG_ID, DEPT_ID, READ_TYPE, 
+    READ_STATUS, SC_TIMES, CMD_CODE, OP_STATUS, VALUE_FREEZING, READ_TIME, PTCT, PTCT_VALUE_FREEZING, 
+    VALUE_FREEZING_T1, PTCT_VALUE_FREEZING_T1, VALUE_FREEZING_T2, PTCT_VALUE_FREEZING_T2, 
+    VALUE_FREEZING_T3, PTCT_VALUE_FREEZING_T3, VALUE_FREEZING_T4, PTCT_VALUE_FREEZING_T4, 
+    VALUE_FREEZING_T5, PTCT_VALUE_FREEZING_T5, VALUE_FREEZING_T6, PTCT_VALUE_FREEZING_T6, 
+    VALUE_FREEZING_T7, PTCT_VALUE_FREEZING_T7, VALUE_FREEZING_T8, PTCT_VALUE_FREEZING_T8, 
+    KWH_PA, KWH_PA_PTCT, KWH_PR, KWH_PR_PTCT, KWH_RA, KWH_RA_PTCT, KWH_RR, KWH_RR_PTCT, 
+    APP_RCV_STATUS, APP_RECEIVER, DATA_SOURCE, FACTOR, COMPENSATE_RATE, MAX_DEMAND, MAX_DEMAND_TIME, 
+    COPERATOR, CDATE, UDATE, KWH_PA_T1, KWH_PA_PTCT_T1, KWH_PA_T2, KWH_PA_PTCT_T2, KWH_PA_T3, 
+    KWH_PA_PTCT_T3, KWH_PA_T4, KWH_PA_PTCT_T4, KWH_PR_T1, KWH_PR_PTCT_T1, KWH_PR_T2, 
+    KWH_PR_PTCT_T2, KWH_PR_T3, KWH_PR_PTCT_T3, KWH_PR_T4, KWH_PR_PTCT_T4, KWH_RA_T1, 
+    KWH_RA_PTCT_T1, KWH_RA_T2, KWH_RA_PTCT_T2, KWH_RA_T3, KWH_RA_PTCT_T3, KWH_RA_T4, 
+    KWH_RA_PTCT_T4, KWH_RR_T1, KWH_RR_PTCT_T1, KWH_RR_T2, KWH_RR_PTCT_T2, KWH_RR_T3, 
+    KWH_RR_PTCT_T3, KWH_RR_T4, KWH_RR_PTCT_T4, VEE_RESULT_DETAIL, VEE_ESTMT_DETAIL, VEE_EDIT_DETAIL
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="com.inhe.mdm.model.MdmDayFreezing" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_DAY_FREEZING
+    where DATA_TYPE = #{dataType,jdbcType=INTEGER}
+      and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and DATA_PERIOD = #{dataPeriod,jdbcType=VARCHAR}
+      <if test="fzDataType != null and fzDataType != ''">
+        and FZ_DATA_TYPE = #{fzDataType,jdbcType=VARCHAR}
+      </if> 
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmDayFreezing">
+    delete from MDM_DAY_FREEZING
+    where DATA_TYPE = #{dataType,jdbcType=INTEGER}
+      and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and DATA_PERIOD = #{dataPeriod,jdbcType=VARCHAR}
+      and FZ_DATA_TYPE = #{fzDataType,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmDayFreezing">
+    insert into MDM_DAY_FREEZING
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dataType != null">
+        DATA_TYPE,
+      </if>
+      <if test="deviceId != null">
+        DEVICE_ID,
+      </if>
+      <if test="dataPeriod != null">
+        DATA_PERIOD,
+      </if>
+      <if test="fzDataType != null">
+        FZ_DATA_TYPE,
+      </if>
+      <if test="deviceNum != null">
+        DEVICE_NUM,
+      </if>
+      <if test="orgId != null">
+        ORG_ID,
+      </if>
+      <if test="deptId != null">
+        DEPT_ID,
+      </if>
+      <if test="readType != null">
+        READ_TYPE,
+      </if>
+      <if test="readStatus != null">
+        READ_STATUS,
+      </if>
+      <if test="scTimes != null">
+        SC_TIMES,
+      </if>
+      <if test="cmdCode != null">
+        CMD_CODE,
+      </if>
+      <if test="opStatus != null">
+        OP_STATUS,
+      </if>
+      <if test="valueFreezing != null">
+        VALUE_FREEZING,
+      </if>
+      <if test="readTime != null">
+        READ_TIME,
+      </if>
+      <if test="ptct != null">
+        PTCT,
+      </if>
+      <if test="ptctValueFreezing != null">
+        PTCT_VALUE_FREEZING,
+      </if>
+      <if test="valueFreezingT1 != null">
+        VALUE_FREEZING_T1,
+      </if>
+      <if test="ptctValueFreezingT1 != null">
+        PTCT_VALUE_FREEZING_T1,
+      </if>
+      <if test="valueFreezingT2 != null">
+        VALUE_FREEZING_T2,
+      </if>
+      <if test="ptctValueFreezingT2 != null">
+        PTCT_VALUE_FREEZING_T2,
+      </if>
+      <if test="valueFreezingT3 != null">
+        VALUE_FREEZING_T3,
+      </if>
+      <if test="ptctValueFreezingT3 != null">
+        PTCT_VALUE_FREEZING_T3,
+      </if>
+      <if test="valueFreezingT4 != null">
+        VALUE_FREEZING_T4,
+      </if>
+      <if test="ptctValueFreezingT4 != null">
+        PTCT_VALUE_FREEZING_T4,
+      </if>
+      <if test="valueFreezingT5 != null">
+        VALUE_FREEZING_T5,
+      </if>
+      <if test="ptctValueFreezingT5 != null">
+        PTCT_VALUE_FREEZING_T5,
+      </if>
+      <if test="valueFreezingT6 != null">
+        VALUE_FREEZING_T6,
+      </if>
+      <if test="ptctValueFreezingT6 != null">
+        PTCT_VALUE_FREEZING_T6,
+      </if>
+      <if test="valueFreezingT7 != null">
+        VALUE_FREEZING_T7,
+      </if>
+      <if test="ptctValueFreezingT7 != null">
+        PTCT_VALUE_FREEZING_T7,
+      </if>
+      <if test="valueFreezingT8 != null">
+        VALUE_FREEZING_T8,
+      </if>
+      <if test="ptctValueFreezingT8 != null">
+        PTCT_VALUE_FREEZING_T8,
+      </if>
+      <if test="kwhPa != null">
+        KWH_PA,
+      </if>
+      <if test="kwhPaPtct != null">
+        KWH_PA_PTCT,
+      </if>
+      <if test="kwhPr != null">
+        KWH_PR,
+      </if>
+      <if test="kwhPrPtct != null">
+        KWH_PR_PTCT,
+      </if>
+      <if test="kwhRa != null">
+        KWH_RA,
+      </if>
+      <if test="kwhRaPtct != null">
+        KWH_RA_PTCT,
+      </if>
+      <if test="kwhRr != null">
+        KWH_RR,
+      </if>
+      <if test="kwhRrPtct != null">
+        KWH_RR_PTCT,
+      </if>
+      <if test="appRcvStatus != null">
+        APP_RCV_STATUS,
+      </if>
+      <if test="appReceiver != null">
+        APP_RECEIVER,
+      </if>
+      <if test="dataSource != null">
+        DATA_SOURCE,
+      </if>
+      <if test="factor != null">
+        FACTOR,
+      </if>
+      <if test="compensateRate != null">
+        COMPENSATE_RATE,
+      </if>
+      <if test="maxDemand != null">
+        MAX_DEMAND,
+      </if>
+      <if test="maxDemandTime != null">
+        MAX_DEMAND_TIME,
+      </if>
+      <if test="coperator != null">
+        COPERATOR,
+      </if>
+      <if test="cdate != null">
+        CDATE,
+      </if>
+      <if test="udate != null">
+        UDATE,
+      </if>
+      <if test="kwhPaT1 != null">
+        KWH_PA_T1,
+      </if>
+      <if test="kwhPaPtctT1 != null">
+        KWH_PA_PTCT_T1,
+      </if>
+      <if test="kwhPaT2 != null">
+        KWH_PA_T2,
+      </if>
+      <if test="kwhPaPtctT2 != null">
+        KWH_PA_PTCT_T2,
+      </if>
+      <if test="kwhPaT3 != null">
+        KWH_PA_T3,
+      </if>
+      <if test="kwhPaPtctT3 != null">
+        KWH_PA_PTCT_T3,
+      </if>
+      <if test="kwhPaT4 != null">
+        KWH_PA_T4,
+      </if>
+      <if test="kwhPaPtctT4 != null">
+        KWH_PA_PTCT_T4,
+      </if>
+      <if test="kwhPrT1 != null">
+        KWH_PR_T1,
+      </if>
+      <if test="kwhPrPtctT1 != null">
+        KWH_PR_PTCT_T1,
+      </if>
+      <if test="kwhPrT2 != null">
+        KWH_PR_T2,
+      </if>
+      <if test="kwhPrPtctT2 != null">
+        KWH_PR_PTCT_T2,
+      </if>
+      <if test="kwhPrT3 != null">
+        KWH_PR_T3,
+      </if>
+      <if test="kwhPrPtctT3 != null">
+        KWH_PR_PTCT_T3,
+      </if>
+      <if test="kwhPrT4 != null">
+        KWH_PR_T4,
+      </if>
+      <if test="kwhPrPtctT4 != null">
+        KWH_PR_PTCT_T4,
+      </if>
+      <if test="kwhRaT1 != null">
+        KWH_RA_T1,
+      </if>
+      <if test="kwhRaPtctT1 != null">
+        KWH_RA_PTCT_T1,
+      </if>
+      <if test="kwhRaT2 != null">
+        KWH_RA_T2,
+      </if>
+      <if test="kwhRaPtctT2 != null">
+        KWH_RA_PTCT_T2,
+      </if>
+      <if test="kwhRaT3 != null">
+        KWH_RA_T3,
+      </if>
+      <if test="kwhRaPtctT3 != null">
+        KWH_RA_PTCT_T3,
+      </if>
+      <if test="kwhRaT4 != null">
+        KWH_RA_T4,
+      </if>
+      <if test="kwhRaPtctT4 != null">
+        KWH_RA_PTCT_T4,
+      </if>
+      <if test="kwhRrT1 != null">
+        KWH_RR_T1,
+      </if>
+      <if test="kwhRrPtctT1 != null">
+        KWH_RR_PTCT_T1,
+      </if>
+      <if test="kwhRrT2 != null">
+        KWH_RR_T2,
+      </if>
+      <if test="kwhRrPtctT2 != null">
+        KWH_RR_PTCT_T2,
+      </if>
+      <if test="kwhRrT3 != null">
+        KWH_RR_T3,
+      </if>
+      <if test="kwhRrPtctT3 != null">
+        KWH_RR_PTCT_T3,
+      </if>
+      <if test="kwhRrT4 != null">
+        KWH_RR_T4,
+      </if>
+      <if test="kwhRrPtctT4 != null">
+        KWH_RR_PTCT_T4,
+      </if>
+      <if test="veeResultDetail != null">
+        VEE_RESULT_DETAIL,
+      </if>
+      <if test="veeEstmtDetail != null">
+        VEE_ESTMT_DETAIL,
+      </if>
+      <if test="veeEditDetail != null">
+        VEE_EDIT_DETAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dataType != null">
+        #{dataType,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataPeriod != null">
+        #{dataPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="fzDataType != null">
+        #{fzDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null">
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="readType != null">
+        #{readType,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null">
+        #{readStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="scTimes != null">
+        #{scTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="cmdCode != null">
+        #{cmdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="opStatus != null">
+        #{opStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="valueFreezing != null">
+        #{valueFreezing,jdbcType=DOUBLE},
+      </if>
+      <if test="readTime != null">
+        #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ptct != null">
+        #{ptct,jdbcType=VARCHAR},
+      </if>
+      <if test="ptctValueFreezing != null">
+        #{ptctValueFreezing,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT1 != null">
+        #{valueFreezingT1,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT1 != null">
+        #{ptctValueFreezingT1,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT2 != null">
+        #{valueFreezingT2,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT2 != null">
+        #{ptctValueFreezingT2,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT3 != null">
+        #{valueFreezingT3,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT3 != null">
+        #{ptctValueFreezingT3,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT4 != null">
+        #{valueFreezingT4,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT4 != null">
+        #{ptctValueFreezingT4,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT5 != null">
+        #{valueFreezingT5,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT5 != null">
+        #{ptctValueFreezingT5,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT6 != null">
+        #{valueFreezingT6,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT6 != null">
+        #{ptctValueFreezingT6,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT7 != null">
+        #{valueFreezingT7,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT7 != null">
+        #{ptctValueFreezingT7,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT8 != null">
+        #{valueFreezingT8,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT8 != null">
+        #{ptctValueFreezingT8,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPa != null">
+        #{kwhPa,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtct != null">
+        #{kwhPaPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPr != null">
+        #{kwhPr,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtct != null">
+        #{kwhPrPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRa != null">
+        #{kwhRa,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtct != null">
+        #{kwhRaPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRr != null">
+        #{kwhRr,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtct != null">
+        #{kwhRrPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="appRcvStatus != null">
+        #{appRcvStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="appReceiver != null">
+        #{appReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null">
+        #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="factor != null">
+        #{factor,jdbcType=DECIMAL},
+      </if>
+      <if test="compensateRate != null">
+        #{compensateRate,jdbcType=DECIMAL},
+      </if>
+      <if test="maxDemand != null">
+        #{maxDemand,jdbcType=DECIMAL},
+      </if>
+      <if test="maxDemandTime != null">
+        #{maxDemandTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coperator != null">
+        #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null">
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udate != null">
+        #{udate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kwhPaT1 != null">
+        #{kwhPaT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT1 != null">
+        #{kwhPaPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT2 != null">
+        #{kwhPaT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT2 != null">
+        #{kwhPaPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT3 != null">
+        #{kwhPaT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT3 != null">
+        #{kwhPaPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT4 != null">
+        #{kwhPaT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT4 != null">
+        #{kwhPaPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT1 != null">
+        #{kwhPrT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT1 != null">
+        #{kwhPrPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT2 != null">
+        #{kwhPrT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT2 != null">
+        #{kwhPrPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT3 != null">
+        #{kwhPrT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT3 != null">
+        #{kwhPrPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT4 != null">
+        #{kwhPrT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT4 != null">
+        #{kwhPrPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT1 != null">
+        #{kwhRaT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT1 != null">
+        #{kwhRaPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT2 != null">
+        #{kwhRaT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT2 != null">
+        #{kwhRaPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT3 != null">
+        #{kwhRaT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT3 != null">
+        #{kwhRaPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT4 != null">
+        #{kwhRaT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT4 != null">
+        #{kwhRaPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT1 != null">
+        #{kwhRrT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT1 != null">
+        #{kwhRrPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT2 != null">
+        #{kwhRrT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT2 != null">
+        #{kwhRrPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT3 != null">
+        #{kwhRrT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT3 != null">
+        #{kwhRrPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT4 != null">
+        #{kwhRrT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT4 != null">
+        #{kwhRrPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="veeResultDetail != null">
+        #{veeResultDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="veeEstmtDetail != null">
+        #{veeEstmtDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="veeEditDetail != null">
+        #{veeEditDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmDayFreezing">
+    update MDM_DAY_FREEZING
+    <set>
+      <if test="deviceNum != null">
+        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="readType != null">
+        READ_TYPE = #{readType,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null">
+        READ_STATUS = #{readStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="scTimes != null">
+        SC_TIMES = #{scTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="cmdCode != null">
+        CMD_CODE = #{cmdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="opStatus != null">
+        OP_STATUS = #{opStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="valueFreezing != null">
+        VALUE_FREEZING = #{valueFreezing,jdbcType=DOUBLE},
+      </if>
+      <if test="readTime != null">
+        READ_TIME = #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ptct != null">
+        PTCT = #{ptct,jdbcType=VARCHAR},
+      </if>
+      <if test="ptctValueFreezing != null">
+        PTCT_VALUE_FREEZING = #{ptctValueFreezing,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT1 != null">
+        VALUE_FREEZING_T1 = #{valueFreezingT1,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT1 != null">
+        PTCT_VALUE_FREEZING_T1 = #{ptctValueFreezingT1,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT2 != null">
+        VALUE_FREEZING_T2 = #{valueFreezingT2,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT2 != null">
+        PTCT_VALUE_FREEZING_T2 = #{ptctValueFreezingT2,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT3 != null">
+        VALUE_FREEZING_T3 = #{valueFreezingT3,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT3 != null">
+        PTCT_VALUE_FREEZING_T3 = #{ptctValueFreezingT3,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT4 != null">
+        VALUE_FREEZING_T4 = #{valueFreezingT4,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT4 != null">
+        PTCT_VALUE_FREEZING_T4 = #{ptctValueFreezingT4,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT5 != null">
+        VALUE_FREEZING_T5 = #{valueFreezingT5,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT5 != null">
+        PTCT_VALUE_FREEZING_T5 = #{ptctValueFreezingT5,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT6 != null">
+        VALUE_FREEZING_T6 = #{valueFreezingT6,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT6 != null">
+        PTCT_VALUE_FREEZING_T6 = #{ptctValueFreezingT6,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT7 != null">
+        VALUE_FREEZING_T7 = #{valueFreezingT7,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT7 != null">
+        PTCT_VALUE_FREEZING_T7 = #{ptctValueFreezingT7,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT8 != null">
+        VALUE_FREEZING_T8 = #{valueFreezingT8,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT8 != null">
+        PTCT_VALUE_FREEZING_T8 = #{ptctValueFreezingT8,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPa != null">
+        KWH_PA = #{kwhPa,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtct != null">
+        KWH_PA_PTCT = #{kwhPaPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPr != null">
+        KWH_PR = #{kwhPr,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtct != null">
+        KWH_PR_PTCT = #{kwhPrPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRa != null">
+        KWH_RA = #{kwhRa,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtct != null">
+        KWH_RA_PTCT = #{kwhRaPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRr != null">
+        KWH_RR = #{kwhRr,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtct != null">
+        KWH_RR_PTCT = #{kwhRrPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="appRcvStatus != null">
+        APP_RCV_STATUS = #{appRcvStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="appReceiver != null">
+        APP_RECEIVER = #{appReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null">
+        DATA_SOURCE = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="factor != null">
+        FACTOR = #{factor,jdbcType=DECIMAL},
+      </if>
+      <if test="compensateRate != null">
+        COMPENSATE_RATE = #{compensateRate,jdbcType=DECIMAL},
+      </if>
+      <if test="maxDemand != null">
+        MAX_DEMAND = #{maxDemand,jdbcType=DECIMAL},
+      </if>
+      <if test="maxDemandTime != null">
+        MAX_DEMAND_TIME = #{maxDemandTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coperator != null">
+        COPERATOR = #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null">
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udate != null">
+        UDATE = #{udate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kwhPaT1 != null">
+        KWH_PA_T1 = #{kwhPaT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT1 != null">
+        KWH_PA_PTCT_T1 = #{kwhPaPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT2 != null">
+        KWH_PA_T2 = #{kwhPaT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT2 != null">
+        KWH_PA_PTCT_T2 = #{kwhPaPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT3 != null">
+        KWH_PA_T3 = #{kwhPaT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT3 != null">
+        KWH_PA_PTCT_T3 = #{kwhPaPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT4 != null">
+        KWH_PA_T4 = #{kwhPaT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT4 != null">
+        KWH_PA_PTCT_T4 = #{kwhPaPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT1 != null">
+        KWH_PR_T1 = #{kwhPrT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT1 != null">
+        KWH_PR_PTCT_T1 = #{kwhPrPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT2 != null">
+        KWH_PR_T2 = #{kwhPrT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT2 != null">
+        KWH_PR_PTCT_T2 = #{kwhPrPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT3 != null">
+        KWH_PR_T3 = #{kwhPrT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT3 != null">
+        KWH_PR_PTCT_T3 = #{kwhPrPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT4 != null">
+        KWH_PR_T4 = #{kwhPrT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT4 != null">
+        KWH_PR_PTCT_T4 = #{kwhPrPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT1 != null">
+        KWH_RA_T1 = #{kwhRaT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT1 != null">
+        KWH_RA_PTCT_T1 = #{kwhRaPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT2 != null">
+        KWH_RA_T2 = #{kwhRaT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT2 != null">
+        KWH_RA_PTCT_T2 = #{kwhRaPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT3 != null">
+        KWH_RA_T3 = #{kwhRaT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT3 != null">
+        KWH_RA_PTCT_T3 = #{kwhRaPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT4 != null">
+        KWH_RA_T4 = #{kwhRaT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT4 != null">
+        KWH_RA_PTCT_T4 = #{kwhRaPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT1 != null">
+        KWH_RR_T1 = #{kwhRrT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT1 != null">
+        KWH_RR_PTCT_T1 = #{kwhRrPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT2 != null">
+        KWH_RR_T2 = #{kwhRrT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT2 != null">
+        KWH_RR_PTCT_T2 = #{kwhRrPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT3 != null">
+        KWH_RR_T3 = #{kwhRrT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT3 != null">
+        KWH_RR_PTCT_T3 = #{kwhRrPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT4 != null">
+        KWH_RR_T4 = #{kwhRrT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT4 != null">
+        KWH_RR_PTCT_T4 = #{kwhRrPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="veeResultDetail != null">
+        VEE_RESULT_DETAIL = #{veeResultDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="veeEstmtDetail != null">
+        VEE_ESTMT_DETAIL = #{veeEstmtDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="veeEditDetail != null">
+        VEE_EDIT_DETAIL = #{veeEditDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where DATA_TYPE = #{dataType,jdbcType=INTEGER}
+      and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and DATA_PERIOD = #{dataPeriod,jdbcType=VARCHAR}
+      and FZ_DATA_TYPE = #{fzDataType,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateVeeByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmDayFreezing" >
+    update MDM_DAY_FREEZING
+    <set>
+      <if test="valueFreezing != null">
+        VALUE_FREEZING = #{valueFreezing,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezing != null">
+        PTCT_VALUE_FREEZING = #{ptctValueFreezing,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT1 != null">
+        VALUE_FREEZING_T1 = #{valueFreezingT1,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT1 != null">
+        PTCT_VALUE_FREEZING_T1 = #{ptctValueFreezingT1,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT2 != null">
+        VALUE_FREEZING_T2 = #{valueFreezingT2,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT2 != null">
+        PTCT_VALUE_FREEZING_T2 = #{ptctValueFreezingT2,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT3 != null">
+        VALUE_FREEZING_T3 = #{valueFreezingT3,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT3 != null">
+        PTCT_VALUE_FREEZING_T3 = #{ptctValueFreezingT3,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT4 != null">
+        VALUE_FREEZING_T4 = #{valueFreezingT4,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT4 != null">
+        PTCT_VALUE_FREEZING_T4 = #{ptctValueFreezingT4,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT5 != null">
+        VALUE_FREEZING_T5 = #{valueFreezingT5,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT5 != null">
+        PTCT_VALUE_FREEZING_T5 = #{ptctValueFreezingT5,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT6 != null">
+        VALUE_FREEZING_T6 = #{valueFreezingT6,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT6 != null">
+        PTCT_VALUE_FREEZING_T6 = #{ptctValueFreezingT6,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT7 != null">
+        VALUE_FREEZING_T7 = #{valueFreezingT7,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT7 != null">
+        PTCT_VALUE_FREEZING_T7 = #{ptctValueFreezingT7,jdbcType=DOUBLE},
+      </if>
+      <if test="valueFreezingT8 != null">
+        VALUE_FREEZING_T8 = #{valueFreezingT8,jdbcType=DOUBLE},
+      </if>
+      <if test="ptctValueFreezingT8 != null">
+        PTCT_VALUE_FREEZING_T8 = #{ptctValueFreezingT8,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPa != null">
+        KWH_PA = #{kwhPa,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtct != null">
+        KWH_PA_PTCT = #{kwhPaPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPr != null">
+        KWH_PR = #{kwhPr,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtct != null">
+        KWH_PR_PTCT = #{kwhPrPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRa != null">
+        KWH_RA = #{kwhRa,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtct != null">
+        KWH_RA_PTCT = #{kwhRaPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRr != null">
+        KWH_RR = #{kwhRr,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtct != null">
+        KWH_RR_PTCT = #{kwhRrPtct,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT1 != null">
+        KWH_PA_T1 = #{kwhPaT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT1 != null">
+        KWH_PA_PTCT_T1 = #{kwhPaPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT2 != null">
+        KWH_PA_T2 = #{kwhPaT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT2 != null">
+        KWH_PA_PTCT_T2 = #{kwhPaPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT3 != null">
+        KWH_PA_T3 = #{kwhPaT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT3 != null">
+        KWH_PA_PTCT_T3 = #{kwhPaPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaT4 != null">
+        KWH_PA_T4 = #{kwhPaT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPaPtctT4 != null">
+        KWH_PA_PTCT_T4 = #{kwhPaPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT1 != null">
+        KWH_PR_T1 = #{kwhPrT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT1 != null">
+        KWH_PR_PTCT_T1 = #{kwhPrPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT2 != null">
+        KWH_PR_T2 = #{kwhPrT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT2 != null">
+        KWH_PR_PTCT_T2 = #{kwhPrPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT3 != null">
+        KWH_PR_T3 = #{kwhPrT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT3 != null">
+        KWH_PR_PTCT_T3 = #{kwhPrPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrT4 != null">
+        KWH_PR_T4 = #{kwhPrT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhPrPtctT4 != null">
+        KWH_PR_PTCT_T4 = #{kwhPrPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT1 != null">
+        KWH_RA_T1 = #{kwhRaT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT1 != null">
+        KWH_RA_PTCT_T1 = #{kwhRaPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT2 != null">
+        KWH_RA_T2 = #{kwhRaT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT2 != null">
+        KWH_RA_PTCT_T2 = #{kwhRaPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT3 != null">
+        KWH_RA_T3 = #{kwhRaT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT3 != null">
+        KWH_RA_PTCT_T3 = #{kwhRaPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaT4 != null">
+        KWH_RA_T4 = #{kwhRaT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRaPtctT4 != null">
+        KWH_RA_PTCT_T4 = #{kwhRaPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT1 != null">
+        KWH_RR_T1 = #{kwhRrT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT1 != null">
+        KWH_RR_PTCT_T1 = #{kwhRrPtctT1,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT2 != null">
+        KWH_RR_T2 = #{kwhRrT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT2 != null">
+        KWH_RR_PTCT_T2 = #{kwhRrPtctT2,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT3 != null">
+        KWH_RR_T3 = #{kwhRrT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT3 != null">
+        KWH_RR_PTCT_T3 = #{kwhRrPtctT3,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrT4 != null">
+        KWH_RR_T4 = #{kwhRrT4,jdbcType=DOUBLE},
+      </if>
+      <if test="kwhRrPtctT4 != null">
+        KWH_RR_PTCT_T4 = #{kwhRrPtctT4,jdbcType=DOUBLE},
+      </if>
+      <if test="veeResultDetail != null" >
+        VEE_RESULT_DETAIL = #{veeResultDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="veeEstmtDetail != null" >
+        VEE_ESTMT_DETAIL = #{veeEstmtDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="veeEditDetail != null" >
+        VEE_EDIT_DETAIL = #{veeEditDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and DATA_PERIOD = #{dataPeriod,jdbcType=VARCHAR}
+      and FZ_DATA_TYPE = #{fzDataType,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByDeviceNum" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmDayFreezing" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_DAY_FREEZING
+    where DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR} 
+      and DATA_PERIOD=#{dataPeriod,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

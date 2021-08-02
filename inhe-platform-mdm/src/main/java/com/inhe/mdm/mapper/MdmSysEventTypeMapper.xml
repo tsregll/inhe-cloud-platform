@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmSysEventTypeDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmSysEventType" >
+    <id column="CODE" property="code" jdbcType="INTEGER" />
+    <result column="REF_CODE" property="refCode" jdbcType="VARCHAR" />
+    <result column="PDELAY" property="pdelay" jdbcType="SMALLINT" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="SUBION_FLAG" property="subionFlag" jdbcType="VARCHAR" />
+    <result column="FIELD_ID" property="fieldId" jdbcType="VARCHAR" />
+    <result column="PARAMS" property="params" jdbcType="VARCHAR" />
+    <result column="PROCESS_TYPE" property="processType" jdbcType="VARCHAR" />
+    <result column="MODE" property="mode" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="VARCHAR" />
+    <result column="SEND_TYPE" property="sendType" jdbcType="VARCHAR" />
+    <result column="FUN_ID" property="funId" jdbcType="VARCHAR" />
+    <result column="TEMP_WEB" property="tempWeb" jdbcType="VARCHAR" />
+    <result column="TEMP_WEB_TYPE" property="tempWebType" jdbcType="VARCHAR" />
+    <result column="TEMP_SMS" property="tempSms" jdbcType="VARCHAR" />
+    <result column="TEMP_EMAIL" property="tempEmail" jdbcType="VARCHAR" />
+    <result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+    <result column="STEAL_FLAG" property="stealFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODE, REF_CODE, PDELAY, DESCRIPTION, TYPE, SUBION_FLAG, FIELD_ID, PARAMS, PROCESS_TYPE, 
+    MODE, LEVEL, SEND_TYPE, FUN_ID, TEMP_WEB, TEMP_WEB_TYPE, TEMP_SMS, TEMP_EMAIL, ACTIVED, 
+    STEAL_FLAG
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_EVENT_TYPE
+    where CODE = #{code,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from SYS_EVENT_TYPE
+    where CODE = #{code,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmSysEventType" >
+    insert into SYS_EVENT_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="refCode != null" >
+        REF_CODE,
+      </if>
+      <if test="pdelay != null" >
+        PDELAY,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="subionFlag != null" >
+        SUBION_FLAG,
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID,
+      </if>
+      <if test="params != null" >
+        PARAMS,
+      </if>
+      <if test="processType != null" >
+        PROCESS_TYPE,
+      </if>
+      <if test="mode != null" >
+        MODE,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+      <if test="sendType != null" >
+        SEND_TYPE,
+      </if>
+      <if test="funId != null" >
+        FUN_ID,
+      </if>
+      <if test="tempWeb != null" >
+        TEMP_WEB,
+      </if>
+      <if test="tempWebType != null" >
+        TEMP_WEB_TYPE,
+      </if>
+      <if test="tempSms != null" >
+        TEMP_SMS,
+      </if>
+      <if test="tempEmail != null" >
+        TEMP_EMAIL,
+      </if>
+      <if test="actived != null" >
+        ACTIVED,
+      </if>
+      <if test="stealFlag != null" >
+        STEAL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="refCode != null" >
+        #{refCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pdelay != null" >
+        #{pdelay,jdbcType=SMALLINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="subionFlag != null" >
+        #{subionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        #{fieldId,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="processType != null" >
+        #{processType,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null" >
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="sendType != null" >
+        #{sendType,jdbcType=VARCHAR},
+      </if>
+      <if test="funId != null" >
+        #{funId,jdbcType=VARCHAR},
+      </if>
+      <if test="tempWeb != null" >
+        #{tempWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="tempWebType != null" >
+        #{tempWebType,jdbcType=VARCHAR},
+      </if>
+      <if test="tempSms != null" >
+        #{tempSms,jdbcType=VARCHAR},
+      </if>
+      <if test="tempEmail != null" >
+        #{tempEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="stealFlag != null" >
+        #{stealFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmSysEventType" >
+    update SYS_EVENT_TYPE
+    <set >
+      <if test="refCode != null" >
+        REF_CODE = #{refCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pdelay != null" >
+        PDELAY = #{pdelay,jdbcType=SMALLINT},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="subionFlag != null" >
+        SUBION_FLAG = #{subionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldId != null" >
+        FIELD_ID = #{fieldId,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        PARAMS = #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="processType != null" >
+        PROCESS_TYPE = #{processType,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null" >
+        MODE = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="sendType != null" >
+        SEND_TYPE = #{sendType,jdbcType=VARCHAR},
+      </if>
+      <if test="funId != null" >
+        FUN_ID = #{funId,jdbcType=VARCHAR},
+      </if>
+      <if test="tempWeb != null" >
+        TEMP_WEB = #{tempWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="tempWebType != null" >
+        TEMP_WEB_TYPE = #{tempWebType,jdbcType=VARCHAR},
+      </if>
+      <if test="tempSms != null" >
+        TEMP_SMS = #{tempSms,jdbcType=VARCHAR},
+      </if>
+      <if test="tempEmail != null" >
+        TEMP_EMAIL = #{tempEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        ACTIVED = #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="stealFlag != null" >
+        STEAL_FLAG = #{stealFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODE = #{code,jdbcType=INTEGER}
+  </update>
+</mapper>

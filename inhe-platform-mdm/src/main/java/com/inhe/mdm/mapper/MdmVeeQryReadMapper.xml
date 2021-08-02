@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmVeeReadQryDao" >
+  
+  <!-- 查询上一次值 -->
+  <select id="queryLast" resultType="com.inhe.mdm.model.MdmDeviceRead" parameterType="com.inhe.mdm.model.MdmVeeReadQry">
+	  select 
+	  	READ_TIME as readTime,
+	  	REAL_VALUE as realValue 
+	  from MDM_DEVICE_READ 
+	  where DATA_TYPE=#{dataType,jdbcType=VARCHAR} 
+	  and FIELD_ID=#{fieldId,jdbcType=VARCHAR}
+      and DEVICE_ID=#{deviceId,jdbcType=VARCHAR}      
+	  and READ_TIME &gt;= #{startTime,jdbcType=TIMESTAMP}          
+      and READ_TIME &lt;= #{endTime,jdbcType=TIMESTAMP}  
+  </select>
+  
+  <!-- 瞬时查询最近的上一次值 -->
+  <select id="queryOnceLast" resultType="com.inhe.mdm.model.MdmDeviceRead" parameterType="com.inhe.mdm.model.MdmVeeReadQry">
+	  select 
+	  	READ_TIME as readTime,
+	  	REAL_VALUE as realValue 
+	  from MDM_DEVICE_READ
+	  where DATA_TYPE=#{dataType,jdbcType=VARCHAR}
+	  and FIELD_ID=#{fieldId,jdbcType=VARCHAR}
+	  and DEVICE_NUM=#{deviceId,jdbcType=VARCHAR}
+	  and READ_TIME &lt; #{time,jdbcType=TIMESTAMP} 
+	  order by READ_TIME desc 
+	  limit 0,1
+  </select>
+  
+</mapper>

@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.inhe</groupId>
+		<artifactId>inhe-cloud-platform</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>inhe-platform-common</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>inhe-common-config</module>
+		<module>inhe-common-admin</module>
+		<module>inhe-common-api</module>
+		<module>inhe-common-message</module>
+		<module>inhe-common-hes</module>
+		<module>inhe-common-meterage</module>
+		<module>inhe-common-asset</module>
+		<module>inhe-common-sts</module>
+		<module>inhe-common-portal</module>
+		<module>inhe-common-mdm</module>
+		<module>inhe-common-crm</module>
+	</modules>
+</project>

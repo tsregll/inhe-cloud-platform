@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAaLineLossModelDveDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAaLineLossModelDve">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+		<id column="SUPPLY_DIRE" property="supplyDire" jdbcType="VARCHAR" />
+		<result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+		<result column="METERING_DIRE" property="meteringDire" jdbcType="VARCHAR" />
+		<result column="METER_SORT" property="meterSort" jdbcType="VARCHAR" />
+		<result column="METER_NAME" property="meterName" jdbcType="VARCHAR" />
+		<result column="VOL_LEVEL" property="volLevel" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="com.inhe.mdm.model.VtMdmAaLineLossModelDve" extends="BaseResultMap">
+		<result column="SUPPLY_IN_COUNT" property="supplyInCount" jdbcType="SMALLINT" />
+		<result column="SUPPLY_OUT_COUNT" property="supplyOutCount" jdbcType="SMALLINT" />
+		<result column="SUP_NUM" property="supNum" jdbcType="INTEGER" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	
+  <sql id="Base_Column_List" >
+    ID, DEVICE_ID, SUPPLY_DIRE, DEVICE_NUM, ORG_ID, DEPT_ID, METERING_DIRE, METER_SORT, 
+    METER_NAME, VOL_LEVEL
+  </sql>
+  
+  <select id="selectSumById" resultMap="ResultMapWithBLOBs" parameterType="com.inhe.mdm.model.VtMdmAaLineLossModelDve" >
+	select
+		sum(case when SUPPLY_DIRE = "0" then 1 else 0 end) as SUPPLY_IN_COUNT,
+		sum(case when SUPPLY_DIRE = "1" then 1 else 0 end) as SUPPLY_OUT_COUNT
+	from
+		MDM_AA_LINE_LOSS_MODEL_DVE
+	<where>
+			<if test="mdmAaLineLossModelDve.id != null and mdmAaLineLossModelDve.id != ''">
+				and ID = #{mdmAaLineLossModelDve.id,jdbcType=VARCHAR}
+			</if>
+		</where>
+  </select>
+
+	<select id="selectMeterCount" resultType="Integer">
+	select 
+		count(*)
+	from 
+		MDM_AM_DEVICE A 
+	left join (
+		select 
+			B.DEVICE_ID, B.SUPPLY_DIRE,B.METERING_DIRE,
+			C.SORT,count(B.DEVICE_ID) SUP_NUM
+		from 
+			MDM_AA_LINE_LOSS_MODEL_DVE B
+		join 
+			MDM_AA_LINE_LOSS_MODEL C on B.ID = C.ID 
+			and C.sort = #{mdmAaLineLossModelDve.sort,jdbcType=VARCHAR}
+		group by DEVICE_ID, SORT
+	) F ON A.ID = F.DEVICE_ID 
+		<where>
+			<if test="mdmAaLineLossModelDve.deviceNum != null and mdmAaLineLossModelDve.deviceNum != ''">
+				and A.DEVICE_NUM like concat('%',#{mdmAaLineLossModelDve.deviceNum,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModelDve.orgId != null and mdmAaLineLossModelDve.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModelDve.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.status != null and mdmAaLineLossModelDve.status != ''">
+				and A.STATUS = #{mdmAaLineLossModelDve.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.meterSort != null and mdmAaLineLossModelDve.meterSort != ''">
+				and A.METER_SORT = #{mdmAaLineLossModelDve.meterSort,jdbcType=VARCHAR}
+			</if>
+				and (F.SUP_NUM &lt; 2 OR ISNULL(F.SUP_NUM))
+		</where>
+	</select>
+
+	<select id="selectMeterList" resultMap="ResultMapWithBLOBs">
+	select 
+		A.ID as DEVICE_ID,A.DEVICE_NUM,A.VOL_LEVEL,
+		F.SUP_NUM,F.SUPPLY_DIRE,F.METERING_DIRE,
+		A.METER_SORT,A.DEPT_ID,A.ORG_ID,
+		A.DESCRIPTION as METER_NAME
+	from 
+		MDM_AM_DEVICE A 
+	left join (
+		select 
+			B.DEVICE_ID, B.SUPPLY_DIRE,B.METERING_DIRE,
+			C.SORT,count(B.DEVICE_ID) SUP_NUM
+		from 
+			MDM_AA_LINE_LOSS_MODEL_DVE B
+		join 
+			MDM_AA_LINE_LOSS_MODEL C on B.ID = C.ID 
+			and C.sort = #{mdmAaLineLossModelDve.sort,jdbcType=VARCHAR}
+			group by DEVICE_ID, SORT
+	) F ON A.ID = F.DEVICE_ID 
+		<where>
+			<if test="mdmAaLineLossModelDve.deviceNum != null and mdmAaLineLossModelDve.deviceNum != ''">
+				and A.DEVICE_NUM like concat('%',#{mdmAaLineLossModelDve.deviceNum,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="mdmAaLineLossModelDve.orgId != null and mdmAaLineLossModelDve.orgId != ''">
+				and A.ORG_ID = #{mdmAaLineLossModelDve.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.status != null and mdmAaLineLossModelDve.status != ''">
+				and A.STATUS = #{mdmAaLineLossModelDve.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.meterSort != null and mdmAaLineLossModelDve.meterSort != ''">
+				and A.METER_SORT = #{mdmAaLineLossModelDve.meterSort,jdbcType=VARCHAR}
+			</if>
+				and (F.SUP_NUM &lt; 2 OR ISNULL(F.SUP_NUM))
+		</where>
+		limit #{currIndex}, #{pageSize}
+	</select>
+  
+  <select id="selectDevCount" resultType="Integer">
+		select 
+			count(*)
+		from 
+			MDM_AA_LINE_LOSS_MODEL_DVE
+		<where>
+			<if test="mdmAaLineLossModelDve.id != null and mdmAaLineLossModelDve.id != ''">
+				and ID = #{mdmAaLineLossModelDve.id,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.orgId != null and mdmAaLineLossModelDve.orgId != ''">
+				and ORG_ID = #{mdmAaLineLossModelDve.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.supplyDire != null and mdmAaLineLossModelDve.supplyDire != ''">
+				and SUPPLY_DIRE = #{mdmAaLineLossModelDve.supplyDire,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.deviceNum != null and mdmAaLineLossModelDve.deviceNum != ''">
+				and DEVICE_NUM like concat('%',#{mdmAaLineLossModelDve.deviceNum,jdbcType=VARCHAR}, '%')
+			</if>
+		</where>
+	</select>
+
+	<select id="selectDevList" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" /> 
+		from 
+			MDM_AA_LINE_LOSS_MODEL_DVE
+		<where>
+			<if test="mdmAaLineLossModelDve.id != null and mdmAaLineLossModelDve.id != ''">
+				and ID = #{mdmAaLineLossModelDve.id,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.orgId != null and mdmAaLineLossModelDve.orgId != ''">
+				and ORG_ID = #{mdmAaLineLossModelDve.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.supplyDire != null and mdmAaLineLossModelDve.supplyDire != ''">
+				and SUPPLY_DIRE = #{mdmAaLineLossModelDve.supplyDire,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaLineLossModelDve.deviceNum != null and mdmAaLineLossModelDve.deviceNum != ''">
+				and DEVICE_NUM like concat('%',#{mdmAaLineLossModelDve.deviceNum,jdbcType=VARCHAR}, '%')
+			</if>
+		</where>
+		limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectAutoSupplyInLineList" resultMap="BaseResultMap">
+		select
+			ID as DEVICE_ID,DEPT_ID,ORG_ID,
+			DEVICE_NUM,METER_SORT,DESCRIPTION as METER_NAME,VOL_LEVEL 
+		from 
+			MDM_AM_DEVICE 
+		<where>
+			<if test="mdmAaLineLossModel.refId != null and mdmAaLineLossModel.refId != ''">
+				and LINE_ID = #{mdmAaLineLossModel.refId,jdbcType=VARCHAR}
+			</if>
+				and METER_SORT = '0'
+				and IMPORTANT = 'Y'
+		</where>
+	</select>
+	
+	<select id="selectAutoSupplyOutLineList" resultMap="BaseResultMap">
+		select
+			ID as DEVICE_ID,DEPT_ID,ORG_ID,
+			DEVICE_NUM,METER_SORT,DESCRIPTION as METER_NAME,VOL_LEVEL 
+		from 
+			MDM_AM_DEVICE 
+		<where>
+			<if test="mdmAaLineLossModel.refId != null and mdmAaLineLossModel.refId != ''">
+				and LINE_ID = #{mdmAaLineLossModel.refId,jdbcType=VARCHAR}
+			</if>
+				and (METER_SORT = '1' or METER_SORT = '2')
+				and IMPORTANT = 'Y'
+		</where>
+	</select>
+	
+	<select id="selectAutoSupplyInTmList" resultMap="BaseResultMap">
+		select
+			ID as DEVICE_ID,DEPT_ID,ORG_ID,
+			DEVICE_NUM,METER_SORT,DESCRIPTION as METER_NAME,VOL_LEVEL 
+		from 
+			MDM_AM_DEVICE 
+		<where>
+			<if test="mdmAaLineLossModel.refId != null and mdmAaLineLossModel.refId != ''">
+				and TM_ID = #{mdmAaLineLossModel.refId,jdbcType=VARCHAR}
+			</if>
+				and METER_SORT = '2'
+				and IMPORTANT = 'Y'
+		</where>
+	</select>
+	
+	<select id="selectAutoSupplyOutTmList" resultMap="BaseResultMap">
+		select
+			ID as DEVICE_ID,DEPT_ID,ORG_ID,
+			DEVICE_NUM,METER_SORT,DESCRIPTION as METER_NAME,VOL_LEVEL 
+		from 
+			MDM_AM_DEVICE 
+		<where>
+			<if test="mdmAaLineLossModel.refId != null and mdmAaLineLossModel.refId != ''">
+				and TM_ID = #{mdmAaLineLossModel.refId,jdbcType=VARCHAR}
+			</if>
+				and METER_SORT = '3'
+				and IMPORTANT = 'Y'
+		</where>
+	</select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAaLineLossModelDve" >
+    select 
+    	<include refid="Base_Column_List" />
+    from 
+    	MDM_AA_LINE_LOSS_MODEL_DVE
+    where 
+    	ID = #{id,jdbcType=VARCHAR}
+      	and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      	and SUPPLY_DIRE = #{supplyDire,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.String" >
+    delete from MDM_AA_LINE_LOSS_MODEL_DVE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.VtMdmAaLineLossModelDve" >
+    delete 
+    from 
+    	MDM_AA_LINE_LOSS_MODEL_DVE
+    where 
+    	ID = #{mdmAaLineLossModel.id,jdbcType=VARCHAR}
+      	and DEVICE_ID = #{mdmAaLineLossModel.deviceId,jdbcType=VARCHAR}
+     	and SUPPLY_DIRE = #{mdmAaLineLossModel.supplyDire,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteBatch">
+		delete from MDM_AA_LINE_LOSS_MODEL_DVE
+		where ID in
+	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+		#{item,jdbcType=VARCHAR}
+	</foreach>
+  </delete>
+  
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+		insert into MDM_AA_LINE_LOSS_MODEL_DVE(
+		ID, DEVICE_ID, SUPPLY_DIRE, DEVICE_NUM, ORG_ID, DEPT_ID, METERING_DIRE, METER_SORT, 
+    	METER_NAME, VOL_LEVEL)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+				(#{item.id,jdbcType=VARCHAR},
+				#{item.deviceId,jdbcType=VARCHAR},
+				#{item.supplyDire,jdbcType=VARCHAR},
+				#{item.deviceNum,jdbcType=VARCHAR},
+				#{item.orgId,jdbcType=VARCHAR},
+				#{item.deptId,jdbcType=VARCHAR},
+				#{item.meteringDire,jdbcType=VARCHAR},
+				#{item.meterSort,jdbcType=VARCHAR},
+				#{item.meterName,jdbcType=VARCHAR},
+				#{item.volLevel,jdbcType=VARCHAR})
+		</foreach> 
+	</insert>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAaLineLossModelDve" >
+    insert into MDM_AA_LINE_LOSS_MODEL_DVE
+    <trim prefix="(" suffix=")" suffixOverrides=";" >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="supplyDire != null" >
+        SUPPLY_DIRE,
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="meteringDire != null" >
+        METERING_DIRE,
+      </if>
+      <if test="meterSort != null" >
+        METER_SORT,
+      </if>
+      <if test="meterName != null" >
+        METER_NAME,
+      </if>
+      <if test="volLevel != null" >
+        VOL_LEVEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyDire != null" >
+        #{supplyDire,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="meteringDire != null" >
+        #{meteringDire,jdbcType=VARCHAR},
+      </if>
+      <if test="meterSort != null" >
+        #{meterSort,jdbcType=VARCHAR},
+      </if>
+      <if test="meterName != null" >
+        #{meterName,jdbcType=VARCHAR},
+      </if>
+      <if test="volLevel != null" >
+        #{volLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAaLineLossModelDve" >
+    update MDM_AA_LINE_LOSS_MODEL_DVE
+    <set >
+      <if test="deviceNum != null" >
+        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="meteringDire != null" >
+        METERING_DIRE = #{meteringDire,jdbcType=VARCHAR},
+      </if>
+      <if test="meterSort != null" >
+        METER_SORT = #{meterSort,jdbcType=VARCHAR},
+      </if>
+      <if test="meterName != null" >
+        METER_NAME = #{meterName,jdbcType=VARCHAR},
+      </if>
+      <if test="volLevel != null" >
+        VOL_LEVEL = #{volLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+      and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and SUPPLY_DIRE = #{supplyDire,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_AA_LINE_LOSS_MODEL_DVE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

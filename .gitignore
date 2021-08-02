@@ -1,0 +1,13 @@
+# Project exclude paths
+/inhe-platform-common/inhe-common-admin/target/
+/inhe-platform-common/inhe-common-api/target/
+/inhe-platform-common/inhe-common-asset/target/
+/inhe-platform-common/inhe-common-config/target/
+/inhe-platform-common/inhe-common-crm/target/
+/inhe-platform-common/inhe-common-hes/target/
+/inhe-platform-common/inhe-common-mdm/target/
+/inhe-platform-common/inhe-common-message/target/
+/inhe-platform-common/inhe-common-meterage/target/
+/inhe-platform-common/inhe-common-portal/target/
+/inhe-platform-common/inhe-common-sts/target/
+/inhe-platform-mdm/target/

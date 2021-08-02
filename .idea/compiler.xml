@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="inhe-common-crm" />
+        <module name="inhe-common-admin" />
+        <module name="inhe-common-portal" />
+        <module name="inhe-common-api" />
+        <module name="inhe-common-config" />
+        <module name="inhe-common-mdm" />
+        <module name="inhe-common-asset" />
+        <module name="inhe-common-hes" />
+        <module name="inhe-common-message" />
+        <module name="inhe-common-sts" />
+        <module name="inhe-common-meterage" />
+        <module name="inhe-platform-mdm" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="inhe-cloud-platform" target="1.8" />
+      <module name="inhe-common-admin" target="1.8" />
+      <module name="inhe-common-api" target="1.8" />
+      <module name="inhe-common-asset" target="1.8" />
+      <module name="inhe-common-config" target="1.8" />
+      <module name="inhe-common-crm" target="1.8" />
+      <module name="inhe-common-hes" target="1.8" />
+      <module name="inhe-common-mdm" target="1.8" />
+      <module name="inhe-common-message" target="1.8" />
+      <module name="inhe-common-meterage" target="1.8" />
+      <module name="inhe-common-portal" target="1.8" />
+      <module name="inhe-common-sts" target="1.8" />
+      <module name="inhe-platform-common" target="1.8" />
+      <module name="inhe-platform-mdm" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

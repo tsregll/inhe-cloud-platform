@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmFieldDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmField" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="INDUSTRY_TYPE" property="industryType" jdbcType="VARCHAR" />
+    <result column="SHORT_CODE" property="shortCode" jdbcType="VARCHAR" />
+    <result column="CIM_CODE" property="cimCode" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="INTEGER" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="FIELD_TYPE" property="fieldType" jdbcType="VARCHAR" />
+    <result column="RW_TYPE" property="rwType" jdbcType="VARCHAR" />
+    <result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
+    <result column="DATA_RANGE" property="dataRange" jdbcType="VARCHAR" />
+    <result column="DATA_FORMAT" property="dataFormat" jdbcType="VARCHAR" />
+    <result column="DATA_UNIT" property="dataUnit" jdbcType="VARCHAR" />
+    <result column="PLUGIN" property="plugin" jdbcType="VARCHAR" />
+    <result column="ACTIVED" property="actived" jdbcType="VARCHAR" />
+    <result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="UOPERATOR" property="uoperator" jdbcType="VARCHAR" />
+    <result column="UDATE" property="udate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, TYPE, INDUSTRY_TYPE, SHORT_CODE, CIM_CODE, ORDER_NO, DESCRIPTION, FIELD_TYPE, 
+    RW_TYPE, DATA_TYPE, DATA_RANGE, DATA_FORMAT, DATA_UNIT, PLUGIN, ACTIVED, COPERATOR, 
+    CDATE, UOPERATOR, UDATE
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_FIELD
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MDM_FIELD
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmField" >
+    insert into MDM_FIELD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="industryType != null" >
+        INDUSTRY_TYPE,
+      </if>
+      <if test="shortCode != null" >
+        SHORT_CODE,
+      </if>
+      <if test="cimCode != null" >
+        CIM_CODE,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="fieldType != null" >
+        FIELD_TYPE,
+      </if>
+      <if test="rwType != null" >
+        RW_TYPE,
+      </if>
+      <if test="dataType != null" >
+        DATA_TYPE,
+      </if>
+      <if test="dataRange != null" >
+        DATA_RANGE,
+      </if>
+      <if test="dataFormat != null" >
+        DATA_FORMAT,
+      </if>
+      <if test="dataUnit != null" >
+        DATA_UNIT,
+      </if>
+      <if test="plugin != null" >
+        PLUGIN,
+      </if>
+      <if test="actived != null" >
+        ACTIVED,
+      </if>
+      <if test="coperator != null" >
+        COPERATOR,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+      <if test="uoperator != null" >
+        UOPERATOR,
+      </if>
+      <if test="udate != null" >
+        UDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="industryType != null" >
+        #{industryType,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cimCode != null" >
+        #{cimCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldType != null" >
+        #{fieldType,jdbcType=VARCHAR},
+      </if>
+      <if test="rwType != null" >
+        #{rwType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataRange != null" >
+        #{dataRange,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFormat != null" >
+        #{dataFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="dataUnit != null" >
+        #{dataUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="plugin != null" >
+        #{plugin,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uoperator != null" >
+        #{uoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="udate != null" >
+        #{udate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmField" >
+    update MDM_FIELD
+    <set >
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="industryType != null" >
+        INDUSTRY_TYPE = #{industryType,jdbcType=VARCHAR},
+      </if>
+      <if test="shortCode != null" >
+        SHORT_CODE = #{shortCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cimCode != null" >
+        CIM_CODE = #{cimCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldType != null" >
+        FIELD_TYPE = #{fieldType,jdbcType=VARCHAR},
+      </if>
+      <if test="rwType != null" >
+        RW_TYPE = #{rwType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null" >
+        DATA_TYPE = #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataRange != null" >
+        DATA_RANGE = #{dataRange,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFormat != null" >
+        DATA_FORMAT = #{dataFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="dataUnit != null" >
+        DATA_UNIT = #{dataUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="plugin != null" >
+        PLUGIN = #{plugin,jdbcType=VARCHAR},
+      </if>
+      <if test="actived != null" >
+        ACTIVED = #{actived,jdbcType=VARCHAR},
+      </if>
+      <if test="coperator != null" >
+        COPERATOR = #{coperator,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uoperator != null" >
+        UOPERATOR = #{uoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="udate != null" >
+        UDATE = #{udate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="searchFieldsDetail" resultMap="BaseResultMap">
+  	select
+  	ID, 
+  	SHORT_CODE, 
+  	DESCRIPTION, 
+	#{vtMdmField.dataType,jdbcType=VARCHAR} as DATA_TYPE, 
+	ACTIVED
+  	from MDM_FIELD
+  	where ID in (${vtMdmField.fieldIds})
+  	<if test="vtMdmField.id != null and vtMdmField.id != ''">
+		and ID like concat('%',#{vtMdmField.id,jdbcType=VARCHAR},'%')
+	</if> 
+  	limit #{currIndex}, #{pageSize}
+  </select>
+  
+</mapper>

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAaPowerOffDetailDao" >
+  <resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAaPowerOffDetail" >
+    <id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+    <id column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <id column="OFF_TYPE" property="offType" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="DEVICE_NUM" property="deviceNum" jdbcType="VARCHAR" />
+    <result column="REF_CODE" property="refCode" jdbcType="VARCHAR" />
+    <result column="LINE_ID" property="lineId" jdbcType="VARCHAR" />
+    <result column="TM_ID" property="tmId" jdbcType="VARCHAR" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="VARCHAR" />
+    <result column="SUPPLIER" property="supplier" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="DURATION" property="duration" jdbcType="DOUBLE" />
+    <result column="IMPORTANT" property="important" jdbcType="VARCHAR" />
+    <result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.inhe.mdm.model.VtMdmAaPowerOffDetail" extends="BaseResultMap">
+		<result column="METER_SORT" property="meterSort" jdbcType="VARCHAR" />
+		<result column="LINE_NAME" property="lineName" jdbcType="VARCHAR" />
+		<result column="TM_NAME" property="tmName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+  <sql id="Base_Column_List" >
+    DEVICE_ID, START_TIME, OFF_TYPE, ORG_ID, DEPT_ID, DEVICE_NUM, REF_CODE, LINE_ID, 
+    TM_ID, DEVICE_TYPE, SUPPLIER, END_TIME, DURATION, IMPORTANT, CDATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from MDM_AA_POWER_OFF_DETAIL
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and START_TIME = #{startTime,jdbcType=TIMESTAMP}
+      and OFF_TYPE = #{offType,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectCount" resultType="Integer">
+		select count(*)
+		from MDM_AA_POWER_OFF_DETAIL A
+		LEFT JOIN MDM_AM_DEVICE B ON A.DEVICE_ID = B.ID
+		<where>
+			<if test="mdmAaPowerOffDetail.deptId != null and mdmAaPowerOffDetail.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaPowerOffDetail.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaPowerOffDetail.orgId != null and mdmAaPowerOffDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaPowerOffDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.offType != null and mdmAaPowerOffDetail.offType != ''">
+				and A.OFF_TYPE = #{mdmAaPowerOffDetail.offType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.meterSort != null and mdmAaPowerOffDetail.meterSort != ''">
+				and B.METER_SORT = #{mdmAaPowerOffDetail.meterSort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.startDate != null and mdmAaPowerOffDetail.startDate != ''">
+				and A.START_TIME &gt; #{mdmAaPowerOffDetail.startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.endDate != null and mdmAaPowerOffDetail.endDate != ''">
+				and A.START_TIME &lt; #{mdmAaPowerOffDetail.endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.important != null and mdmAaPowerOffDetail.important != ''">
+				and A.IMPORTANT = #{mdmAaPowerOffDetail.important,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.deviceNum != null and mdmAaPowerOffDetail.deviceNum != ''">
+				and A.DEVICE_NUM like concat('%', #{mdmAaPowerOffDetail.deviceNum,jdbcType=VARCHAR},'%')
+			</if>
+				and A.DEVICE_ID in
+			<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+				#{item,jdbcType=VARCHAR}
+			</foreach>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="ResultMapWithBLOBs">
+		SELECT
+			A.DEPT_ID,
+			A.ORG_ID,
+			A.DEVICE_NUM,
+			B.METER_SORT,
+			A.OFF_TYPE,
+			A.DEPT_ID,
+			A.START_TIME,
+			A.IMPORTANT,
+			A.END_TIME,
+			A.DURATION,
+			C.DESCRIPTION AS TM_NAME,
+			D.DESCRIPTION AS LINE_NAME
+		FROM
+			MDM_AA_POWER_OFF_DETAIL A
+		LEFT JOIN MDM_AM_DEVICE B ON A.DEVICE_ID = B.ID
+		LEFT JOIN MDM_AM_TM C ON B.TM_ID = C.ID
+		LEFT JOIN MDM_AM_LINE D ON B.LINE_ID = D.ID
+		<where>
+			<if test="mdmAaPowerOffDetail.deptId != null and mdmAaPowerOffDetail.deptId != ''">
+				and A.DEPT_ID like concat(#{mdmAaPowerOffDetail.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAaPowerOffDetail.orgId != null and mdmAaPowerOffDetail.orgId != ''">
+				and A.ORG_ID = #{mdmAaPowerOffDetail.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.offType != null and mdmAaPowerOffDetail.offType != ''">
+				and A.OFF_TYPE = #{mdmAaPowerOffDetail.offType,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.meterSort != null and mdmAaPowerOffDetail.meterSort != ''">
+				and B.METER_SORT = #{mdmAaPowerOffDetail.meterSort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.startDate != null and mdmAaPowerOffDetail.startDate != ''">
+				and A.START_TIME &gt; #{mdmAaPowerOffDetail.startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.endDate != null and mdmAaPowerOffDetail.endDate != ''">
+				and A.START_TIME &lt; #{mdmAaPowerOffDetail.endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.important != null and mdmAaPowerOffDetail.important != ''">
+				and A.IMPORTANT = #{mdmAaPowerOffDetail.important,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAaPowerOffDetail.deviceNum != null and mdmAaPowerOffDetail.deviceNum != ''">
+				and A.DEVICE_NUM like concat('%', #{mdmAaPowerOffDetail.deviceNum,jdbcType=VARCHAR},'%')
+			</if>
+				and A.DEVICE_ID in
+				<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+					#{item,jdbcType=VARCHAR}
+				</foreach>
+		</where>
+		order by A.START_TIME desc limit #{currIndex}, #{pageSize}
+	</select>
+	
+	<select id="selectDeviceNumCount" resultType="java.lang.String">
+		SELECT
+			DEVICE_ID as deviceId
+		FROM
+		MDM_AA_POWER_OFF_DETAIL 
+		GROUP BY DEVICE_ID
+		<if test="timesFlag == 'Y'.toString()">
+			having COUNT(DEVICE_ID) >= 3
+		</if>
+	</select>
+  
+  <select id="selectByEvent" resultMap="BaseResultMap" parameterType="java.lang.String" fetchSize="1000">
+  	select
+		A.DEVICE_ID,
+		A.ORG_ID,
+		A.EVENT_TIME AS START_TIME,
+		'2' AS OFF_TYPE,
+		A.DEVICE_NUM AS DEVICE_NUM,
+		B.REF_ID AS REF_CODE,
+		A.DEPT_ID AS DEPT_ID,
+		B.LINE_ID AS LINE_ID,
+		B.TM_ID AS TM_ID,
+		B.TYPE AS DEVICE_TYPE,
+		A.OP_TIME AS END_TIME,
+		timestampdiff(
+			SECOND,
+			A.EVENT_TIME,
+			A.OP_TIME
+		) / 3600 AS DURATION,
+		B.IMPORTANT AS IMPORTANT,
+		NOW() AS CDATE
+	from
+		MDM_DEVICE_EVENT A
+	left join MDM_AM_DEVICE B ON B.ID = A.DEVICE_ID
+	where
+		B. STATUS = '0'
+		and A.DISPOSE_FLAG = 'Y'
+		and A.EVENT_TIME LIKE concat(#{day,jdbcType=VARCHAR},'%') 
+		and A.EVENT_TYPE = '1'
+		and B.TYPE = '0'
+		and B.METER_SORT != '3'
+  </select>
+  
+  <select id="selectSummary" resultType="com.inhe.mdm.model.VtMdmAaPowerOffSummary" parameterType="com.inhe.mdm.model.VtMdmAaPowerOffDetail">
+  	SELECT 
+  	    A.DEPT_ID as deptId,
+		A.ORG_ID as orgId,
+		count(*) as offUserCount,
+		sum(case when A.TIMES>=3 then 1 else 0 end) as offThreeUserCount,
+		sum(A.DURATION) as totalOffDuration,
+		sum(A.TIMES) as totalOffTimes,
+		sum(case when A.IMPORTANT='Y' then DURATION else 0 end) as totalOffDurationImp,
+		sum(case when A.IMPORTANT='Y' then TIMES else 0 end) as totalOffTimesImp
+	from (
+	   select 
+	   	DEPT_ID,ORG_ID,count(DEVICE_ID) as TIMES,sum(DURATION) as DURATION,IMPORTANT
+	   from MDM_AA_POWER_OFF_DETAIL
+	  where 
+	    START_TIME LIKE concat(#{dateStr,jdbcType=VARCHAR} ,'%') and
+	  	DEVICE_TYPE='0'
+	  	<if test="offType != null and offType != '5' and offType != ''">
+	 		and OFF_TYPE=#{offType,jdbcType=VARCHAR} 
+	 	</if>
+	  	<if test="deptId!= null and deptId != ''">
+	 		and DEPT_ID like concat(#{deptId,jdbcType=VARCHAR},'%') 
+	 	</if>
+	 	<if test="orgId != null and orgId != ''">
+	 		and ORG_ID=#{orgId,jdbcType=VARCHAR} 
+	 	</if>
+    	<if test="lineId != null and lineId != ''">
+	 		and LINE_ID=#{lineId,jdbcType=VARCHAR} 
+	 	</if>
+	 	<if test="tmId != null and tmId != ''">
+	 		and TM_ID=#{tmId,jdbcType=VARCHAR} 
+	 	</if>
+	  group by DEVICE_ID
+	) A
+	group by A.ORG_ID,A.DEPT_ID
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from MDM_AA_POWER_OFF_DETAIL
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and START_TIME = #{startTime,jdbcType=TIMESTAMP}
+      and OFF_TYPE = #{offType,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertByPlan" parameterType="java.lang.String" >
+    replace into MDM_AA_POWER_OFF_DETAIL(
+	  DEVICE_ID,
+	  ORG_ID,
+	  START_TIME,
+	  OFF_TYPE,
+	  DEVICE_NUM,
+	  REF_CODE,
+	  DEPT_ID,
+	  LINE_ID,
+	  TM_ID,
+	  DEVICE_TYPE,
+	  END_TIME,
+	  DURATION,
+	  IMPORTANT,
+	  CDATE)
+    SELECT
+		A.DEVICE_ID,
+		A.ORG_ID,
+		A.OFF_EXEC_TIME AS START_TIME,
+		'1' AS OFF_TYPE,
+		B.DEVICE_NUM AS DEVICE_NUM,
+		B.REF_ID AS REF_CODE,
+		B.DEPT_ID AS DEPT_ID,
+		B.LINE_ID AS LINE_ID,
+		IFNULL(B.TM_ID, '') AS TM_ID,
+		B.TYPE AS DEVICE_TYPE,
+		A.ON_EXEC_TIME AS END_TIME,
+		timestampdiff(
+			SECOND,
+			A.OFF_EXEC_TIME,
+			A.ON_EXEC_TIME
+		) / 3600 AS DURATION,
+		B.IMPORTANT AS IMPORTANT,
+		NOW() AS CDATE
+	FROM
+		MDM_POWER_OFF_TASK_DATA A
+	LEFT JOIN MDM_AM_DEVICE B ON B.ID = A.DEVICE_ID
+	WHERE
+		B. STATUS = '0'
+		AND B.TYPE = '0'
+		AND B.METER_SORT != '3'
+		AND A.OFF_EXEC_TIME &lt; A.ON_EXEC_TIME
+		AND A.OFF_EXEC_TIME LIKE concat(#{day,jdbcType=VARCHAR},'%') 
+		AND A.OFF_RESULT = '2'
+		AND A.ON_RESULT = '2'
+  </insert>
+ 
+  <insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAaPowerOffDetail" >
+    replace into MDM_AA_POWER_OFF_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="offType != null" >
+        OFF_TYPE,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM,
+      </if>
+      <if test="refCode != null" >
+        REF_CODE,
+      </if>
+      <if test="lineId != null" >
+        LINE_ID,
+      </if>
+      <if test="tmId != null" >
+        TM_ID,
+      </if>
+      <if test="deviceType != null" >
+        DEVICE_TYPE,
+      </if>
+      <if test="supplier != null" >
+        SUPPLIER,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="duration != null" >
+        DURATION,
+      </if>
+      <if test="important != null" >
+        IMPORTANT,
+      </if>
+      <if test="cdate != null" >
+        CDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offType != null" >
+        #{offType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="refCode != null" >
+        #{refCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=VARCHAR},
+      </if>
+      <if test="tmId != null" >
+        #{tmId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplier != null" >
+        #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=DOUBLE},
+      </if>
+      <if test="important != null" >
+        #{important,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAaPowerOffDetail" >
+    update MDM_AA_POWER_OFF_DETAIL
+    <set >
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNum != null" >
+        DEVICE_NUM = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="refCode != null" >
+        REF_CODE = #{refCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lineId != null" >
+        LINE_ID = #{lineId,jdbcType=VARCHAR},
+      </if>
+      <if test="tmId != null" >
+        TM_ID = #{tmId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        DEVICE_TYPE = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplier != null" >
+        SUPPLIER = #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null" >
+        DURATION = #{duration,jdbcType=DOUBLE},
+      </if>
+      <if test="important != null" >
+        IMPORTANT = #{important,jdbcType=VARCHAR},
+      </if>
+      <if test="cdate != null" >
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+      and START_TIME = #{startTime,jdbcType=TIMESTAMP}
+      and OFF_TYPE = #{offType,jdbcType=VARCHAR}
+  </update>
+</mapper>

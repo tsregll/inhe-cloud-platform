@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inhe.mdm.dao.MdmAmLineDao">
+	<resultMap id="BaseResultMap" type="com.inhe.mdm.model.MdmAmLine">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="VARCHAR" />
+		<result column="LINE_CODE" property="lineCode" jdbcType="VARCHAR" />
+		<result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+		<result column="STATION_ID" property="stationId" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="TRANS_REGIONAL_FLAG" property="transRegionalFlag" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="COPERATOR" property="coperator" jdbcType="VARCHAR" />
+		<result column="UDATE" property="udate" jdbcType="TIMESTAMP" />
+		<result column="CDATE" property="cdate" jdbcType="TIMESTAMP" />
+		<result column="REMARKS" property="remarks" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="com.inhe.mdm.model.VtMdmAmLine" extends="BaseResultMap">
+		<result column="STATION_DESCRIPTION" property="stationDescription" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, DESCRIPTION, SORT, LINE_CODE, ORG_ID, STATION_ID, TYPE,
+		TRANS_REGIONAL_FLAG,
+		STATUS, COPERATOR, UDATE, CDATE, REMARKS
+	</sql>
+
+	<select id="selectCount" resultType="Integer">
+		select 
+			count(*)
+		from 
+			MDM_AM_LINE A 
+		join
+			MDM_AM_SUBSTATION B on A.STATION_ID = B.ID
+		<where>
+			<if test="mdmAmLine.orgId != null and mdmAmLine.orgId != ''">
+				and A.ORG_ID = #{mdmAmLine.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.deptId != null and mdmAmLine.deptId != ''">
+				and B.DEPT_ID like concat(#{mdmAmLine.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmLine.lineCodeName != null and mdmAmLine.lineCodeName != ''">
+				and concat(ifnull(A.DESCRIPTION, ''), ifnull(LINE_CODE, ''))
+				like
+				concat('%',#{mdmAmLine.lineCodeName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmLine.stationId != null and mdmAmLine.stationId != ''">
+				and STATION_ID = #{mdmAmLine.stationId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.status != null and mdmAmLine.status != ''">
+				and A.STATUS = #{mdmAmLine.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.sort != null and mdmAmLine.sort != ''">
+				and SORT = #{mdmAmLine.sort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.type != null and mdmAmLine.type != ''">
+				and TYPE = #{mdmAmLine.type,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectList" resultMap="ResultMapWithBLOBs">
+		select 
+			A.ID, A.DESCRIPTION, SORT, LINE_CODE, A.ORG_ID, STATION_ID, TYPE,TRANS_REGIONAL_FLAG,
+			A.STATUS, A.COPERATOR, A.UDATE, A.CDATE, A.REMARKS,B.DESCRIPTION as STATION_DESCRIPTION
+		from 
+			MDM_AM_LINE A 
+		join
+			MDM_AM_SUBSTATION B on A.STATION_ID = B.ID
+		<where>
+			<if test="mdmAmLine.orgId != null and mdmAmLine.orgId != ''">
+				and A.ORG_ID = #{mdmAmLine.orgId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.deptId != null and mdmAmLine.deptId != ''">
+				and B.DEPT_ID like concat(#{mdmAmLine.deptId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmLine.lineCodeName != null and mdmAmLine.lineCodeName != ''">
+				and concat(ifnull(A.DESCRIPTION, ''), ifnull(LINE_CODE, ''))
+				like
+				concat('%',#{mdmAmLine.lineCodeName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="mdmAmLine.stationId != null and mdmAmLine.stationId != ''">
+				and STATION_ID = #{mdmAmLine.stationId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.status != null and mdmAmLine.status != ''">
+				and A.STATUS = #{mdmAmLine.status,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.sort != null and mdmAmLine.sort != ''">
+				and SORT = #{mdmAmLine.sort,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.type != null and mdmAmLine.type != ''">
+				and TYPE = #{mdmAmLine.type,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by ID asc limit #{currIndex}, #{pageSize}
+	</select>
+
+	<select id="selectMaxId" resultType="String" parameterType="com.inhe.mdm.model.MdmAmLine">
+		select max(right(ID,5)) as ID
+		from MDM_AM_LINE
+	</select>
+
+	<select id="selectDeptIdByStationId" resultType="String" parameterType="com.inhe.mdm.model.MdmAmLine">
+		select DEPT_ID from MDM_AM_SUBSTATION
+		<where>
+			<if test="mdmAmLine.stationId != null and mdmAmLine.stationId != ''">
+				and ID = #{mdmAmLine.stationId,jdbcType=VARCHAR}
+			</if>
+			<if test="mdmAmLine.orgId  != null and mdmAmLine.orgId != ''">
+				and ORG_ID = #{mdmAmLine.orgId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectDesByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="com.inhe.mdm.model.MdmAmLine">
+		select 
+			A.ID, A.DESCRIPTION, SORT, LINE_CODE, A.ORG_ID, STATION_ID, TYPE,TRANS_REGIONAL_FLAG,
+			A.STATUS, A.COPERATOR, A.UDATE, A.CDATE, A.REMARKS,B.DESCRIPTION as STATION_DESCRIPTION
+		from 
+			MDM_AM_LINE A 
+		join
+			MDM_AM_SUBSTATION B on A.STATION_ID = B.ID
+		where 
+			A.ID = #{mdmAmLine.id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AM_LINE
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByLineCode" resultMap="BaseResultMap" parameterType="com.inhe.mdm.model.MdmAmLine">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			MDM_AM_LINE
+		where 
+			LINE_CODE = #{lineCode,jdbcType=VARCHAR}
+			and ORG_ID = #{orgId,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="delete" parameterType="com.inhe.mdm.model.MdmAmLine">
+		update 
+			MDM_AM_LINE
+		set
+			STATUS = #{status,jdbcType=VARCHAR}
+		where 
+			ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByPrimaryKey" parameterType="com.inhe.mdm.model.MdmAmLine">
+		delete from MDM_AM_LINE
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.inhe.mdm.model.MdmAmLine">
+		insert into MDM_AM_LINE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="description != null">
+				DESCRIPTION,
+			</if>
+			<if test="sort != null">
+				SORT,
+			</if>
+			<if test="lineCode != null">
+				LINE_CODE,
+			</if>
+			<if test="orgId != null">
+				ORG_ID,
+			</if>
+			<if test="stationId != null">
+				STATION_ID,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="transRegionalFlag != null">
+				TRANS_REGIONAL_FLAG,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="coperator != null">
+				COPERATOR,
+			</if>
+			<if test="udate != null">
+				UDATE,
+			</if>
+			<if test="cdate != null">
+				CDATE,
+			</if>
+			<if test="remarks != null">
+				REMARKS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=VARCHAR},
+			</if>
+			<if test="lineCode != null">
+				#{lineCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="stationId != null">
+				#{stationId,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="transRegionalFlag != null">
+				#{transRegionalFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				#{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="udate != null">
+				#{udate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cdate != null">
+				#{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.inhe.mdm.model.MdmAmLine">
+		update MDM_AM_LINE
+		<set>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				SORT = #{sort,jdbcType=VARCHAR},
+			</if>
+			<if test="lineCode != null">
+				LINE_CODE = #{lineCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=VARCHAR},
+			</if>
+			<if test="stationId != null">
+				STATION_ID = #{stationId,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="transRegionalFlag != null">
+				TRANS_REGIONAL_FLAG =
+				#{transRegionalFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="coperator != null">
+				COPERATOR = #{coperator,jdbcType=VARCHAR},
+			</if>
+			<if test="udate != null">
+				UDATE = #{udate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cdate != null">
+				CDATE = #{cdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remarks != null">
+				REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="selectByAll" resultMap="BaseResultMap">
+	    select 
+	    	<include refid="Base_Column_List" />
+	    from 
+	    	MDM_AM_LINE
+	    where STATUS='0'
+	</select>
+	
+	<select id="selectByAllPowerOff" resultMap="BaseResultMap" parameterType="java.lang.String">
+	    select 
+	    	<include refid="Base_Column_List" />
+	    from 
+	    	MDM_AM_LINE
+	    where STATUS='0' and ORG_ID = #{orgId,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/inhe-cloud-platform.iml" filepath="$PROJECT_DIR$/inhe-cloud-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-admin/inhe-common-admin.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-admin/inhe-common-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-api/inhe-common-api.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-api/inhe-common-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-asset/inhe-common-asset.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-asset/inhe-common-asset.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-config/inhe-common-config.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-config/inhe-common-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-crm/inhe-common-crm.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-crm/inhe-common-crm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-hes/inhe-common-hes.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-hes/inhe-common-hes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-mdm/inhe-common-mdm.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-mdm/inhe-common-mdm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-message/inhe-common-message.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-message/inhe-common-message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-meterage/inhe-common-meterage.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-meterage/inhe-common-meterage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-portal/inhe-common-portal.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-portal/inhe-common-portal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-common-sts/inhe-common-sts.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-common-sts/inhe-common-sts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-common/inhe-platform-common.iml" filepath="$PROJECT_DIR$/inhe-platform-common/inhe-platform-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inhe-platform-mdm/inhe-platform-mdm.iml" filepath="$PROJECT_DIR$/inhe-platform-mdm/inhe-platform-mdm.iml" />
+    </modules>
+  </component>
+</project>
